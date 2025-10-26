@@ -1,0 +1,70 @@
+<mxfile host="65bd71144e">
+    <diagram id="jD24NFxQoE0CgLDbKyGG" name="Página-1">
+        <mxGraphModel dx="1658" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="1">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="17" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+                    <mxGeometry x="-150" y="120" width="850" height="850" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="ellipse;whiteSpace=wrap;html=1;direction=south;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="387" width="140" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;direction=south;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="217" width="310" height="630" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Peladeiro" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="397" width="80" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Criar Fut" style="ellipse;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="257" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Editar Fut Criado por Ele" style="ellipse;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="367" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Ver Historico&amp;nbsp;&lt;div&gt;Pessoal&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="607" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Alterar Perfil" style="ellipse;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="737" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Apaga Fut Criado por Ele" style="ellipse;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="487" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="endArrow=none;html=1;entryX=0.017;entryY=0.638;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.094;exitY=0.25;exitDx=0;exitDy=0;exitPerimeter=0;shadow=1;" parent="1" source="5" target="6" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="430" y="407" as="sourcePoint"/>
+                        <mxPoint x="480" y="357" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="" style="endArrow=none;html=1;entryX=0.033;entryY=0.413;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.212;exitY=0.079;exitDx=0;exitDy=0;exitPerimeter=0;shadow=1;" parent="1" source="5" target="7" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="185" y="413" as="sourcePoint"/>
+                        <mxPoint x="457" y="318" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="" style="endArrow=none;html=1;entryX=0.033;entryY=0.363;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.353;exitY=0.007;exitDx=0;exitDy=0;exitPerimeter=0;shadow=1;" parent="1" source="5" target="10" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="209" y="433" as="sourcePoint"/>
+                        <mxPoint x="459" y="410" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="" style="endArrow=none;html=1;entryX=0.033;entryY=0.363;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;shadow=1;" parent="1" source="5" target="8" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="219" y="457" as="sourcePoint"/>
+                        <mxPoint x="459" y="526" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="" style="endArrow=none;html=1;entryX=0.05;entryY=0.313;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.765;exitY=0.064;exitDx=0;exitDy=0;exitPerimeter=0;shadow=1;" parent="1" source="5" target="9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="220" y="482" as="sourcePoint"/>
+                        <mxPoint x="459" y="646" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="Ações Inicial Peladeiro" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;strokeColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="217" width="80" height="43" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Entity
 @Table( name = "fut")
 @Getter
@@ -35,5 +37,13 @@ public class FutModel {
     @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_peladeiro_adm")
-    private PeladeiroModel peladeiroModel = new PeladeiroModel();
+    private PeladeiroModel administradorPeladeiro = new PeladeiroModel();
+
+    @ManyToMany
+    @JoinTable(
+            name = "participa_peladeiro_fut",
+            joinColumns = @JoinColumn(name = "fk_fut"),
+            inverseJoinColumns = @JoinColumn(name = "fk_peladeiro")
+    )
+    private List<PeladeiroModel> peladeiros;
 }

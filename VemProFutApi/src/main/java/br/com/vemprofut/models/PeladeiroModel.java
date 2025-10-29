@@ -37,9 +37,6 @@ public class PeladeiroModel {
     @JoinColumn(name = "fk_historico_peladeiro")
     private HistoricoPeladeiroModel historicoPeladeiroModel = new HistoricoPeladeiroModel();
 
-    @ManyToMany(mappedBy = "cartoesPeladeiro")
-    private CartoesModel cartoesModelPeladeiro;
-
     @ManyToMany
     @JoinTable(
             name = "esta_peladeiro_partida",
@@ -47,4 +44,10 @@ public class PeladeiroModel {
             inverseJoinColumns = @JoinColumn(name = "fk_partida")
     )
     private List<PartidasModel> partidas;
+
+    @ManyToMany(mappedBy = "cartoesPeladeiro")
+    private CartoesModel cartoesModelPeladeiro;
+
+    @ManyToMany(mappedBy = "participa_peladeiro_fut")
+    private List<FutModel> participaFut;
 }

@@ -31,13 +31,13 @@ public class CartoesModel {
             joinColumns = @JoinColumn(name = "fk_cartoes"),
             inverseJoinColumns = @JoinColumn(name = "fk_partida")
     )
-    private List<PartidasModel> cartoesPartida;
+    private List<PartidasModel> cartoesPartidas;
 
     @ManyToMany
     @JoinTable(
-        name = "cartoes_peladeiro",
+        name = "tem_cartoes_peladeiro",
         joinColumns = @JoinColumn(name = "fk_cartoes"),
         inverseJoinColumns = @JoinColumn(name = "fk_peladeiro")
     )
-    private List<PeladeiroModel> cartoesPeladeiro;
+    private List<PeladeiroModel> cartoesPeladeiros;
 }

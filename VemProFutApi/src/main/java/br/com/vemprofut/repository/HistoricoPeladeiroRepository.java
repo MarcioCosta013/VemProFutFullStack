@@ -1,4 +1,4 @@
-package br.com.vemprofut.repositories;
+package br.com.vemprofut.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

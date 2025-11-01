@@ -16,7 +16,7 @@ public interface CartoesMapper {
 
     @Mapping(target = "cartoesPartidas", ignore = true)//ignora na classe model
     @Mapping(target = "cartoesPeladeiros", ignore = true)
-    CartoesModel toEntity(CartoesDTO dto); // De DTO --> Entity/Model
+    CartoesModel toModel(CartoesDTO dto); // De DTO --> Entity/Model
     /*
     Esses dois campos (`cartoesPartida` e `cartoesPeladeiro`) são listas de objetos (`List<PartidasModel>` e
     `List<PeladeiroModel>`). Como o DTO não possui esses objetos (tem apenas os IDs), pedimos para **ignorar**
@@ -25,7 +25,7 @@ public interface CartoesMapper {
 
     @Mapping(target = "partidasIds", ignore = true)//ignora no DTO
     @Mapping(target = "peladeirosIds", ignore = true)
-    CartoesDTO toDTO(CartoesModel entity); //De Entity/Model --> DTO
+    CartoesDTO toDTO(CartoesModel model); //De Entity/Model --> DTO
 
     /*
     Os relacionamentos (List<PartidasModel>, List<PeladeiroModel>) são ignorados, porque o DTO só tem listas de IDs.

@@ -20,5 +20,5 @@ public class GolsPartidaModel {
     private PeladeiroModel peladeiroModel = new PeladeiroModel();
 
     @ManyToMany(mappedBy = "tem_gols_partida")
-    private PartidasModel partidas = new PartidasModel();
+    private PartidasModel partida = new PartidasModel();
 }

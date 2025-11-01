@@ -19,7 +19,7 @@ public interface PeladeiroMapper {
     @Mapping(target = "partidas", ignore = true)
     @Mapping(target = "cartoesModelPeladeiro", ignore = true)
     @Mapping(target = "participaFut", ignore = true)
-    PeladeiroModel toEntity(PeladeiroDTO dto);
+    PeladeiroModel toModel(PeladeiroDTO dto);
 
     //Model --> DTO
     @Mapping(target = "id", source = "id_peladeiro")
@@ -31,5 +31,5 @@ public interface PeladeiroMapper {
     @Mapping(target = "historicoId", expression = "java(entity.getHistoricoPeladeiroModel() != null ? entity.getHistoricoPeladeiroModel().getId_historico() : null)")
     @Mapping(target = "partidasIds", expression = "java(entity.getPartidas() != null ? entity.getPartidas().stream().map(p -> p.getId_partida()).toList() : null)")
     @Mapping(target = "futsIds", expression = "java(entity.getParticipaFut() != null ? entity.getParticipaFut().stream().map(f -> f.getId_fut()).toList() : null)")
-    PeladeiroDTO toDTO(PeladeiroModel entity);
+    PeladeiroDTO toDTO(PeladeiroModel model);
 }

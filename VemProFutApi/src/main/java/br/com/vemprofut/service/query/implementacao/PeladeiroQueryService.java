@@ -1,24 +1,10 @@
-package br.com.vemprofut.service.implementacao;
+package br.com.vemprofut.service.query.implementacao;
 
-import br.com.vemprofut.DTOs.PeladeiroDTO;
-import br.com.vemprofut.service.IPeladeiroService;
+import br.com.vemprofut.service.query.IPeladeiroQueryService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PeladeiroService implements IPeladeiroService {
+public class PeladeiroQueryService implements IPeladeiroQueryService {
 
-    @Override
-    public PeladeiroDTO salvar(PeladeiroDTO dto) {
-        return null;
-    }
 
-    @Override
-    public PeladeiroDTO alterar(PeladeiroDTO dto) {
-        return null;
-    }
-
-    @Override
-    public void apagar(Long id) {
-
-    }
 }

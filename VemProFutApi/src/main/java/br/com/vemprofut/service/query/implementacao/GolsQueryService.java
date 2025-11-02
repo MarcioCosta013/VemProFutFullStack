@@ -1,8 +1,8 @@
-package br.com.vemprofut.service.implementacao;
+package br.com.vemprofut.service.query.implementacao;
 
-import br.com.vemprofut.service.IGolsService;
+import br.com.vemprofut.service.query.IGolsQueryService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GolsService implements IGolsService {
+public class GolsQueryService implements IGolsQueryService {
 }

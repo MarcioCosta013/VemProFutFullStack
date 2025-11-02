@@ -1,13 +1,7 @@
-package br.com.vemprofut.service;
+package br.com.vemprofut.service.query;
 
 import br.com.vemprofut.DTOs.PeladeiroDTO;
-import br.com.vemprofut.service.implementacao.PeladeiroService;
 
-public interface IPeladeiroService {
+public interface IPeladeiroQueryService {
 
-    PeladeiroDTO salvar(PeladeiroDTO dto);
-
-    PeladeiroDTO alterar(PeladeiroDTO dto);
-
-    void apagar(Long id);
 }

@@ -1,8 +1,8 @@
-package br.com.vemprofut.service.implementacao;
+package br.com.vemprofut.service.query.implementacao;
 
-import br.com.vemprofut.service.ICartoesService;
+import br.com.vemprofut.service.query.ICartoesQueryService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CartoesService implements ICartoesService {
+public class CartoesQueryService implements ICartoesQueryService {
 }

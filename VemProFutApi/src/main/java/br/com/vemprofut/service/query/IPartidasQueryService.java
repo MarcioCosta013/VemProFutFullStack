@@ -1,4 +1,4 @@
-package br.com.vemprofut.service;
+package br.com.vemprofut.service.query;
 
-public interface IPartidasService {
+public interface IPartidasQueryService {
 }

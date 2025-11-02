@@ -1,8 +1,8 @@
-package br.com.vemprofut.service.implementacao;
+package br.com.vemprofut.service.query.implementacao;
 
-import br.com.vemprofut.service.IPartidasService;
+import br.com.vemprofut.service.query.IPartidasQueryService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PartidasService implements IPartidasService {
+public class PartidasQueryService implements IPartidasQueryService {
 }

@@ -1,8 +1,8 @@
-package br.com.vemprofut.service.implementacao;
+package br.com.vemprofut.service.query.implementacao;
 
-import br.com.vemprofut.service.IFutService;
+import br.com.vemprofut.service.query.IFutQueryService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FutService implements IFutService {
+public class FutQueryService implements IFutQueryService {
 }

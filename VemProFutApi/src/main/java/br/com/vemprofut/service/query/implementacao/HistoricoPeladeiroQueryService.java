@@ -1,8 +1,8 @@
-package br.com.vemprofut.service.implementacao;
+package br.com.vemprofut.service.query.implementacao;
 
-import br.com.vemprofut.service.IHistoricoPeladeiroService;
+import br.com.vemprofut.service.query.IHistoricoPeladeiroQueryService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
+public class HistoricoPeladeiroQueryService implements IHistoricoPeladeiroQueryService {
 }

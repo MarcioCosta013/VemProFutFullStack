@@ -9,11 +9,11 @@ import org.mapstruct.Mapping;
 public interface FutMapper {
 
     //DTO --> Model
-    @Mapping(target = "id_fut")
-    @Mapping(target = "nome_fut")
-    @Mapping(target = "jogadores_por_time")
-    @Mapping(target = "tempo_max_partida")
-    @Mapping(target = "max_gols_vitoria")
+    @Mapping(target = "id_fut", source = "id")
+    @Mapping(target = "nome_fut", source = "nome")
+    @Mapping(target = "jogadores_por_time", source = "jogadoresPorTime")
+    @Mapping(target = "tempo_max_partida", source = "tempoMaxPartida")
+    @Mapping(target = "max_gols_vitoria", source = "maxGolsPartida")
     @Mapping(target = "historicoFutModel", ignore = true)
     @Mapping(target = "administradorPeladeiro", ignore = true)
     @Mapping(target = "peladeiros", ignore = true)

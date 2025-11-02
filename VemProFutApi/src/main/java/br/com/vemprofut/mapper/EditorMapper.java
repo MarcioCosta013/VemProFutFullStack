@@ -16,7 +16,7 @@ public interface EditorMapper {
 
     //Model --> DTO
     @Mapping(target = "id", source = "id_editor")
-    @Mapping(target = "idPeladeiro", ignore = true)
-    @Mapping(target = "idFut", ignore = true)
+    @Mapping(target = "idPeladeiro", expression = "java(entity.getPeladeiroModel() != null ? entity.getPeladeiroModel().getId_peladeiro() : null)")
+    @Mapping(target = "idFut", expression = "java(entity.getFutModel() != null ?  entity.getFutModel().getId_fut() : null)")
     EditorDTO toDTO(EditorModel model);
 }

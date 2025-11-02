@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface ICartoesService {
 
-    CartoesDTO criar(CartoesDTO dto);
+    CartoesDTO create(CartoesDTO cartoesDTO);
 
-    List<CartoesDTO> buscarCartoesPeladeiro (PeladeiroDTO peladeiro);
+    CartoesDTO findById(Long id);
 
-    List<CartoesDTO> buscarCartoesFut (FutDTO fut);
+    List<CartoesDTO> findAll();
+
+    CartoesDTO update(Long id, CartoesDTO cartoesDTO);
 }

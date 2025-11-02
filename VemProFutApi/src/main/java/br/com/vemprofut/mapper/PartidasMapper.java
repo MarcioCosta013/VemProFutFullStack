@@ -21,7 +21,7 @@ public interface PartidasMapper {
     @Mapping(target = "id", source = "id_partida")
     @Mapping(target = "reservas", source = "jogadores_reservas")
     @Mapping(target = "idFut", expression = "java(entity.getFutModel() != null ? entity.getFutModel().getId_fut() : null)")
-    @Mapping(target = "golsPartida", expression = "java(entity.getGolsPartidaModel() != null ? entity.getGolsPartida().scream().map(g -> g.getId_fut()).toList() : null)")
-    @Mapping(target = "peladeiros", expression = "java(entity.getPeladeiroModel() != null ? entity.getPeladeiroModel().scream().map( p -> p.getId_peladeiro()).toList() : null)") //você ignora o relacionamento reverso "cartoesModelPartida" para evitar loops de referência.
+    @Mapping(target = "golsPartida", expression = "java(entity.getGolsPartida() != null ? entity.getGolsPartida().stream().map(g -> g.getId_gol()).toList() : null)")
+    @Mapping(target = "peladeiros", expression = "java(entity.getPeladeiros() != null ? entity.getPeladeiros().stream().map( p -> p.getId_peladeiro()).toList() : null)") //você ignora o relacionamento reverso "cartoesModelPartida" para evitar loops de referência.
     PartidasDTO toDTO(PartidasModel model);
 }

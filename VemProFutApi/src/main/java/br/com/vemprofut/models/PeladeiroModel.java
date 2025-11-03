@@ -17,6 +17,9 @@ public class PeladeiroModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_peladeiro;
 
+    @Column(nullable = false, length = 80, unique = true)
+    private String email_peladeiro;
+
     @Column(nullable = false, length = 50)
     private String nome_peladeiro;
 

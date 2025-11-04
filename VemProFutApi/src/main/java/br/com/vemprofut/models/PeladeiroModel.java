@@ -48,8 +48,8 @@ public class PeladeiroModel {
     )
     private List<PartidasModel> partidas;
 
-    @ManyToMany(mappedBy = "cartoesPeladeiro")
-    private CartoesModel cartoesModelPeladeiro;
+    @OneToMany(mappedBy = "peladeiro")
+    private List<CartoesModel> cartoes;
 
     @ManyToMany(mappedBy = "participa_peladeiro_fut")
     private List<FutModel> participaFut;

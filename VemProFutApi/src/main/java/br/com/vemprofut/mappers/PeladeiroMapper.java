@@ -16,6 +16,7 @@ public interface PeladeiroMapper {
     @Mapping(target = "descricao_peladeiro", source = "descricao")
     @Mapping(target = "pe_dominante", source = "peDominante")
     @Mapping(target = "whatsapp_peladeiro", source = "whatsapp")
+    @Mapping(target = "cartoes", ignore = true)
     @Mapping(target = "historicoPeladeiroModel", ignore = true) // Preenche manualmente no service
     @Mapping(target = "partidas", ignore = true)
     @Mapping(target = "cartoesModelPeladeiro", ignore = true)
@@ -30,6 +31,7 @@ public interface PeladeiroMapper {
     @Mapping(target = "descricao", source = "descricao_peladeiro")
     @Mapping(target = "peDominante", source = "pe_dominante")
     @Mapping(target = "whatsapp", source = "whatsapp_peladeiro")
+    @Mapping(target = "cartoes", expression = "java(entity.getCartoesModel() != null ? entity.getCartoesModel().stream().map(c -> c.getId_cartoes()).toList() : null)")
     @Mapping(target = "historicoPeladeiro", expression = "java(entity.getHistoricoPeladeiroModel() != null ? entity.getHistoricoPeladeiroModel().getId_historico() : null)")
     @Mapping(target = "partidasIDs", expression = "java(entity.getPartidas() != null ? entity.getPartidas().stream().map(p -> p.getId_partida()).toList() : null)")
     @Mapping(target = "futsIDs", expression = "java(entity.getParticipaFut() != null ? entity.getParticipaFut().stream().map(f -> f.getId_fut()).toList() : null)")

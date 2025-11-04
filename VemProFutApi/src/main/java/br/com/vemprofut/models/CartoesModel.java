@@ -1,5 +1,6 @@
 package br.com.vemprofut.models;
 
+import br.com.vemprofut.models.enuns.TipoCartao;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,28 +17,20 @@ public class CartoesModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_cartoes;
 
-    @Column(nullable = false)
-    private Integer azuis_cartoes;
+    @ManyToOne
+    @JoinColumn(name = "partida_id")
+    private PartidasModel partidaId;
 
-    @Column(nullable = false)
-    private Integer amarelos_cartoes;
+    @ManyToOne
+    @JoinColumn(name = "peladeiro_id")
+    private PeladeiroModel peladeiroId;
 
-    @Column(nullable = false)
-    private Integer vermelhos_cartoes;
+    @ManyToOne
+    @JoinColumn(name = "fut_id")
+    private FutModel futId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "cartoes_partidas",
-            joinColumns = @JoinColumn(name = "fk_cartoes"),
-            inverseJoinColumns = @JoinColumn(name = "fk_partida")
-    )
-    private List<PartidasModel> cartoesPartidas;
+    @Enumerated(EnumType.STRING) // salva o nome do ENUM (AZUL, AMARELO, VERMELHO)
+    @Column(name = "tipo_cartao", nullable = false)
+    private TipoCartao tipoCartao;
 
-    @ManyToMany
-    @JoinTable(
-        name = "tem_cartoes_peladeiro",
-        joinColumns = @JoinColumn(name = "fk_cartoes"),
-        inverseJoinColumns = @JoinColumn(name = "fk_peladeiro")
-    )
-    private List<PeladeiroModel> cartoesPeladeiros;
 }

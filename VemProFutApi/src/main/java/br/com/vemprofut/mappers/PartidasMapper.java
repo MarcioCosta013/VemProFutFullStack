@@ -15,6 +15,7 @@ public interface PartidasMapper {
     @Mapping(target = "cartoesModelPartida", ignore = true)
     @Mapping(target = "golsPartida", ignore = true)
     @Mapping(target = "peladeiros", ignore = true)
+    @Mapping(target = "cartoes", ignore = true)
     PartidasModel toModel(PartidasDTO dto);
 
     //Model-> DTO
@@ -23,5 +24,6 @@ public interface PartidasMapper {
     @Mapping(target = "idFut", expression = "java(entity.getFutModel() != null ? entity.getFutModel().getId_fut() : null)")
     @Mapping(target = "golsPartida", expression = "java(entity.getGolsPartida() != null ? entity.getGolsPartida().stream().map(g -> g.getId_gol()).toList() : null)")
     @Mapping(target = "peladeiros", expression = "java(entity.getPeladeiros() != null ? entity.getPeladeiros().stream().map( p -> p.getId_peladeiro()).toList() : null)") //você ignora o relacionamento reverso "cartoesModelPartida" para evitar loops de referência.
+    @Mapping(target = "cartoes", expression = "java(entity.getCartoesModel() != null ? entity.getCartoesModel().stream().map(c -> c.getId_cartoes()).toList() : null)")
     PartidasDTO toDTO(PartidasModel model);
 }

@@ -1,5 +1,7 @@
 package br.com.vemprofut.models.DTOs;
 
+import br.com.vemprofut.models.CartoesModel;
+
 import java.util.List;
 
 public record PartidasDTO(
@@ -7,5 +9,6 @@ public record PartidasDTO(
         Boolean reservas,
         Long idFut,
         List<Long> golsPartida,
-        List<Long> peladeiros
+        List<Long> peladeiros,
+        List<Long> cartoes
 ) { }

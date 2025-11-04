@@ -17,6 +17,7 @@ public interface FutMapper {
     @Mapping(target = "historicoFutModel", ignore = true)
     @Mapping(target = "administradorPeladeiro", ignore = true)
     @Mapping(target = "peladeiros", ignore = true)
+    @Mapping(target = "cartoes", ignore = true)
     FutModel toModel(FutDTO dto);
 
     //Model --> DTO
@@ -28,5 +29,6 @@ public interface FutMapper {
     @Mapping(target = "historicoFutId", expression = "java(entity.getHistoricoFutModel() != null ? entity.getHistoricoFutModel().getId_historico_fut(): null)" )
     @Mapping(target = "admPeladeiroId", expression = "java(entity.getAdministradorPeladeiro() != null ? entity.getAdministradorPeladeiro().getId_peladeiro : null)")
     @Mapping(target = "peladeiros", expression = "java(entity.getParticipaFut() != null ? entity.getParticipaFut().stream().map(f -> f.getId_fut()).toList() : null)")
+    @Mapping(target = "cartoes", expression = "java(entity.getCartoesModel() != null ? entity.getCartoesModel().stream().map(c -> c.getId_cartoes()).toList() : null)")
     FutDTO toDTO(FutModel model);
 }

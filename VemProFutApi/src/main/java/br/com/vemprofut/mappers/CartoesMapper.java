@@ -14,11 +14,9 @@ public interface CartoesMapper {
     //vamos usar a injecao de dependencias entrão não vamos precisar da linha acima...
 
     @Mapping(target = "id_cartoes", source = "id")
-    @Mapping(target = "azuis_cartoes", source = "cartoes_azul")
-    @Mapping(target = "amarelos_cartoes", source = "cartoes_amarelos")
-    @Mapping(target = "vermelhos_cartoes", source = "cartoes_vermelhos")
-    @Mapping(target = "cartoesPartidas", ignore = true)//ignora na classe model
-    @Mapping(target = "cartoesPeladeiros", ignore = true)
+    @Mapping(target = "partidaId", source = "partidaId")
+    @Mapping(target = "peladeiroId", source = "peladeiroId")
+    @Mapping(target = "futId", source = "futId")
     CartoesModel toModel(CartoesDTO dto); // De DTO --> Entity/Model
     /*
     Esses dois campos (`cartoesPartida` e `cartoesPeladeiro`) são listas de objetos (`List<PartidasModel>` e
@@ -27,11 +25,9 @@ public interface CartoesMapper {
     */
 
     @Mapping(target = "id", source = "id_cartoes")
-    @Mapping(target = "cartoes_azul", source = "azuis_cartoes")
-    @Mapping(target = "cartoes_amarelos", source = "amarelos_cartoes")
-    @Mapping(target = "cartoes_vermelhos", source = "vermelhos_cartoes")
-    @Mapping(target = "partidasIds", expression = "java(entity.getCartoesPartidas() != null ? entity.getCartoesPartidas().stream().map(f -> f.getId_partida()).toList() : null")
-    @Mapping(target = "peladeirosIds", expression = "java(entity.getCartoesPeladeiros() != null ? entity.getCartoesPeladeiros().stream().map(f -> f.id_peladeiro()).toList() : null)")
+    @Mapping(target = "partidaId", source = "partidaId")
+    @Mapping(target = "peladeiroId", source = "peladeiroId")
+    @Mapping(target = "futId", source = "futId")
     CartoesDTO toDTO(CartoesModel model); //De Entity/Model --> DTO
 
 }

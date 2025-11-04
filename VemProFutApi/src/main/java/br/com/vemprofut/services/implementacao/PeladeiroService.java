@@ -8,6 +8,7 @@ import br.com.vemprofut.services.IPeladeiroService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class PeladeiroService implements IPeladeiroService {
     private PeladeiroMapper peladeiroMapper;
 
     @Override
+    @Transactional
     public PeladeiroDTO create(PeladeiroDTO dto) {
         queryService.verifyEmail(dto.email());
         PeladeiroModel peladeiroModel = peladeiroMapper.toModel(dto);
@@ -32,22 +34,41 @@ public class PeladeiroService implements IPeladeiroService {
     }
 
     @Override
+    @Transactional
     public PeladeiroDTO update(Long id, PeladeiroDTO dto) {
-        return null;
+        var peladeiroModel = queryService.verifyPeladeiroExist(id);
+
+        peladeiroModel.setNome_peladeiro(dto.nome());
+        peladeiroModel.setEmail_peladeiro(dto.email());
+        peladeiroModel.setApelido_peladeiro(dto.apelido());
+        peladeiroModel.setDescricao_peladeiro(dto.descricao());
+        peladeiroModel.setWhatsapp_peladeiro(dto.whatsapp());
+        peladeiroModel.setPe_dominante(dto.peDominante());
+
+        return peladeiroMapper.toDTO(repository.save(peladeiroModel));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PeladeiroDTO findById(Long id) {
-        return null;
+        var peladeiroModel = queryService.verifyPeladeiroExist(id);
+        return peladeiroMapper.toDTO(peladeiroModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PeladeiroDTO> findAll() {
-        return List.of();
+
+        return repository.findAll()
+                .stream()
+                .map(peladeiroMapper::toDTO)
+                .toList();
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-
+        queryService.verifyPeladeiroExist(id);
+        repository.deleteById(id);
     }
 }

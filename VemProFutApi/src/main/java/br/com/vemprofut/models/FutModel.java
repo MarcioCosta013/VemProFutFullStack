@@ -46,4 +46,7 @@ public class FutModel {
             inverseJoinColumns = @JoinColumn(name = "fk_peladeiro")
     )
     private List<PeladeiroModel> peladeiros;
+
+    @OneToMany(mappedBy = "fut")
+    private List<CartoesModel> cartoes;
 }

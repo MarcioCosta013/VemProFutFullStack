@@ -24,8 +24,8 @@ public class PartidasModel {
     @JoinColumn(name = "fk_fut")
     private FutModel futModel = new FutModel();
 
-    @ManyToMany(mappedBy = "cartoesPartida")
-    private CartoesModel cartoesModelPartida;
+    @OneToMany(mappedBy = "partida")
+    private List<CartoesModel> cartoes;
 
     @ManyToMany
     @JoinTable(

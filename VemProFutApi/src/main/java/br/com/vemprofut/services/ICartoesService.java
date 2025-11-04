@@ -6,11 +6,14 @@ import java.util.List;
 
 public interface ICartoesService {
 
-    CartoesDTO create(CartoesDTO cartoesDTO);
+    CartoesDTO create(CartoesDTO dto);
 
-    CartoesDTO findById(Long id);
+    List<CartoesDTO> findByPeladeiro(Long id);
+
+    List<CartoesDTO> findByPartida(Long id);
+
+    List<CartoesDTO> findByFut(Long id);
 
     List<CartoesDTO> findAll();
 
-    CartoesDTO update(Long id, CartoesDTO cartoesDTO);
 }

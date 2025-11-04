@@ -5,9 +5,8 @@ import br.com.vemprofut.exceptions.ResourceNotFoundException;
 import br.com.vemprofut.mappers.CartoesMapper;
 import br.com.vemprofut.models.CartoesModel;
 import br.com.vemprofut.repositories.CartoesRepository;
-import br.com.vemprofut.repositories.PartidasRepository;
-import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.ICartoesService;
+import br.com.vemprofut.services.query.ICartoesQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,60 +18,57 @@ import java.util.stream.Collectors;
 public class CartoesService implements ICartoesService {
 
     @Autowired
-    private CartoesRepository cartoesRepository;
+    private CartoesRepository repository;
 
     @Autowired
-    private PartidasRepository partidasRepository;
+    private CartoesMapper mapper;
 
     @Autowired
-    private PeladeiroRepository peladeiroRepository;
-
-    @Autowired
-    private CartoesMapper cartoesMapper;
+    private ICartoesQueryService queryService;
 
     @Override
     @Transactional
-    public CartoesDTO create(CartoesDTO cartoesDTO) {
-        CartoesModel cartoesModel = cartoesMapper.toModel(cartoesDTO);
-        updateRelationships(cartoesModel, cartoesDTO);
-        CartoesModel savedCartoes = cartoesRepository.save(cartoesModel);
-        return cartoesMapper.toDTO(savedCartoes);
-    }
+    public CartoesDTO create(CartoesDTO dto) {
+        queryService.verifyEntitiesExist(dto);
 
-    @Override
-    @Transactional(readOnly = true)
-    public CartoesDTO findById(Long id) {
-        CartoesModel cartoesModel = cartoesRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cartões não encontrados com o id: " + id));
-        return cartoesMapper.toDTO(cartoesModel);
+        CartoesModel model = mapper.toModel(dto);
+        CartoesModel saved = repository.save(model);
+        return mapper.toDTO(saved);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CartoesDTO> findAll() {
-        return cartoesRepository.findAll().stream()
-                .map(cartoesMapper::toDTO)
-                .collect(Collectors.toList());
+        return repository.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 
     @Override
-    @Transactional
-    public CartoesDTO update(Long id, CartoesDTO cartoesDTO) {
-        CartoesModel cartoesModel = cartoesRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cartões não encontrados com o id: " + id));
-
-        // Atualiza os campos simples
-        cartoesModel.setAzuis_cartoes(cartoesDTO.cartoes_azul());
-        cartoesModel.setAmarelos_cartoes(cartoesDTO.cartoes_amarelos());
-        cartoesModel.setVermelhos_cartoes(cartoesDTO.cartoes_vermelhos());
-
-        updateRelationships(cartoesModel, cartoesDTO);
-        CartoesModel updatedCartoes = cartoesRepository.save(cartoesModel);
-        return cartoesMapper.toDTO(updatedCartoes);
+    @Transactional(readOnly = true)
+    public List<CartoesDTO> findByPeladeiro(Long id) {
+        return repository.findByPeladeiroId(id)
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 
-    private void updateRelationships(CartoesModel model, CartoesDTO dto) {
-        // Lógica para associar Partidas e Peladeiros
-        // Esta parte do código assume que você tem os repositórios para Partidas e Peladeiros
+    @Override
+    @Transactional(readOnly = true)
+    public List<CartoesDTO> findByPartida(Long id) {
+        return repository.findByPartidaId(id)
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CartoesDTO> findByFut(Long id) {
+        return repository.findByFutId(id)
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 }

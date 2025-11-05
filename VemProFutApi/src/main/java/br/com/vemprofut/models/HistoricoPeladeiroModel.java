@@ -15,16 +15,16 @@ public class HistoricoPeladeiroModel {
     private Long idHistoricoPeladeiro;
 
     @Column(nullable = false)
-    private Integer golsHistoricoPeladeiro;
+    private Integer golsHistoricoPeladeiro = 0;
 
     @Column(nullable = false)
-    private Double notaPeladeiro;
+    private Double notaPeladeiro = 0.0;
 
     @Column(nullable = false)
-    private Integer partidasJogadasHistorico;
+    private Integer partidasJogadasHistorico = 0;
 
     @Column(nullable = false)
-    private Integer partidasGanhasHistorico;
+    private Integer partidasGanhasHistorico = 0;
 
 
 }

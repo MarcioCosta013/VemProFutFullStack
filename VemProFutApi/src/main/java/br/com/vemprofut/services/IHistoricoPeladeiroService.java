@@ -6,11 +6,10 @@ import java.util.List;
 
 public interface IHistoricoPeladeiroService {
 
-    HistoricoPeladeiroDTO create(HistoricoPeladeiroDTO dto);
+    HistoricoPeladeiroDTO create();
 
     HistoricoPeladeiroDTO findById(Long id);
 
-    List<HistoricoPeladeiroDTO> findAll();
 
     HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto);
 

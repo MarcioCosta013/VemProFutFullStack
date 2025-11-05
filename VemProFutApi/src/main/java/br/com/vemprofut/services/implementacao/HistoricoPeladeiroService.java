@@ -1,35 +1,59 @@
 package br.com.vemprofut.services.implementacao;
 
+import br.com.vemprofut.mappers.HistoricoPeladeiroMapper;
 import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
+import br.com.vemprofut.models.HistoricoPeladeiroModel;
+import br.com.vemprofut.repositories.HistoricoPeladeiroRepository;
 import br.com.vemprofut.services.IHistoricoPeladeiroService;
+import br.com.vemprofut.services.query.IHistoricoPeladeiroQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
+
+    @Autowired
+    private IHistoricoPeladeiroQueryService queryService;
+
+    @Autowired
+    private HistoricoPeladeiroRepository repository;
+
+    @Autowired
+    private HistoricoPeladeiroMapper mapper;
+
     @Override
-    public HistoricoPeladeiroDTO create(HistoricoPeladeiroDTO dto) {
-        return null;
+    @Transactional
+    public HistoricoPeladeiroDTO create() {
+        HistoricoPeladeiroModel historico = new HistoricoPeladeiroModel();
+        return mapper.toDTO(repository.save(historico));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HistoricoPeladeiroDTO findById(Long id) {
-        return null;
+
+        return mapper.toDTO(queryService.verityHistoricoPeladeiroExistReturn(id));
     }
 
-    @Override
-    public List<HistoricoPeladeiroDTO> findAll() {
-        return List.of();
-    }
 
     @Override
     public HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto) {
-        return null;
+        HistoricoPeladeiroModel historico = queryService.verityHistoricoPeladeiroExistReturn(id);
+
+        historico.setGolsHistoricoPeladeiro(dto.golsDoPeladeiro());
+        historico.setNotaPeladeiro(dto.notaPeladeiro());
+        historico.setPartidasJogadasHistorico(dto.partidasJogadas());
+        historico.setPartidasGanhasHistorico(dto.partidasGanhas());
+
+        return mapper.toDTO(repository.save(historico));
     }
 
     @Override
     public void delete(Long id) {
-
+        queryService.verityHistoricoPeladeiroExist(id);
+        repository.deleteById(id);
     }
 }

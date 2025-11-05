@@ -9,14 +9,14 @@ import org.mapstruct.Mapping;
 public interface EditorMapper {
 
     //DTO --> Model
-    @Mapping(target = "id_editor", source = "id")
-    @Mapping(target = "peladeiroModel", ignore = true)
-    @Mapping(target = "futModel", ignore = true)
+    @Mapping(target = "idEditor", source = "id")
+    @Mapping(target = "peladeiroModel.idPeladeiro", source = "peladeiroModel")
+    @Mapping(target = "futModel.idFut", source = "futModel")
     EditorModel toModel(EditorDTO dto);
 
     //Model --> DTO
-    @Mapping(target = "id", source = "id_editor")
-    @Mapping(target = "idPeladeiro", expression = "java(entity.getPeladeiroModel() != null ? entity.getPeladeiroModel().getId_peladeiro() : null)")
-    @Mapping(target = "idFut", expression = "java(entity.getFutModel() != null ?  entity.getFutModel().getId_fut() : null)")
+    @Mapping(target = "id", source = "idEditor")
+    @Mapping(target = "idPeladeiro",source = "peladeiroModel.idPeladeiro")
+    @Mapping(target = "idFut", source = "futModel.idFut")
     EditorDTO toDTO(EditorModel model);
 }

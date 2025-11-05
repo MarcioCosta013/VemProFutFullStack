@@ -15,10 +15,10 @@ public class PartidasModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_partida;
+    private Long idPartida;
 
     @Column(nullable = false)
-    private Boolean jogadores_reservas;
+    private Boolean jogadoresReservas;
 
     @ToString.Exclude
     @JoinColumn(name = "fk_fut")

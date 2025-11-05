@@ -10,6 +10,8 @@ public interface IFutService {
 
     FutDTO findById(Long id);
 
+    FutDTO findByNome(String nome);
+
     List<FutDTO> findAll();
 
     FutDTO update(Long id, FutDTO dto);

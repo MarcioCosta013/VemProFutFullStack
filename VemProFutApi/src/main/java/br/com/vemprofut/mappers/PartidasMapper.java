@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 public interface PartidasMapper {
 
     //DTO -> Model
-    @Mapping(target = "id_partida", source = "id")
-    @Mapping(target = "jogadores_reservas", source = "reservas")
+    @Mapping(target = "idPartida", source = "id")
+    @Mapping(target = "jogadoresReservas", source = "reservas")
     @Mapping(target = "futModel", ignore = true)
     @Mapping(target = "cartoesModelPartida", ignore = true)
     @Mapping(target = "golsPartida", ignore = true)
@@ -19,11 +19,11 @@ public interface PartidasMapper {
     PartidasModel toModel(PartidasDTO dto);
 
     //Model-> DTO
-    @Mapping(target = "id", source = "id_partida")
-    @Mapping(target = "reservas", source = "jogadores_reservas")
-    @Mapping(target = "idFut", expression = "java(entity.getFutModel() != null ? entity.getFutModel().getId_fut() : null)")
-    @Mapping(target = "golsPartida", expression = "java(entity.getGolsPartida() != null ? entity.getGolsPartida().stream().map(g -> g.getId_gol()).toList() : null)")
-    @Mapping(target = "peladeiros", expression = "java(entity.getPeladeiros() != null ? entity.getPeladeiros().stream().map( p -> p.getId_peladeiro()).toList() : null)") //você ignora o relacionamento reverso "cartoesModelPartida" para evitar loops de referência.
-    @Mapping(target = "cartoes", expression = "java(entity.getCartoesModel() != null ? entity.getCartoesModel().stream().map(c -> c.getId_cartoes()).toList() : null)")
+    @Mapping(target = "id", source = "idPartida")
+    @Mapping(target = "reservas", source = "jogadoresReservas")
+    @Mapping(target = "idFut", expression = "java(entity.getFutModel() != null ? entity.getFutModel().getIdFut() : null)")
+    @Mapping(target = "golsPartida", expression = "java(entity.getGolsPartida() != null ? entity.getGolsPartida().stream().map(g -> g.getIdGol()).toList() : null)")
+    @Mapping(target = "peladeiros", expression = "java(entity.getPeladeiros() != null ? entity.getPeladeiros().stream().map( p -> p.getIdPeladeiro()).toList() : null)") //você ignora o relacionamento reverso "cartoesModelPartida" para evitar loops de referência.
+    @Mapping(target = "cartoes", expression = "java(entity.getCartoesModel() != null ? entity.getCartoesModel().stream().map(c -> c.getIdCartoes()).toList() : null)")
     PartidasDTO toDTO(PartidasModel model);
 }

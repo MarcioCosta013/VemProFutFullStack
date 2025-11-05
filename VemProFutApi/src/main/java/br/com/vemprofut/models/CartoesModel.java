@@ -15,7 +15,7 @@ public class CartoesModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_cartoes;
+    private Long idCartoes;
 
     @ManyToOne
     @JoinColumn(name = "partida_id")

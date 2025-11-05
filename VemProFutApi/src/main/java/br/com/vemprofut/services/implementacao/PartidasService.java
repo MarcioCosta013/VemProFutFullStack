@@ -10,21 +10,25 @@ import java.util.List;
 public class PartidasService implements IPartidasService {
     @Override
     public PartidasDTO create(PartidasDTO dto) {
+
         return null;
     }
 
     @Override
     public PartidasDTO findById(Long id) {
+
         return null;
     }
 
     @Override
     public List<PartidasDTO> findAll() {
+
         return List.of();
     }
 
     @Override
     public PartidasDTO update(Long id, PartidasDTO dto) {
+
         return null;
     }
 }

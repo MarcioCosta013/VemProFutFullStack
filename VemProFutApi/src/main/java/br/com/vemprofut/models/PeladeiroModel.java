@@ -15,25 +15,25 @@ public class PeladeiroModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_peladeiro;
+    private Long idPeladeiro;
 
     @Column(nullable = false, length = 80, unique = true)
-    private String email_peladeiro;
+    private String emailPeladeiro;
 
     @Column(nullable = false, length = 50)
-    private String nome_peladeiro;
+    private String nomePeladeiro;
 
     @Column(nullable = false, length = 30)
-    private String apelido_peladeiro;
+    private String apelidoPeladeiro;
 
     @Column(nullable = false, length = 100)
-    private String descricao_peladeiro;
+    private String descricaoPeladeiro;
 
     @Column(nullable = false, length = 10)
-    private String pe_dominante;
+    private String peDominante;
 
     @Column(nullable = false, length = 15)
-    private String whatsapp_peladeiro;
+    private String whatsappPeladeiro;
 
     @ToString.Exclude
     @OneToOne

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,19 +16,19 @@ public class FutModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_fut;
+    private Long idFut;
 
-    @Column(nullable = false, length = 50)
-    private String nome_fut;
-
-    @Column(nullable = false)
-    private Integer jogadores_por_time;
+    @Column(nullable = false, length = 50, unique = true)
+    private String nomeFut;
 
     @Column(nullable = false)
-    private Integer tempo_max_partida;
+    private Integer jogadoresPorTime;
 
     @Column(nullable = false)
-    private Integer max_gols_vitoria;
+    private Integer tempoMaxPartida;
+
+    @Column(nullable = false)
+    private Integer maxGolsVitoria;
 
     @ToString.Exclude
     @OneToOne
@@ -38,6 +39,9 @@ public class FutModel {
     @OneToOne
     @JoinColumn(name = "fk_peladeiro_adm")
     private PeladeiroModel administradorPeladeiro = new PeladeiroModel();
+
+    @OneToMany(mappedBy = "fut", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PeladeiroModel> editores = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

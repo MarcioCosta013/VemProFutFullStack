@@ -38,12 +38,12 @@ public class PeladeiroService implements IPeladeiroService {
     public PeladeiroDTO update(Long id, PeladeiroDTO dto) {
         var peladeiroModel = queryService.verifyPeladeiroExist(id);
 
-        peladeiroModel.setNome_peladeiro(dto.nome());
-        peladeiroModel.setEmail_peladeiro(dto.email());
-        peladeiroModel.setApelido_peladeiro(dto.apelido());
-        peladeiroModel.setDescricao_peladeiro(dto.descricao());
-        peladeiroModel.setWhatsapp_peladeiro(dto.whatsapp());
-        peladeiroModel.setPe_dominante(dto.peDominante());
+        peladeiroModel.setNomePeladeiro(dto.nome());
+        peladeiroModel.setEmailPeladeiro(dto.email());
+        peladeiroModel.setApelidoPeladeiro(dto.apelido());
+        peladeiroModel.setDescricaoPeladeiro(dto.descricao());
+        peladeiroModel.setWhatsappPeladeiro(dto.whatsapp());
+        peladeiroModel.setPeDominante(dto.peDominante());
 
         return peladeiroMapper.toDTO(repository.save(peladeiroModel));
     }

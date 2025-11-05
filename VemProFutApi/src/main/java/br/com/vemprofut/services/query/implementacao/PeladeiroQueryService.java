@@ -25,7 +25,7 @@ public class PeladeiroQueryService implements IPeladeiroQueryService {
     @Override
     public PeladeiroModel verifyPeladeiroExist(Long id) {
         return repository.findById(id).orElseThrow(
-                () -> new NotFoundException("Não foi encontrado o cliente de id " + id)
+                () -> new NotFoundException("Não foi encontrado o Peladeiro de id " + id)
         );
     }
 }

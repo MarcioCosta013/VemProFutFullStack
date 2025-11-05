@@ -8,15 +8,18 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface GolsPartidaMapper {
 
+    //Source --> é o objeto de origem, de onde vêm os dados
+    //Target --> é o objeto de destino, para onde os dados vão
+
     //DTO -> Model
-    @Mapping(target = "id_gols_partida", source = "id")
-    @Mapping(target = "peladeiroModel", ignore = true)
-    @Mapping(target = "partida", ignore = true)
+    @Mapping(target = "idGolsPartida", source = "id")
+    @Mapping(target = "peladeiro", source = "peladeiro.idPeladeiro")
+    @Mapping(target = "partida", source = "partida.idPartida")
     GolsPartidaModel toModel(GolsPartidaDTO dto);
 
     //Model --> DTO
-    @Mapping(target = "id", source = "id_gols_partida")
-    @Mapping(target = "peladeiro", expression = "java(entity.getPeladeiroModel() != null ? entity.getPeladeiroModel().getId_peladeiro() : null)")
-    @Mapping(target = "partida", expression = "java(entity.getPartidaModel() != null ? entity.getPartidaModel().getId_partida() : null)")
+    @Mapping(target = "id", source = "idGolsPartida")
+    @Mapping(target = "peladeiro.idPeladeiro", source = "peladeiro")
+    @Mapping(target = "partida.idPartida", source = "partida")
     GolsPartidaDTO toDTO(GolsPartidaModel model);
 }

@@ -13,11 +13,11 @@ public class GolsPartidaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_gols_partida;
+    private Long idGolsPartida;
 
     @ToString.Exclude
     @JoinColumn(name = "fk_peladeiro")
-    private PeladeiroModel peladeiroModel = new PeladeiroModel();
+    private PeladeiroModel peladeiro = new PeladeiroModel();
 
     @ManyToMany(mappedBy = "tem_gols_partida")
     private PartidasModel partida = new PartidasModel();

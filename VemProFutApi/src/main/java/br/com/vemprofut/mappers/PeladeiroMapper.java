@@ -9,13 +9,13 @@ import org.mapstruct.Mapping;
 public interface PeladeiroMapper {
 
     // DTO --> Model
-    @Mapping(target = "id_peladeiro", source = "id")
-    @Mapping(target = "nome_peladeiro", source = "nome")
-    @Mapping(target = "email_peladeiro", source = "email")
-    @Mapping(target = "apelido_peladeiro", source = "apelido")
-    @Mapping(target = "descricao_peladeiro", source = "descricao")
-    @Mapping(target = "pe_dominante", source = "peDominante")
-    @Mapping(target = "whatsapp_peladeiro", source = "whatsapp")
+    @Mapping(target = "idPeladeiro", source = "id")
+    @Mapping(target = "nomePeladeiro", source = "nome")
+    @Mapping(target = "emailPeladeiro", source = "email")
+    @Mapping(target = "apelidoPeladeiro", source = "apelido")
+    @Mapping(target = "descricaoPeladeiro", source = "descricao")
+    @Mapping(target = "peDominante", source = "peDominante")
+    @Mapping(target = "whatsappPeladeiro", source = "whatsapp")
     @Mapping(target = "cartoes", ignore = true)
     @Mapping(target = "historicoPeladeiroModel", ignore = true) // Preenche manualmente no service
     @Mapping(target = "partidas", ignore = true)
@@ -24,16 +24,16 @@ public interface PeladeiroMapper {
     PeladeiroModel toModel(PeladeiroDTO dto);
 
     //Model --> DTO
-    @Mapping(target = "id", source = "id_peladeiro")
-    @Mapping(target = "nome", source = "nome_peladeiro")
-    @Mapping(target = "email", source = "email_peladeiro")
-    @Mapping(target = "apelido", source = "apelido_peladeiro")
-    @Mapping(target = "descricao", source = "descricao_peladeiro")
-    @Mapping(target = "peDominante", source = "pe_dominante")
-    @Mapping(target = "whatsapp", source = "whatsapp_peladeiro")
-    @Mapping(target = "cartoes", expression = "java(entity.getCartoesModel() != null ? entity.getCartoesModel().stream().map(c -> c.getId_cartoes()).toList() : null)")
-    @Mapping(target = "historicoPeladeiro", expression = "java(entity.getHistoricoPeladeiroModel() != null ? entity.getHistoricoPeladeiroModel().getId_historico() : null)")
-    @Mapping(target = "partidasIDs", expression = "java(entity.getPartidas() != null ? entity.getPartidas().stream().map(p -> p.getId_partida()).toList() : null)")
-    @Mapping(target = "futsIDs", expression = "java(entity.getParticipaFut() != null ? entity.getParticipaFut().stream().map(f -> f.getId_fut()).toList() : null)")
+    @Mapping(target = "id", source = "idPeladeiro")
+    @Mapping(target = "nome", source = "nomePeladeiro")
+    @Mapping(target = "email", source = "emailPeladeiro")
+    @Mapping(target = "apelido", source = "apelidoPeladeiro")
+    @Mapping(target = "descricao", source = "descricaoPeladeiro")
+    @Mapping(target = "peDominante", source = "peDominante")
+    @Mapping(target = "whatsapp", source = "whatsappPeladeiro")
+    @Mapping(target = "cartoes", expression = "java(entity.getCartoesModel() != null ? entity.getCartoesModel().stream().map(c -> c.getIdCartoes()).toList() : null)")
+    @Mapping(target = "historicoPeladeiro", expression = "java(entity.getHistoricoPeladeiroModel() != null ? entity.getHistoricoPeladeiroModel().getIdHistorico() : null)")
+    @Mapping(target = "partidasIDs", expression = "java(entity.getPartidas() != null ? entity.getPartidas().stream().map(p -> p.getIdPartida()).toList() : null)")
+    @Mapping(target = "futsIDs", expression = "java(entity.getParticipaFut() != null ? entity.getParticipaFut().stream().map(f -> f.getIdFut()).toList() : null)")
     PeladeiroDTO toDTO(PeladeiroModel model);
 }

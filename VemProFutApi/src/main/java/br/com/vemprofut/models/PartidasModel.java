@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,15 @@ import java.util.List;
 @Getter
 @Setter
 public class PartidasModel {
+
+    public PartidasModel(Boolean jogadoresReservas, FutModel futModel){
+
+        this.jogadoresReservas = jogadoresReservas;
+        this.futModel = futModel;
+        this.cartoes = new ArrayList<>();
+        this.golsPartida = new ArrayList<>();
+        this.peladeiros = new ArrayList<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +32,7 @@ public class PartidasModel {
 
     @ToString.Exclude
     @JoinColumn(name = "fk_fut")
-    private FutModel futModel = new FutModel();
+    private FutModel futModel;
 
     @OneToMany(mappedBy = "partida")
     private List<CartoesModel> cartoes;

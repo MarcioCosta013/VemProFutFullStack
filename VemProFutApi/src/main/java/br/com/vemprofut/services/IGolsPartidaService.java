@@ -1,13 +1,16 @@
 package br.com.vemprofut.services;
 
 import br.com.vemprofut.models.DTOs.GolsPartidaDTO;
+import br.com.vemprofut.models.DTOs.PartidasDTO;
+import br.com.vemprofut.models.DTOs.PeladeiroDTO;
+import br.com.vemprofut.models.GolsPartidaModel;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IGolsPartidaService {
 
-    void create(GolsPartidaDTO dto);
+    GolsPartidaModel create(PeladeiroDTO peladeiroDTO, PartidasDTO partidasDTO);
 
     GolsPartidaDTO findById(Long id);
 

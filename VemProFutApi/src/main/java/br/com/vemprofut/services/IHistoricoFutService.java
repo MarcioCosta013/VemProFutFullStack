@@ -1,18 +1,21 @@
 package br.com.vemprofut.services;
 
 import br.com.vemprofut.models.DTOs.HistoricoFutDTO;
+import br.com.vemprofut.models.PeladeiroModel;
 
 import java.util.List;
 
 public interface IHistoricoFutService {
 
-    HistoricoFutDTO create(HistoricoFutDTO dto);
+    HistoricoFutDTO create();
 
     HistoricoFutDTO findById(Long id);
 
-    List<HistoricoFutDTO> findAll();
+    void updateTimeMaisVitorias(Long id, List<PeladeiroModel> time);
 
-    HistoricoFutDTO update(Long id, HistoricoFutDTO dto);
+    void addPartidasJogadas(Long id, Integer numero);
+
+    void addGolsTotal(Long id, Integer numero);
 
     void delete(Long id);
 }

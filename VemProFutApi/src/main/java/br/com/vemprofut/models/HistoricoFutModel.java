@@ -15,12 +15,12 @@ public class HistoricoFutModel {
     private Long idHistoricoFut;
 
     @Column(nullable = false)
-    private Integer golsTotalFut;
+    private Integer golsTotalFut = 0;
 
     @Column(nullable = false)
-    private Integer totalPartidasJogadas;
+    private Integer totalPartidasJogadas = 0;
 
     @Column(nullable = false)
-    private String timeMaisVitorias;
+    private String timeMaisVitorias = "vazio";
 
 }

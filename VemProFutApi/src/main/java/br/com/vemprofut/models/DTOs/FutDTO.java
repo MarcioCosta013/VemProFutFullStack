@@ -13,5 +13,5 @@ public record FutDTO(
         Long historicoFutId,
         Long admPeladeiroId,
         List<Long> peladeiros,
-        List<CartoesModel> cartoes
+        List<Long> cartoes
 ) { }

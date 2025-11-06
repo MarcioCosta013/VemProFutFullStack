@@ -46,6 +46,11 @@ public class CartoesService implements ICartoesService {
     }
 
     @Override
+    public CartoesDTO findById(Long id) {
+        return mapper.toDTO(queryService.verityCartoesExist(id));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<CartoesDTO> findByPeladeiro(Long id) {
         return repository.findByPeladeiroId(id)

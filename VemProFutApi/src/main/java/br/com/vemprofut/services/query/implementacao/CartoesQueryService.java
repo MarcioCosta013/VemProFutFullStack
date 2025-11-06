@@ -1,5 +1,7 @@
 package br.com.vemprofut.services.query.implementacao;
 
+import br.com.vemprofut.exceptions.NotFoundException;
+import br.com.vemprofut.models.CartoesModel;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
@@ -32,5 +34,11 @@ public class CartoesQueryService implements ICartoesQueryService {
 
         if (!repository.existsById(dto.futId()))
             throw new IllegalArgumentException("Fut não encontrado");
+    }
+
+    public CartoesModel verityCartoesExist (Long id){
+        return repository.findById(id).orElseThrow(
+                () -> new NotFoundException("Não foi encontrado o Cartoes de id " + id)
+        );
     }
 }

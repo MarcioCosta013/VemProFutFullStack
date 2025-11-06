@@ -1,9 +1,13 @@
 package br.com.vemprofut.services.implementacao;
 
 import br.com.vemprofut.mappers.FutMapper;
+import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
+import br.com.vemprofut.models.DTOs.PartidasDTO;
+import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.HistoricoFutModel;
+import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.services.IFutService;
 import br.com.vemprofut.services.query.IFutQueryService;
@@ -18,17 +22,20 @@ import java.util.List;
 public class FutService implements IFutService {
 
     @Autowired
-    IFutQueryService queryService;
+    private IFutQueryService queryService;
 
     @Autowired
-    FutMapper mapper;
+    private FutMapper mapper;
 
     @Autowired
-    FutRepository repository;
+    private FutRepository repository;
+
+    @Autowired
+    private PartidasService partidasService;
 
     @Override
     public FutDTO create(FutDTO dto) {
-        queryService.verifyFutExist(dto.id());
+        queryService.verifyFutExist(dto.id()); //depois de criar os responce e request DTO avaliar de vai tirar essa verificação.
         queryService.verifyNomeFutExist(dto.nome());
 
         FutModel model = mapper.toModel(dto);
@@ -69,11 +76,6 @@ public class FutService implements IFutService {
         retorno.setTempoMaxPartida(dto.tempoMaxPartida());
         retorno.setMaxGolsVitoria(dto.maxGolsPartida());
 
-        //Todo: historicopeladeiro id
-        //Todo: add adm
-        //Todo: lista de editores
-        //Todo: lista de peladeiros geral
-        //Todo: lista de cartoes
         return mapper.toDTO(repository.save(retorno));
     }
 
@@ -81,5 +83,23 @@ public class FutService implements IFutService {
     public void delete(Long id) {
         queryService.verifyFutExist(id);
         repository.deleteById(id);
+    }
+
+    @Override
+    public void criarPartida(Boolean jogadoresReservas, FutModel futModel) {
+
+        partidasService.create(jogadoresReservas, futModel);
+    }
+
+    @Override
+    public void addPeladeiro(FutDTO futDTO, PeladeiroDTO peladeiroDTO) {
+        //TODO:Verity
+        futDTO.peladeiros().add(peladeiroDTO.id());
+    }
+
+    @Override
+    public void addCartoes(FutDTO futDTO, CartoesDTO cartoesDTO) {
+        //TODO:Verity
+        futDTO.cartoes().add(cartoesDTO.id());
     }
 }

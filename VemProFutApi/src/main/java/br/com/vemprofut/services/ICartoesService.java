@@ -16,4 +16,6 @@ public interface ICartoesService {
 
     List<CartoesDTO> findAll();
 
+    CartoesDTO findById(Long id);
+
 }

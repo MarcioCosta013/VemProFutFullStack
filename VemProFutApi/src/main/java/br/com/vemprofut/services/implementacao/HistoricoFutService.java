@@ -1,6 +1,6 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.mappers.HistoricoFutMapper;
+import br.com.vemprofut.mappers.IHistoricoFutMapper;
 import br.com.vemprofut.models.DTOs.HistoricoFutDTO;
 import br.com.vemprofut.models.HistoricoFutModel;
 import br.com.vemprofut.models.PeladeiroModel;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class HistoricoFutService implements IHistoricoFutService {
 
     @Autowired
-    private HistoricoFutMapper mapper;
+    private IHistoricoFutMapper mapper;
 
     @Autowired
     private HisotricoFutRepository repository;

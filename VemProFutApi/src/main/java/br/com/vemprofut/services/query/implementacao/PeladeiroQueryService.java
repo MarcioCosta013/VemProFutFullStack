@@ -2,11 +2,9 @@ package br.com.vemprofut.services.query.implementacao;
 
 import br.com.vemprofut.exceptions.EmailInUseException;
 import br.com.vemprofut.exceptions.NotFoundException;
-import br.com.vemprofut.mappers.PeladeiroMapper;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

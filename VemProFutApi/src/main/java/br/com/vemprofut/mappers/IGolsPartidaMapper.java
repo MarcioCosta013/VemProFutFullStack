@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface GolsPartidaMapper {
+public interface IGolsPartidaMapper {
 
     //Source --> é o objeto de origem, de onde vêm os dados
     //Target --> é o objeto de destino, para onde os dados vão

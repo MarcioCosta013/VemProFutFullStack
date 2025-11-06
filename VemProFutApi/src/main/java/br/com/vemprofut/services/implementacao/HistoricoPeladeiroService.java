@@ -1,6 +1,6 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.mappers.HistoricoPeladeiroMapper;
+import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
 import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
 import br.com.vemprofut.models.HistoricoPeladeiroModel;
 import br.com.vemprofut.repositories.HistoricoPeladeiroRepository;
@@ -9,8 +9,6 @@ import br.com.vemprofut.services.query.IHistoricoPeladeiroQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
@@ -22,7 +20,7 @@ public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
     private HistoricoPeladeiroRepository repository;
 
     @Autowired
-    private HistoricoPeladeiroMapper mapper;
+    private IHistoricoPeladeiroMapper mapper;
 
     @Override
     @Transactional

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface HistoricoPeladeiroMapper {
+public interface IHistoricoPeladeiroMapper {
 
     //DTO -> Model
     @Mapping(target = "idHistoricoPeladeiro", source = "id")

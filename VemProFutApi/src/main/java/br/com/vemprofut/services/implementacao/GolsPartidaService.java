@@ -1,8 +1,8 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.mappers.GolsPartidaMapper;
-import br.com.vemprofut.mappers.PartidasMapper;
-import br.com.vemprofut.mappers.PeladeiroMapper;
+import br.com.vemprofut.mappers.IGolsPartidaMapper;
+import br.com.vemprofut.mappers.IPartidasMapper;
+import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.DTOs.GolsPartidaDTO;
 import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
@@ -27,19 +27,19 @@ public class GolsPartidaService implements IGolsPartidaService {
     private GolsPartidaRepository repository;
 
     @Autowired
-    private GolsPartidaMapper mapper;
+    private IGolsPartidaMapper mapper;
 
     @Autowired
-    private PeladeiroMapper peladeiroMapper;
+    private IPeladeiroMapper IPeladeiroMapper;
 
     @Autowired
-    PartidasMapper partidasMapper;
+    IPartidasMapper IPartidasMapper;
 
     @Override
     @Transactional
     public GolsPartidaModel create(PeladeiroDTO peladeiroDTO, PartidasDTO partidasDTO) {
-        PeladeiroModel peladeiroModel = peladeiroMapper.toModel(peladeiroDTO);
-        PartidasModel partidasModel = partidasMapper.toModel(partidasDTO);
+        PeladeiroModel peladeiroModel = IPeladeiroMapper.toModel(peladeiroDTO);
+        PartidasModel partidasModel = IPartidasMapper.toModel(partidasDTO);
 
         GolsPartidaModel golsPartidaModel = new GolsPartidaModel(peladeiroModel, partidasModel);
 

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring") //diz ao MapStruct que essa interface é um mapper.
-public interface CartoesMapper {
+public interface ICartoesMapper {
     //não precisa implementar, o Maptruct vai fazer isso sozinho.
 
 

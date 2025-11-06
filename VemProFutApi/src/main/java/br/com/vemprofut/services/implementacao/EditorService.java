@@ -1,6 +1,6 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.mappers.EditorMapper;
+import br.com.vemprofut.mappers.IEditorMapper;
 import br.com.vemprofut.models.DTOs.EditorDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.EditorModel;
@@ -17,7 +17,7 @@ import java.util.List;
 public class EditorService implements IEditorService {
 
     @Autowired
-    private EditorMapper mapper;
+    private IEditorMapper mapper;
 
     @Autowired
     private IEditorQueryService queryService;

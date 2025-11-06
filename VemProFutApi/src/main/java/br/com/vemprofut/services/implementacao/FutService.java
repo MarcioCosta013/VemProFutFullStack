@@ -1,17 +1,13 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.mappers.FutMapper;
+import br.com.vemprofut.mappers.IFutMapper;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
-import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
-import br.com.vemprofut.models.HistoricoFutModel;
-import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.services.IFutService;
 import br.com.vemprofut.services.query.IFutQueryService;
-import br.com.vemprofut.services.query.implementacao.FutQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +21,7 @@ public class FutService implements IFutService {
     private IFutQueryService queryService;
 
     @Autowired
-    private FutMapper mapper;
+    private IFutMapper mapper;
 
     @Autowired
     private FutRepository repository;

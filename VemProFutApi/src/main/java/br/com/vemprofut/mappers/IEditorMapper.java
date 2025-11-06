@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface EditorMapper {
+public interface IEditorMapper {
 
     //DTO --> Model
     @Mapping(target = "idEditor", source = "id")

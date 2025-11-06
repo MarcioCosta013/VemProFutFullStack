@@ -1,8 +1,8 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.mappers.CartoesMapper;
-import br.com.vemprofut.mappers.PartidasMapper;
-import br.com.vemprofut.mappers.PeladeiroMapper;
+import br.com.vemprofut.mappers.ICartoesMapper;
+import br.com.vemprofut.mappers.IPartidasMapper;
+import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.*;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.PartidasDTO;
@@ -14,13 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class PartidasService implements IPartidasService {
 
     @Autowired
-    private PartidasMapper mapperPartidas;
+    private IPartidasMapper mapperPartidas;
 
     @Autowired
     private PartidasRepository repository;
@@ -38,10 +36,10 @@ public class PartidasService implements IPartidasService {
     private PeladeiroService peladeiroService;
 
     @Autowired
-    private PeladeiroMapper peladeiroMapper;
+    private IPeladeiroMapper IPeladeiroMapper;
 
     @Autowired
-    private CartoesMapper cartoesMapper;
+    private ICartoesMapper ICartoesMapper;
 
     @Override
     @Transactional
@@ -74,7 +72,7 @@ public class PartidasService implements IPartidasService {
         PeladeiroDTO peladeiroDTO = peladeiroService.findById(peladeiro.id());
 
         PartidasModel partida = mapperPartidas.toModel(partidasDTO);
-        partida.getPeladeiros().add(peladeiroMapper.toModel(peladeiroDTO));
+        partida.getPeladeiros().add(IPeladeiroMapper.toModel(peladeiroDTO));
 
         repository.save(partida);
     }
@@ -86,7 +84,7 @@ public class PartidasService implements IPartidasService {
         CartoesDTO cartoesDTO = cartoesService.findById(cartoes.id());
 
         PartidasModel partida = mapperPartidas.toModel(partidasDTO);
-        partida.getCartoes().add(cartoesMapper.toModel(cartoesDTO));
+        partida.getCartoes().add(ICartoesMapper.toModel(cartoesDTO));
 
         repository.save(partida);
     }

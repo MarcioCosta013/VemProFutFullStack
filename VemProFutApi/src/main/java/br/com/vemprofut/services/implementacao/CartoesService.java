@@ -1,8 +1,7 @@
 package br.com.vemprofut.services.implementacao;
 
 import br.com.vemprofut.models.DTOs.CartoesDTO;
-import br.com.vemprofut.exceptions.ResourceNotFoundException;
-import br.com.vemprofut.mappers.CartoesMapper;
+import br.com.vemprofut.mappers.ICartoesMapper;
 import br.com.vemprofut.models.CartoesModel;
 import br.com.vemprofut.repositories.CartoesRepository;
 import br.com.vemprofut.services.ICartoesService;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CartoesService implements ICartoesService {
@@ -21,7 +19,7 @@ public class CartoesService implements ICartoesService {
     private CartoesRepository repository;
 
     @Autowired
-    private CartoesMapper mapper;
+    private ICartoesMapper mapper;
 
     @Autowired
     private ICartoesQueryService queryService;

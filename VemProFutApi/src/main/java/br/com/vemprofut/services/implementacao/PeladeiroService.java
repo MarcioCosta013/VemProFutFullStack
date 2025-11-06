@@ -1,10 +1,9 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.mappers.HistoricoPeladeiroMapper;
-import br.com.vemprofut.mappers.PeladeiroMapper;
+import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
+import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
-import br.com.vemprofut.models.HistoricoPeladeiroModel;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.IHistoricoPeladeiroService;
@@ -26,10 +25,10 @@ public class PeladeiroService implements IPeladeiroService {
     private PeladeiroRepository repository;
 
     @Autowired
-    private PeladeiroMapper peladeiroMapper;
+    private IPeladeiroMapper IPeladeiroMapper;
 
     @Autowired
-    private HistoricoPeladeiroMapper historicoMapper;
+    private IHistoricoPeladeiroMapper historicoMapper;
 
     @Autowired
     private IHistoricoPeladeiroService historicoPeladeiroService;
@@ -38,13 +37,13 @@ public class PeladeiroService implements IPeladeiroService {
     @Transactional
     public PeladeiroDTO create(PeladeiroDTO dto) {
         queryService.verifyEmail(dto.email());
-        PeladeiroModel peladeiroModel = peladeiroMapper.toModel(dto);
+        PeladeiroModel peladeiroModel = IPeladeiroMapper.toModel(dto);
         PeladeiroModel peladeiroSalvo = repository.save(peladeiroModel);
 
         HistoricoPeladeiroDTO historico = historicoPeladeiroService.create();
         peladeiroSalvo.setHistoricoPeladeiroModel(historicoMapper.toModel(historico));
 
-        return peladeiroMapper.toDTO(repository.save(peladeiroSalvo));
+        return IPeladeiroMapper.toDTO(repository.save(peladeiroSalvo));
     }
 
     @Override
@@ -59,13 +58,13 @@ public class PeladeiroService implements IPeladeiroService {
         peladeiroModel.setWhatsappPeladeiro(dto.whatsapp());
         peladeiroModel.setPeDominante(dto.peDominante());
 
-        return peladeiroMapper.toDTO(repository.save(peladeiroModel));
+        return IPeladeiroMapper.toDTO(repository.save(peladeiroModel));
     }
 
     @Override
     @Transactional(readOnly = true)
     public PeladeiroDTO findById(Long id) {
-        return peladeiroMapper.toDTO(queryService.verifyPeladeiroExist(id));
+        return IPeladeiroMapper.toDTO(queryService.verifyPeladeiroExist(id));
     }
 
     @Override
@@ -74,7 +73,7 @@ public class PeladeiroService implements IPeladeiroService {
 
         return repository.findAll()
                 .stream()
-                .map(peladeiroMapper::toDTO)
+                .map(IPeladeiroMapper::toDTO)
                 .toList();
     }
 

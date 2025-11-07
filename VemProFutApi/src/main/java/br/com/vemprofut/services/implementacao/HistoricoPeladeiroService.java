@@ -41,10 +41,10 @@ public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
     public HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto) {
         HistoricoPeladeiroModel historico = queryService.verityHistoricoPeladeiroExistReturn(id);
 
-        historico.setGolsHistoricoPeladeiro(dto.golsDoPeladeiro());
+        historico.setGolsHistorico(dto.golsDoPeladeiro());
         historico.setNotaPeladeiro(dto.notaPeladeiro());
-        historico.setPartidasJogadasHistorico(dto.partidasJogadas());
-        historico.setPartidasGanhasHistorico(dto.partidasGanhas());
+        historico.setPartidasJogadas(dto.partidasJogadas());
+        historico.setPartidasGanhas(dto.partidasGanhas());
 
         return mapper.toDTO(repository.save(historico));
     }

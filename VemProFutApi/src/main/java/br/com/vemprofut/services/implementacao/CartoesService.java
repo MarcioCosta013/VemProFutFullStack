@@ -1,8 +1,10 @@
 package br.com.vemprofut.services.implementacao;
 
+import br.com.vemprofut.controllers.response.CartoesResumoResponseDTO;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.mappers.ICartoesMapper;
 import br.com.vemprofut.models.CartoesModel;
+import br.com.vemprofut.models.enuns.CartaoCountProjection;
 import br.com.vemprofut.repositories.CartoesRepository;
 import br.com.vemprofut.services.ICartoesService;
 import br.com.vemprofut.services.query.ICartoesQueryService;
@@ -44,6 +46,7 @@ public class CartoesService implements ICartoesService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CartoesDTO findById(Long id) {
         return mapper.toDTO(queryService.verityCartoesExist(id));
     }
@@ -73,5 +76,29 @@ public class CartoesService implements ICartoesService {
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
+    }
+
+    public CartoesResumoResponseDTO contarCartoesPeladeiro(Long peladeiroId){
+        List<CartaoCountProjection> resultados = repository.countByTipoAndPeladeiro(peladeiroId);
+        return montarResumo(resultados);
+    }
+
+    public CartoesResumoResponseDTO contarCartoesFut(Long futId){
+        List<CartaoCountProjection> resultados = repository.countByTipoAndFut(futId);
+        return montarResumo(resultados);
+    }
+
+    private CartoesResumoResponseDTO montarResumo(List<CartaoCountProjection> resultados) {
+        CartoesResumoResponseDTO dto = new CartoesResumoResponseDTO();
+
+        for (CartaoCountProjection proj : resultados) {
+            switch (proj.getTipo()) {
+                case AZUL -> dto.setAzul(proj.getQuantidade().intValue());
+                case AMARELO -> dto.setAmarelo(proj.getQuantidade().intValue());
+                case VERMELHO -> dto.setVermelho(proj.getQuantidade().intValue());
+            }
+        }
+
+        return dto;
     }
 }

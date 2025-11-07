@@ -67,7 +67,7 @@ public class FutService implements IFutService {
         queryService.verifyNomeFutExist(dto.nome());
         var retorno = queryService.verifyFutExistRetorn(id);
 
-        retorno.setNomeFut(dto.nome());
+        retorno.setNome(dto.nome());
         retorno.setJogadoresPorTime(dto.jogadoresPorTime());
         retorno.setTempoMaxPartida(dto.tempoMaxPartida());
         retorno.setMaxGolsVitoria(dto.maxGolsPartida());

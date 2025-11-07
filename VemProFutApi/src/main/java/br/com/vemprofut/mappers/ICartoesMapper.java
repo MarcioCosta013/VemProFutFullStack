@@ -13,7 +13,7 @@ public interface ICartoesMapper {
     //CartoesMapper INSTANCE = Mappers.getMapper(CartoesMapper.class); <--- Ela cria uma instância estática do mapper, útil quando não estamos usando Spring.
     //vamos usar a injecao de dependencias entrão não vamos precisar da linha acima...
 
-    @Mapping(target = "idCartoes", source = "id")
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "partidaId", source = "partidaId")
     @Mapping(target = "peladeiroId", source = "peladeiroId")
     @Mapping(target = "futId", source = "futId")
@@ -24,7 +24,7 @@ public interface ICartoesMapper {
      o mapeamento automático.
     */
 
-    @Mapping(target = "id", source = "idCartoes")
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "partidaId", source = "partidaId")
     @Mapping(target = "peladeiroId", source = "peladeiroId")
     @Mapping(target = "futId", source = "futId")

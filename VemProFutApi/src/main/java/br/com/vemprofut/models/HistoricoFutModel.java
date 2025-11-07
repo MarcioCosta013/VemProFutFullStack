@@ -12,13 +12,13 @@ public class HistoricoFutModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idHistoricoFut;
+    private Long id;
 
     @Column(nullable = false)
-    private Integer golsTotalFut = 0;
+    private Integer golsTotal = 0;
 
     @Column(nullable = false)
-    private Integer totalPartidasJogadas = 0;
+    private Integer totalPartidas = 0;
 
     @Column(nullable = false)
     private String timeMaisVitorias = "vazio";

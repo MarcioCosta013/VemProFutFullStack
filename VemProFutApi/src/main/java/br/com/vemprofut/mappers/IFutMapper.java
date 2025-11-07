@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 public interface IFutMapper {
 
     //DTO --> Model
-    @Mapping(target = "idFut", source = "id")
-    @Mapping(target = "nomeFut", source = "nome")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "nome", source = "nome")
     @Mapping(target = "jogadoresPorTime", source = "jogadoresPorTime")
     @Mapping(target = "tempoMaxPartida", source = "tempoMaxPartida")
     @Mapping(target = "maxGolsVitoria", source = "maxGolsPartida")
@@ -21,8 +21,8 @@ public interface IFutMapper {
     FutModel toModel(FutDTO dto);
 
     //Model --> DTO
-    @Mapping(target = "id", source = "idFut")
-    @Mapping(target = "nome", source = "nomeFut")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "nome", source = "nome")
     @Mapping(target = "jogadoresPorTime", source = "jogadoresPorTime")
     @Mapping(target = "tempoMaxPartida", source = "tempoMaxPartida")
     @Mapping(target = "maxGolsPartida", source = "maxGolsVitoria")

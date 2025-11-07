@@ -6,8 +6,8 @@ import java.util.List;
 
 public record CartoesDTO(
         Long id,
-        Long peladeiroId,
         Long partidaId,
+        Long peladeiroId,
         Long futId,
         TipoCartao tipoCartao
 ) { }

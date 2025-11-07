@@ -1,5 +1,10 @@
 package br.com.vemprofut.services.implementacao;
 
+import br.com.vemprofut.controllers.request.SavePeladeiroRequestDTO;
+import br.com.vemprofut.controllers.request.UpdatePeladeiroRequestDTO;
+import br.com.vemprofut.controllers.response.PeladeiroDetailResponse;
+import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
+import br.com.vemprofut.controllers.response.UpdatePeladeiroResponseDTO;
 import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
 import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
@@ -35,36 +40,36 @@ public class PeladeiroService implements IPeladeiroService {
 
     @Override
     @Transactional
-    public PeladeiroDTO create(PeladeiroDTO dto) {
+    public SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto) {
         queryService.verifyEmail(dto.email());
-        PeladeiroModel peladeiroModel = IPeladeiroMapper.toModel(dto);
+        PeladeiroModel peladeiroModel = IPeladeiroMapper.saveRequestToModel(dto);
         PeladeiroModel peladeiroSalvo = repository.save(peladeiroModel);
 
         HistoricoPeladeiroDTO historico = historicoPeladeiroService.create();
-        peladeiroSalvo.setHistoricoPeladeiroModel(historicoMapper.toModel(historico));
+        peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
 
-        return IPeladeiroMapper.toDTO(repository.save(peladeiroSalvo));
+        return IPeladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
     }
 
     @Override
     @Transactional
-    public PeladeiroDTO update(Long id, PeladeiroDTO dto) {
+    public UpdatePeladeiroResponseDTO update(Long id, UpdatePeladeiroRequestDTO dto) {
         var peladeiroModel = queryService.verifyPeladeiroExist(id);
 
-        peladeiroModel.setNomePeladeiro(dto.nome());
-        peladeiroModel.setEmailPeladeiro(dto.email());
-        peladeiroModel.setApelidoPeladeiro(dto.apelido());
-        peladeiroModel.setDescricaoPeladeiro(dto.descricao());
-        peladeiroModel.setWhatsappPeladeiro(dto.whatsapp());
+        peladeiroModel.setNome(dto.nome());
+        peladeiroModel.setEmail(dto.email());
+        peladeiroModel.setApelido(dto.apelido());
+        peladeiroModel.setDescricao(dto.descricao());
+        peladeiroModel.setWhatsapp(dto.whatsapp());
         peladeiroModel.setPeDominante(dto.peDominante());
 
-        return IPeladeiroMapper.toDTO(repository.save(peladeiroModel));
+        return IPeladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PeladeiroDTO findById(Long id) {
-        return IPeladeiroMapper.toDTO(queryService.verifyPeladeiroExist(id));
+    public PeladeiroDetailResponse findById(Long id) {
+        return IPeladeiroMapper.modelToDetailsDTO(queryService.verifyPeladeiroExist(id));
     }
 
     @Override

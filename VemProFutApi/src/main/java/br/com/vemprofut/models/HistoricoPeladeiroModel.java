@@ -12,19 +12,19 @@ public class HistoricoPeladeiroModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idHistoricoPeladeiro;
+    private Long id;
 
     @Column(nullable = false)
-    private Integer golsHistoricoPeladeiro = 0;
+    private Integer golsHistorico = 0;
 
     @Column(nullable = false)
     private Double notaPeladeiro = 0.0;
 
     @Column(nullable = false)
-    private Integer partidasJogadasHistorico = 0;
+    private Integer partidasJogadas = 0;
 
     @Column(nullable = false)
-    private Integer partidasGanhasHistorico = 0;
+    private Integer partidasGanhas = 0;
 
 
 }

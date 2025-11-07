@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Table(name = "cartoes_peladeiro")
 @Getter
@@ -15,7 +13,7 @@ public class CartoesModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCartoes;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "partida_id")

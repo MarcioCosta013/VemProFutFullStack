@@ -9,14 +9,14 @@ import org.mapstruct.Mapping;
 public interface IHistoricoFutMapper {
 
     //DTO -> model
-    @Mapping(target = "idHistoricoFut", source = "id")
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "golsTotalFut", source = "golsTotal")
     @Mapping(target = "totalPartidasJogadas", source = "totalPartidas")
     @Mapping(target = "timeMaisVitorias", source = "timeMaisVitorias")
     HistoricoFutModel toModel(HistoricoFutDTO dto);
 
     //Model -> DTO
-    @Mapping(target = "id", source = "idHistoricoFut")
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "golsTotal", source = "golsTotalFut")
     @Mapping(target = "totalPartidas", source = "totalPartidasJogadas")
     @Mapping(target = "timeMaisVitorias", source = "timeMaisVitorias")

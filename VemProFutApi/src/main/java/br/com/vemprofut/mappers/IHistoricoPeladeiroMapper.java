@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 public interface IHistoricoPeladeiroMapper {
 
     //DTO -> Model
-    @Mapping(target = "idHistoricoPeladeiro", source = "id")
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "golsHistoricoPeladeiro", source = "golsDoPeladeiro")
     @Mapping(target = "notaPeladeiro", source = "notaPeladeiro")
     @Mapping(target = "partidasJogadasHistorico", source = "partidasJogadas")
@@ -17,10 +17,10 @@ public interface IHistoricoPeladeiroMapper {
     HistoricoPeladeiroModel toModel(HistoricoPeladeiroDTO dto);
 
     //Model --> DTO
-    @Mapping(target = "id", source = "idHistoricoPeladeiro")
-    @Mapping(target = "golsDoPeladeiro", source = "golsHistoricoPeladeiro")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "golsDoPeladeiro", source = "golsPeladeiro")
     @Mapping(target = "notaPeladeiro", source = "notaPeladeiro")
-    @Mapping(target = "partidasJogadas", source = "partidasJogadasHistorico")
-    @Mapping(target = "partidasGanhas", source = "partidasGanhasHistorico")
+    @Mapping(target = "partidasJogadas", source = "partidasJogadas")
+    @Mapping(target = "partidasGanhas", source = "partidasGanhas")
     HistoricoPeladeiroDTO toDTO(HistoricoPeladeiroModel model);
 }

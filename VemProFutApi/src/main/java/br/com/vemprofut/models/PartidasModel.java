@@ -14,10 +14,10 @@ import java.util.List;
 @Setter
 public class PartidasModel {
 
-    public PartidasModel(Boolean jogadoresReservas, FutModel futModel){
+    public PartidasModel(Boolean reservas, FutModel futId){
 
-        this.jogadoresReservas = jogadoresReservas;
-        this.futModel = futModel;
+        this.reservas = reservas;
+        this.futId = futId;
         this.cartoes = new ArrayList<>();
         this.golsPartida = new ArrayList<>();
         this.peladeiros = new ArrayList<>();
@@ -25,14 +25,14 @@ public class PartidasModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPartida;
+    private Long id;
 
     @Column(nullable = false)
-    private Boolean jogadoresReservas;
+    private Boolean reservas;
 
     @ToString.Exclude
     @JoinColumn(name = "fk_fut")
-    private FutModel futModel;
+    private FutModel futId;
 
     @OneToMany(mappedBy = "partida")
     private List<CartoesModel> cartoes;

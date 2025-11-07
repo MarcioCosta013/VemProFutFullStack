@@ -15,30 +15,30 @@ public class PeladeiroModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPeladeiro;
+    private Long id;
 
     @Column(nullable = false, length = 80, unique = true)
-    private String emailPeladeiro;
+    private String email;
 
     @Column(nullable = false, length = 50)
-    private String nomePeladeiro;
+    private String nome;
 
     @Column(nullable = false, length = 30)
-    private String apelidoPeladeiro;
+    private String apelido;
 
     @Column(nullable = false, length = 100)
-    private String descricaoPeladeiro;
+    private String descricao;
 
     @Column(nullable = false, length = 10)
     private String peDominante;
 
     @Column(nullable = false, length = 15)
-    private String whatsappPeladeiro;
+    private String whatsapp;
 
     @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_historico_peladeiro")
-    private HistoricoPeladeiroModel historicoPeladeiroModel = new HistoricoPeladeiroModel();
+    private HistoricoPeladeiroModel historicoPeladeiro = new HistoricoPeladeiroModel();
 
     @ManyToMany
     @JoinTable(

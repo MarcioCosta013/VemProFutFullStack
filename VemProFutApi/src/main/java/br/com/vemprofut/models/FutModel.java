@@ -16,10 +16,10 @@ public class FutModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idFut;
+    private Long id;
 
     @Column(nullable = false, length = 50, unique = true)
-    private String nomeFut;
+    private String nome;
 
     @Column(nullable = false)
     private Integer jogadoresPorTime;

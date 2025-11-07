@@ -42,7 +42,7 @@ public class HistoricoFutService implements IHistoricoFutService {
     public void updateTimeMaisVitorias(Long id, List<PeladeiroModel> time) {
         HistoricoFutModel model = queryService.verityHistoricoFutExistRetorn(id);
         model.setTimeMaisVitorias(time.stream()
-                .map(PeladeiroModel::getNomePeladeiro)
+                .map(PeladeiroModel::getNome)
                 .collect(Collectors.joining(", ")));
 
         repository.save(model);
@@ -52,7 +52,7 @@ public class HistoricoFutService implements IHistoricoFutService {
     public void addPartidasJogadas(Long id, Integer numero) {
         HistoricoFutModel model = queryService.verityHistoricoFutExistRetorn(id);
 
-        model.setTotalPartidasJogadas(model.getTotalPartidasJogadas() + numero);
+        model.setTotalPartidas(model.getTotalPartidas() + numero);
 
         repository.save(model);
     }
@@ -61,7 +61,7 @@ public class HistoricoFutService implements IHistoricoFutService {
     public void addGolsTotal(Long id, Integer numero) {
         HistoricoFutModel model = queryService.verityHistoricoFutExistRetorn(id);
 
-        model.setGolsTotalFut(model.getGolsTotalFut() + numero);
+        model.setGolsTotal(model.getGolsTotal() + numero);
 
         repository.save(model);
     }

@@ -33,15 +33,15 @@ public class FutModel {
     @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_historico_fut")
-    private HistoricoFutModel historicoFutModel = new HistoricoFutModel();
+    private HistoricoFutModel historicoFutId;
 
     @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_peladeiro_adm")
-    private PeladeiroModel administradorPeladeiro = new PeladeiroModel();
+    private PeladeiroModel administradorPeladeiroId;
 
     @OneToMany(mappedBy = "fut", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PeladeiroModel> editores = new ArrayList<>();
+    private List<PeladeiroModel> editores;
 
     @ManyToMany
     @JoinTable(

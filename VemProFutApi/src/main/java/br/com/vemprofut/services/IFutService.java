@@ -14,6 +14,8 @@ public interface IFutService {
 
     FutDTO findById(Long id);
 
+    FutModel findByIdModel(Long id);
+
     FutDTO findByNome(String nome);
 
     List<FutDTO> findAll();

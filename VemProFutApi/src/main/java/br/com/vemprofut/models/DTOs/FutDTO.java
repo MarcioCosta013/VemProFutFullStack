@@ -1,7 +1,5 @@
 package br.com.vemprofut.models.DTOs;
 
-import br.com.vemprofut.models.CartoesModel;
-
 import java.util.List;
 
 public record FutDTO(
@@ -9,9 +7,10 @@ public record FutDTO(
         String nome,
         Integer jogadoresPorTime,
         Integer tempoMaxPartida,
-        Integer maxGolsPartida,
+        Integer maxGolsVitoria,
         Long historicoFutId,
-        Long admPeladeiroId,
+        Long administradorPeladeiroId,
+        List<Long> editores,
         List<Long> peladeiros,
         List<Long> cartoes
 ) { }

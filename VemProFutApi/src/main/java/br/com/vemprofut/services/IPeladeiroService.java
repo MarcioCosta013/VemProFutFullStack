@@ -6,6 +6,7 @@ import br.com.vemprofut.controllers.response.PeladeiroDetailResponse;
 import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
 import br.com.vemprofut.controllers.response.UpdatePeladeiroResponseDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
+import br.com.vemprofut.models.PeladeiroModel;
 
 import java.util.List;
 
@@ -17,7 +18,9 @@ public interface IPeladeiroService {
 
     PeladeiroDetailResponse findById(Long id);
 
-    List<PeladeiroDTO> findAll();
+    PeladeiroModel findByIdModel(Long id);
+
+    //List<PeladeiroDTO> findAll();
 
     void delete(Long id);
 }

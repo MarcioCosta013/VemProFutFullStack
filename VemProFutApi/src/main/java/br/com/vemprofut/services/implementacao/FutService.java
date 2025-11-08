@@ -48,6 +48,11 @@ public class FutService implements IFutService {
     }
 
     @Override
+    public FutModel findByIdModel(Long id) {
+        return queryService.verifyFutExistRetorn(id);
+    }
+
+    @Override
     public FutDTO findByNome(String nome) {
         var futModel = queryService.verifyNomeFutExistRetorn(nome);
         return mapper.toDTO(futModel);
@@ -70,7 +75,7 @@ public class FutService implements IFutService {
         retorno.setNome(dto.nome());
         retorno.setJogadoresPorTime(dto.jogadoresPorTime());
         retorno.setTempoMaxPartida(dto.tempoMaxPartida());
-        retorno.setMaxGolsVitoria(dto.maxGolsPartida());
+        retorno.setMaxGolsVitoria(dto.maxGolsVitoria());
 
         return mapper.toDTO(repository.save(retorno));
     }

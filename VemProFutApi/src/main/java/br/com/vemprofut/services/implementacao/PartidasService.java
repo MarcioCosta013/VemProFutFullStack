@@ -55,6 +55,12 @@ public class PartidasService implements IPartidasService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public PartidasModel findByIdModel(Long id) {
+        return queryService.verifyPartidaExistWithRetorn(id);
+    }
+
+    @Override
     @Transactional
     public void addGols(PeladeiroDTO peladeiroDTO, PartidasDTO partidasDTO) {
          GolsPartidaModel gol = golsService.create(peladeiroDTO, partidasDTO);
@@ -67,24 +73,24 @@ public class PartidasService implements IPartidasService {
 
     @Override
     @Transactional
-    public void addPeladeiros(PeladeiroDTO peladeiro, PartidasDTO partidasDTO) {
-
-        PeladeiroDTO peladeiroDTO = peladeiroService.findById(peladeiro.id());
+    public void addPeladeiros(Long peladeiroId, PartidasDTO partidasDTO) {
+        //TODO: mudar o DTO para Long de peladeiro.
+        PeladeiroModel peladeiroModel = peladeiroService.findByIdModel(peladeiroId);
 
         PartidasModel partida = mapperPartidas.toModel(partidasDTO);
-        partida.getPeladeiros().add(IPeladeiroMapper.toModel(peladeiroDTO));
+        partida.getPeladeiros().add(peladeiroModel);
 
         repository.save(partida);
     }
 
     @Override
     @Transactional
-    public void addCartoes(CartoesDTO cartoes, PartidasDTO partidasDTO) {
-
-        CartoesDTO cartoesDTO = cartoesService.findById(cartoes.id());
+    public void addCartoes(Long cartaoId, PartidasDTO partidasDTO) {
+        //TODO: mudar o DTO para Long de cartoes.
+        CartoesModel cartoesModel = cartoesService.findByIdModel(cartaoId);
 
         PartidasModel partida = mapperPartidas.toModel(partidasDTO);
-        partida.getCartoes().add(ICartoesMapper.toModel(cartoesDTO));
+        partida.getCartoes().add(cartoesModel);
 
         repository.save(partida);
     }

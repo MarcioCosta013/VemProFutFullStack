@@ -5,7 +5,7 @@ import br.com.vemprofut.models.HistoricoFutModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {IMappersDefault.class})
 public interface IHistoricoFutMapper {
 
     //DTO -> model

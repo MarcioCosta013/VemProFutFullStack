@@ -5,7 +5,7 @@ import br.com.vemprofut.models.GolsPartidaModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {IMappersDefault.class})
 public interface IGolsPartidaMapper {
 
     //Source --> é o objeto de origem, de onde vêm os dados

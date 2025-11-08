@@ -1,5 +1,6 @@
 package br.com.vemprofut.services;
 
+import br.com.vemprofut.models.CartoesModel;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 
 import java.util.List;
@@ -17,5 +18,7 @@ public interface ICartoesService {
     List<CartoesDTO> findAll();
 
     CartoesDTO findById(Long id);
+
+    CartoesModel findByIdModel(Long id);
 
 }

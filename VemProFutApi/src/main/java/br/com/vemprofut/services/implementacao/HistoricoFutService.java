@@ -39,6 +39,12 @@ public class HistoricoFutService implements IHistoricoFutService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public HistoricoFutModel findByIdModel(Long id) {
+        return queryService.verityHistoricoFutExistRetorn(id);
+    }
+
+    @Override
     public void updateTimeMaisVitorias(Long id, List<PeladeiroModel> time) {
         HistoricoFutModel model = queryService.verityHistoricoFutExistRetorn(id);
         model.setTimeMaisVitorias(time.stream()

@@ -36,6 +36,13 @@ public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
         return mapper.toDTO(queryService.verityHistoricoPeladeiroExistReturn(id));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public HistoricoPeladeiroModel findByIdModel(Long id) {
+
+        return queryService.verityHistoricoPeladeiroExistReturn(id);
+    }
+
 
     @Override
     public HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto) {

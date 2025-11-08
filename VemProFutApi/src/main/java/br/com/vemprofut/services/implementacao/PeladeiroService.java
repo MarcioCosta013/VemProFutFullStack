@@ -74,13 +74,19 @@ public class PeladeiroService implements IPeladeiroService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PeladeiroDTO> findAll() {
-
-        return repository.findAll()
-                .stream()
-                .map(IPeladeiroMapper::toDTO)
-                .toList();
+    public PeladeiroModel findByIdModel(Long id) {
+        return queryService.verifyPeladeiroExist(id);
     }
+
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<PeladeiroDTO> findAll() {
+//
+//        return repository.findAll()
+//                .stream()
+//                .map(IPeladeiroMapper::toDTO)
+//                .toList();
+//    }
 
     @Override
     @Transactional

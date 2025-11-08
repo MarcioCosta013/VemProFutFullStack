@@ -17,11 +17,11 @@ public class PeladeiroModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 80, unique = true)
-    private String email;
-
     @Column(nullable = false, length = 50)
     private String nome;
+
+    @Column(nullable = false, length = 80, unique = true)
+    private String email;
 
     @Column(nullable = false, length = 30)
     private String apelido;
@@ -38,8 +38,7 @@ public class PeladeiroModel {
     @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_historico_peladeiro")
-    private HistoricoPeladeiroModel historicoPeladeiro = new HistoricoPeladeiroModel();
-
+    private HistoricoPeladeiroModel historicoPeladeiro;
     @ManyToMany
     @JoinTable(
             name = "esta_peladeiro_partida",

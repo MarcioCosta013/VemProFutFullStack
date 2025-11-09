@@ -13,8 +13,8 @@ public record PeladeiroDTO (
         String peDominante,
         String whatsapp,
         Long historicoPeladeiro,
-        List<Long> partidasIDs,
+        List<Long> partidas,
         List<Long> cartoes,
-        List<Long> futsIDs
+        List<Long> futs
 
 ){ }

@@ -1,5 +1,6 @@
 package br.com.vemprofut.services.implementacao;
 
+import br.com.vemprofut.controllers.response.SaveHistoricoFutResponseDTO;
 import br.com.vemprofut.mappers.IHistoricoFutMapper;
 import br.com.vemprofut.models.DTOs.HistoricoFutDTO;
 import br.com.vemprofut.models.HistoricoFutModel;
@@ -27,9 +28,9 @@ public class HistoricoFutService implements IHistoricoFutService {
     private IHistoricoFutQueryService queryService;
     @Override
     @Transactional
-    public HistoricoFutDTO create() {
-        HistoricoFutModel futModel = new HistoricoFutModel();
-        return mapper.toDTO(repository.save(futModel));
+    public HistoricoFutModel create() {
+        HistoricoFutModel futHistorico = new HistoricoFutModel();
+        return repository.save(futHistorico);
     }
 
     @Override

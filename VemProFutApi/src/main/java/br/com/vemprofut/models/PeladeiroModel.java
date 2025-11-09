@@ -51,5 +51,5 @@ public class PeladeiroModel {
     private List<CartoesModel> cartoes;
 
     @ManyToMany(mappedBy = "participa_peladeiro_fut")
-    private List<FutModel> participaFut;
+    private List<FutModel> futs;
 }

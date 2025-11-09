@@ -14,6 +14,8 @@ public interface IGolsPartidaService {
 
     GolsPartidaDTO findById(Long id);
 
+    GolsPartidaModel findByIdModel(Long id);
+
     List<GolsPartidaDTO> findAll();
 
     List<GolsPartidaDTO> findAllPeladeiro( Long id);

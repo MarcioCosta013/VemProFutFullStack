@@ -15,7 +15,7 @@ public class HistoricoPeladeiroModel {
     private Long id;
 
     @Column(nullable = false)
-    private Integer golsHistorico = 0;
+    private Integer golsDoPeladeiro = 0;
 
     @Column(nullable = false)
     private Double notaPeladeiro = 0.0;

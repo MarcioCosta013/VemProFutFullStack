@@ -1,5 +1,6 @@
 package br.com.vemprofut.services;
 
+import br.com.vemprofut.controllers.response.SaveHistoricoFutResponseDTO;
 import br.com.vemprofut.models.DTOs.HistoricoFutDTO;
 import br.com.vemprofut.models.HistoricoFutModel;
 import br.com.vemprofut.models.PeladeiroModel;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface IHistoricoFutService {
 
-    HistoricoFutDTO create();
+    HistoricoFutModel create();
 
     HistoricoFutDTO findById(Long id);
 

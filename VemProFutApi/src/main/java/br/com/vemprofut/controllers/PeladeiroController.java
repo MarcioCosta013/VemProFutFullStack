@@ -23,22 +23,21 @@ public class PeladeiroController {
     private final IPeladeiroService peladeiroService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<SavePeladeiroResponseDTO> create (@Valid @RequestBody final SavePeladeiroRequestDTO requestDTO){
         var obj = peladeiroService.create(requestDTO);
-        return ResponseEntity.ok().body(obj);
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable final Long id ,@Valid @RequestBody UpdatePeladeiroRequestDTO dto){
-        peladeiroService.update(id, dto);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<PeladeiroDetailResponse> findById (@PathVariable final Long id){
         var obj = peladeiroService.findById(id);
         return ResponseEntity.ok(obj);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Void> update(@PathVariable final Long id ,@Valid @RequestBody UpdatePeladeiroRequestDTO dto){
+        peladeiroService.update(id, dto);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")

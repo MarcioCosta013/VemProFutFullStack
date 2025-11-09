@@ -38,7 +38,7 @@ public class FutModel {
     @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_peladeiro_adm")
-    private PeladeiroModel administradorPeladeiroId;
+    private PeladeiroModel administradorPeladeiro;
 
     @OneToMany(mappedBy = "fut", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PeladeiroModel> editores;

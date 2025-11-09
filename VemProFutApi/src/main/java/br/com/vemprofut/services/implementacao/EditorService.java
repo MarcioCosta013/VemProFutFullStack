@@ -41,6 +41,12 @@ public class EditorService implements IEditorService {
 
     @Override
     @Transactional(readOnly = true)
+    public EditorModel findByIdModel(Long id) {
+        return queryService.verityEditorIdExistReturn(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<EditorDTO> findAll(FutDTO futDTO) {
         queryService.verityFutExist(futDTO);
 

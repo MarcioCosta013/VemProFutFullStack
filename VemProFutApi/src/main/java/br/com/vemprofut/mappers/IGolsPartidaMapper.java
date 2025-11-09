@@ -12,14 +12,8 @@ public interface IGolsPartidaMapper {
     //Target --> é o objeto de destino, para onde os dados vão
 
     //DTO -> Model
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "peladeiro", source = "peladeiro.idPeladeiro")
-    @Mapping(target = "partida", source = "partida.idPartida")
     GolsPartidaModel toModel(GolsPartidaDTO dto);
 
     //Model --> DTO
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "peladeiro.idPeladeiro", source = "peladeiro")
-    @Mapping(target = "partida.idPartida", source = "partida")
     GolsPartidaDTO toDTO(GolsPartidaModel model);
 }

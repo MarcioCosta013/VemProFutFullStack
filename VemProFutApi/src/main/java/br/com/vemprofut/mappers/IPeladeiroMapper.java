@@ -22,12 +22,9 @@ public interface IPeladeiroMapper {
     // DTO --> Model
     PeladeiroModel toModel(PeladeiroDTO dto);
 
-    @Mapping(
-            target = "cartoes",
-            expression = "java(cartoesService.contarCartoesPeladeiro(model.getId()))" //executa código Java para preencher o campo cartoes.
-    )
     PeladeiroDetailResponse modelToDetailsDTO(PeladeiroModel model);
 
+    @Mapping(target = "id", ignore = true)
     PeladeiroModel saveRequestToModel(SavePeladeiroRequestDTO dto);
 
     UpdatePeladeiroResponseDTO modelToUpdateResponse(PeladeiroModel model);

@@ -22,9 +22,9 @@ public record SavePeladeiroResponseDTO(
         @JsonProperty("historicoPeladeiro")
         Long historicoPeladeiro,
         @JsonProperty("partidasIDs")
-        List<Long> partidasIDs,
+        List<Long> partidas,
         @JsonProperty("futsIDs")
-        List<Long> futsIDs,
+        List<Long> futs,
         @JsonProperty("cartoes")
         List<Long> cartoes
 ) { }

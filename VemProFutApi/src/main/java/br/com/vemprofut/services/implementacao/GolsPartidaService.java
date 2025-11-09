@@ -48,7 +48,14 @@ public class GolsPartidaService implements IGolsPartidaService {
 
     @Override
     public GolsPartidaDTO findById(Long id) {
+
         return mapper.toDTO(queryService.verifyGolExistWithRetorn(id));
+    }
+
+    @Override
+    public GolsPartidaModel findByIdModel(Long id) {
+
+        return queryService.verifyGolExistWithRetorn(id);
     }
 
     @Override

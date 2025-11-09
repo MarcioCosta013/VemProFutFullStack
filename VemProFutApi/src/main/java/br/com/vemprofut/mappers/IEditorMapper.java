@@ -9,14 +9,8 @@ import org.mapstruct.Mapping;
 public interface IEditorMapper {
 
     //DTO --> Model
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "peladeiroModel.idPeladeiro", source = "peladeiroId")
-    @Mapping(target = "futModel.futId", source = "futId")
     EditorModel toModel(EditorDTO dto);
 
     //Model --> DTO
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "idPeladeiro",source = "peladeiroModel.idPeladeiro")
-    @Mapping(target = "futId", source = "futModel.futId")
     EditorDTO toDTO(EditorModel model);
 }

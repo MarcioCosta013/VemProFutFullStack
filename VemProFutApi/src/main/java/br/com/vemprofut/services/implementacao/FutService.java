@@ -1,13 +1,23 @@
 package br.com.vemprofut.services.implementacao;
 
+import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
+import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
+import br.com.vemprofut.controllers.response.FutDetailsResponse;
+import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
+import br.com.vemprofut.controllers.response.SaveHistoricoFutResponseDTO;
+import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
 import br.com.vemprofut.mappers.IFutMapper;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
+import br.com.vemprofut.models.HistoricoFutModel;
 import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.services.IFutService;
+import br.com.vemprofut.services.IHistoricoFutService;
+import br.com.vemprofut.services.IPartidasService;
 import br.com.vemprofut.services.query.IFutQueryService;
+import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,32 +37,43 @@ public class FutService implements IFutService {
     private FutRepository repository;
 
     @Autowired
-    private PartidasService partidasService;
+    private IPartidasService partidasService;
+
+    @Autowired
+    private IPeladeiroQueryService peladeiroQueryService;
+
+    @Autowired
+    private IHistoricoFutService historicoFutService;
 
     @Override
-    public FutDTO create(FutDTO dto) {
-        queryService.verifyFutExist(dto.id()); //depois de criar os responce e request DTO avaliar de vai tirar essa verificação.
+    @Transactional
+    public SaveFutResponseDTO create(SaveFutRequestDTO dto) {
         queryService.verifyNomeFutExist(dto.nome());
+        var peladeiro = peladeiroQueryService.verifyPeladeiroExist(dto.administradorPeladeiroId());
 
-        FutModel model = mapper.toModel(dto);
-        FutModel saved = repository.save(model);
+        FutModel saved = repository.save(mapper.saveRequestToModel(dto));
 
-        return mapper.toDTO(saved);
+        HistoricoFutModel historico = historicoFutService.create();
+        saved.setHistoricoFutId(historico);
+        saved.setAdministradorPeladeiro(peladeiro);
+        return mapper.toSaveResponse(repository.save(saved));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public FutDTO findById(Long id) {
+    public FutDetailsResponse findById(Long id) {
         var futModel= queryService.verifyFutExistRetorn(id);
-        return mapper.toDTO(futModel);
+        return mapper.modelToDetailsResponse(futModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FutModel findByIdModel(Long id) {
         return queryService.verifyFutExistRetorn(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FutDTO findByNome(String nome) {
         var futModel = queryService.verifyNomeFutExistRetorn(nome);
         return mapper.toDTO(futModel);
@@ -68,37 +89,42 @@ public class FutService implements IFutService {
     }
 
     @Override
-    public FutDTO update(Long id, FutDTO dto) {
-        queryService.verifyNomeFutExist(dto.nome());
+    @Transactional
+    public UpdateFutResponseDTO update(Long id, UpdateFutRequestDTO dto) {
         var retorno = queryService.verifyFutExistRetorn(id);
 
-        retorno.setNome(dto.nome());
         retorno.setJogadoresPorTime(dto.jogadoresPorTime());
         retorno.setTempoMaxPartida(dto.tempoMaxPartida());
         retorno.setMaxGolsVitoria(dto.maxGolsVitoria());
 
-        return mapper.toDTO(repository.save(retorno));
+        return mapper.modelToUpdateResponse(repository.save(retorno));
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         queryService.verifyFutExist(id);
         repository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void criarPartida(Boolean jogadoresReservas, FutModel futModel) {
 
         partidasService.create(jogadoresReservas, futModel);
     }
 
+    //TODO: Adicionar editores
+
     @Override
+    @Transactional
     public void addPeladeiro(FutDTO futDTO, PeladeiroDTO peladeiroDTO) {
         //TODO:Verity
         futDTO.peladeiros().add(peladeiroDTO.id());
     }
 
     @Override
+    @Transactional
     public void addCartoes(FutDTO futDTO, CartoesDTO cartoesDTO) {
         //TODO:Verity
         futDTO.cartoes().add(cartoesDTO.id());

@@ -24,7 +24,7 @@ Crei esse projeto para aplicar todos os meus conhecimentos FullStack adqueridos 
     - [Diagrama Entidade Relacionamento](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Diagramas/DiagramaEntidadeRelacionamento)
         - [Modelo Conceitual](https://github.com/MarcioCosta013/VemProFutFullStack/blob/main/Diagramas/DiagramaEntidadeRelacionamento/DER_Conceitual_VemProFut.png).
         - [Modelo Lógico](https://github.com/MarcioCosta013/VemProFutFullStack/blob/main/Diagramas/DiagramaEntidadeRelacionamento/DER_L%C3%B3gico_VemProFut.png).
-        - [SQL gerado pelo BrModelo e ajustado]().
+        - [SQL gerado pelo BrModelo e ajustado](https://github.com/MarcioCosta013/VemProFutFullStack/blob/main/Diagramas/DiagramaEntidadeRelacionamento/SQL_BrModelo).
 
 * [Prototipos](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos)
     - [Web](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos/Web) (A ser iniciado)
@@ -35,7 +35,7 @@ Crei esse projeto para aplicar todos os meus conhecimentos FullStack adqueridos 
 
 * [Aplicação Desktop](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutDesktop) (A ser iniciado)
 
-* [Aplicação Mobile]() (A ser iniciado)
+* [Aplicação Mobile](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutMobile) (A ser iniciado)
 
 * [Aplicação Web](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutWebPage) (A ser iniciado)
 

@@ -1,0 +1,4 @@
+ALTER TABLE Editor ADD CONSTRAINT FK_Editor_1
+    FOREIGN KEY (fk_Fut_id_fut)
+    REFERENCES Fut (id_fut)
+    ON DELETE CASCADE;

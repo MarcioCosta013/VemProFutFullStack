@@ -20,8 +20,8 @@ public class CartoesModel {
     private PartidasModel partidaId;
 
     @ManyToOne
-    @JoinColumn(name = "peladeiro_id")
-    private PeladeiroModel peladeiroId;
+    @JoinColumn(name = "fk_Cartoes_Peladeiro_id_cartoes_peladeiro")
+    private PeladeiroModel peladeiroIdCartoes;
 
     @ManyToOne
     @JoinColumn(name = "fut_id")

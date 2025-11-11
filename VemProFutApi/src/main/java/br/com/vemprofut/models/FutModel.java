@@ -36,12 +36,12 @@ public class FutModel {
     private HistoricoFutModel historicoFutId;
 
     @ToString.Exclude
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_peladeiro_adm")
     private PeladeiroModel administradorPeladeiro;
 
-    @OneToMany(mappedBy = "fut", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PeladeiroModel> editores;
+    @OneToMany(mappedBy = "futId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EditorModel> editores = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -49,8 +49,8 @@ public class FutModel {
             joinColumns = @JoinColumn(name = "fk_fut"),
             inverseJoinColumns = @JoinColumn(name = "fk_peladeiro")
     )
-    private List<PeladeiroModel> peladeiros;
+    private List<PeladeiroModel> peladeiros= new ArrayList<>();
 
-    @OneToMany(mappedBy = "fut")
-    private List<CartoesModel> cartoes;
+    @OneToMany(mappedBy = "futId")
+    private List<CartoesModel> cartoes = new ArrayList<>();
 }

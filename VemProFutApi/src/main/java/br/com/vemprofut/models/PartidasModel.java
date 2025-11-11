@@ -2,6 +2,7 @@ package br.com.vemprofut.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "partidas")
 @Getter
 @Setter
+@NoArgsConstructor
 public class PartidasModel {
 
     public PartidasModel(Boolean reservas, FutModel futId){
@@ -31,20 +33,16 @@ public class PartidasModel {
     private Boolean reservas;
 
     @ToString.Exclude
+    @ManyToOne
     @JoinColumn(name = "fk_fut")
     private FutModel futId;
 
+    @OneToMany(mappedBy = "partidaId")
+    private List<CartoesModel> cartoes = new ArrayList<>();
+
     @OneToMany(mappedBy = "partida")
-    private List<CartoesModel> cartoes;
+    private List<GolsPartidaModel> golsPartida = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "tem_gols_partida",
-            joinColumns = @JoinColumn (name = "fk_Partidas"),
-            inverseJoinColumns = @JoinColumn (name = "fk_gols_partida")
-    )
-    private List<GolsPartidaModel> golsPartida;
-
-    @ManyToMany(mappedBy = "esta_peladeiro_partida")
-    private List<PeladeiroModel> peladeiros;
+    @ManyToMany(mappedBy = "partidas")
+    private List<PeladeiroModel> peladeiros = new ArrayList<>();
 }

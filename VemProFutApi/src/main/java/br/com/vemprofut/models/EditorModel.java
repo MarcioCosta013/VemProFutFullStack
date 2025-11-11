@@ -18,10 +18,10 @@ public class EditorModel {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "peladeiro_id", nullable = false)
-    private PeladeiroModel peladeiroId = new PeladeiroModel();
+    private PeladeiroModel peladeiroIdEditor;
 
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "fut_id", nullable = false)
-    private FutModel futId = new FutModel();
+    private FutModel futId;
 }

@@ -39,3 +39,12 @@ Crei esse projeto para aplicar todos os meus conhecimentos FullStack adqueridos 
 
 * [Aplicação Web](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutWebPage) (A ser iniciado)
 
+### Tecnologias e Ferramentas Utilizadas:
+
+#### Back-End:
+
+#### FrontEnd:
+
+#### Banco de Dados:
+
+#### DevOps:

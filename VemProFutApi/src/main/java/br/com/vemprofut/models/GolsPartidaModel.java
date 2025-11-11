@@ -22,9 +22,11 @@ public class GolsPartidaModel {
     private Long id;
 
     @ToString.Exclude
+    @ManyToOne
     @JoinColumn(name = "fk_peladeiro")
     private PeladeiroModel peladeiro;
 
-    @ManyToMany(mappedBy = "tem_gols_partida")
+    @ManyToOne
+    @JoinColumn(name = "partida_id")
     private PartidasModel partida;
 }

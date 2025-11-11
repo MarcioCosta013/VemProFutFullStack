@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,17 +40,27 @@ public class PeladeiroModel {
     @OneToOne
     @JoinColumn(name = "fk_historico_peladeiro")
     private HistoricoPeladeiroModel historicoPeladeiro;
+
     @ManyToMany
     @JoinTable(
             name = "esta_peladeiro_partida",
             joinColumns = @JoinColumn(name = "fk_peladeiro"),
             inverseJoinColumns = @JoinColumn(name = "fk_partida")
     )
-    private List<PartidasModel> partidas;
+    private List<PartidasModel> partidas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "peladeiroIdCartoes")
+    private List<CartoesModel> cartoes = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "peladeiros")
+    private List<FutModel> futs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "administradorPeladeiro")
+    private List<FutModel> administra = new ArrayList<>();
+
+    @OneToMany(mappedBy = "peladeiroIdEditor")
+    private List<EditorModel> editores = new ArrayList<>();
 
     @OneToMany(mappedBy = "peladeiro")
-    private List<CartoesModel> cartoes;
-
-    @ManyToMany(mappedBy = "participa_peladeiro_fut")
-    private List<FutModel> futs;
+    private List<GolsPartidaModel> golsPeladeiro = new ArrayList<>();
 }

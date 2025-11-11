@@ -28,7 +28,7 @@ public class EditorQueryService implements IEditorQueryService {
     public void verityEditorExist(EditorDTO dto) {
         EditorModel model = mapper.toModel(dto);
 
-        if(repository.findByPeladeiroAndFut(model.getPeladeiroId(), model.getFutId())){
+        if(repository.findByPeladeiroAndFut(model.getPeladeiroIdEditor(), model.getFutId())){
             throw new EditorInUseException("Editor já cadastrado!");
         }
     }

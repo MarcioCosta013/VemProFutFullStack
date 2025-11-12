@@ -14,16 +14,16 @@ public class HistoricoPeladeiroModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "gols_historico_peladeiro", nullable = false)
     private Integer golsDoPeladeiro = 0;
 
-    @Column(nullable = false)
+    @Column(name = "nota_historico_peladeiro", nullable = false)
     private Double notaPeladeiro = 0.0;
 
-    @Column(nullable = false)
+    @Column(name = "partidas_jogadas_peladeiro", nullable = false)
     private Integer partidasJogadas = 0;
 
-    @Column(nullable = false)
+    @Column(name = "partidas_ganhas_peladeiro", nullable = false)
     private Integer partidasGanhas = 0;
 
 

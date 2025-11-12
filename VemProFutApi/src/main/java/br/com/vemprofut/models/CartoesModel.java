@@ -17,11 +17,11 @@ public class CartoesModel {
 
     @ManyToOne
     @JoinColumn(name = "partida_id")
-    private PartidasModel partidaId;
+    private PartidasModel partida;
 
     @ManyToOne
     @JoinColumn(name = "fk_Cartoes_Peladeiro_id_cartoes_peladeiro")
-    private PeladeiroModel peladeiroIdCartoes;
+    private PeladeiroModel peladeiro;
 
     @ManyToOne
     @JoinColumn(name = "fut_id")

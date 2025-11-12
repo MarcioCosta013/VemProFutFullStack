@@ -40,7 +40,7 @@ public class FutModel {
     @JoinColumn(name = "fk_peladeiro_adm")
     private PeladeiroModel administradorPeladeiro;
 
-    @OneToMany(mappedBy = "futId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fut", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EditorModel> editores = new ArrayList<>();
 
     @ManyToMany
@@ -51,6 +51,6 @@ public class FutModel {
     )
     private List<PeladeiroModel> peladeiros= new ArrayList<>();
 
-    @OneToMany(mappedBy = "futId")
+    @OneToMany(mappedBy = "fut")
     private List<CartoesModel> cartoes = new ArrayList<>();
 }

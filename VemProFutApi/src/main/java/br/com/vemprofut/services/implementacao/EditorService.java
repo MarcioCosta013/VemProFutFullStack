@@ -50,7 +50,7 @@ public class EditorService implements IEditorService {
     public List<EditorDTO> findAll(FutDTO futDTO) {
         queryService.verityFutExist(futDTO);
 
-        return repository.findAllFutModelIdIguals(futDTO.id())
+        return repository.findByFutId(futDTO.id())
                 .stream()
                 .map(mapper::toDTO)
                 .toList();

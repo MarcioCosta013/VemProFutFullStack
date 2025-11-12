@@ -4,11 +4,13 @@ import br.com.vemprofut.mappers.ICartoesMapper;
 import br.com.vemprofut.mappers.IPartidasMapper;
 import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.*;
-import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.repositories.PartidasRepository;
+import br.com.vemprofut.services.ICartoesService;
+import br.com.vemprofut.services.IGolsPartidaService;
 import br.com.vemprofut.services.IPartidasService;
+import br.com.vemprofut.services.IPeladeiroService;
 import br.com.vemprofut.services.query.IPartidasQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +29,13 @@ public class PartidasService implements IPartidasService {
     private IPartidasQueryService queryService;
 
     @Autowired
-    private GolsPartidaService golsService;
+    private IGolsPartidaService golsService;
 
     @Autowired
-    private CartoesService cartoesService;
+    private ICartoesService cartoesService;
 
     @Autowired
-    private PeladeiroService peladeiroService;
+    private IPeladeiroService peladeiroService;
 
     @Autowired
     private IPeladeiroMapper IPeladeiroMapper;

@@ -15,6 +15,7 @@ import br.com.vemprofut.services.IPartidasService;
 import br.com.vemprofut.services.IPeladeiroService;
 import br.com.vemprofut.services.query.ICartoesQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +37,11 @@ public class CartoesService implements ICartoesService {
     private IPeladeiroService peladeiroService;
 
     @Autowired
+    @Lazy //Isso diz ao Spring: “injete essa dependência só quando for realmente usada”, quebrando o ciclo de inicialização.
     private IPartidasService partidasService;
 
     @Autowired
+    @Lazy
     private IFutService futService;
 
     @Override

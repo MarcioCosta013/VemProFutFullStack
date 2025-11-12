@@ -37,7 +37,7 @@ public class PartidasModel {
     @JoinColumn(name = "fk_fut")
     private FutModel futId;
 
-    @OneToMany(mappedBy = "partidaId")
+    @OneToMany(mappedBy = "partida")
     private List<CartoesModel> cartoes = new ArrayList<>();
 
     @OneToMany(mappedBy = "partida")

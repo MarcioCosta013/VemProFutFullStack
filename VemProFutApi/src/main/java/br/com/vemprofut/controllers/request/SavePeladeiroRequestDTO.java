@@ -16,9 +16,5 @@ public record SavePeladeiroRequestDTO(
         @NotNull String apelido,
         @NotBlank String descricao,
         @NotNull String peDominante,
-        @NotBlank String whatsapp,
-        @NotBlank HistoricoPeladeiroDTO historicoPeladeiro,
-        List<PartidasModel> partidas,
-        List<CartoesModel> cartoes,
-        List<FutModel> futs
+        @NotBlank String whatsapp
         ) {}

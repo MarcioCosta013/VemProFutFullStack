@@ -10,5 +10,5 @@ import java.util.List;
 public interface EditorRepository extends JpaRepository<EditorModel, Long> {
 
     Boolean findByPeladeiroAndFut(PeladeiroModel peladeiroModel, FutModel futModel);
-    List<EditorModel> findAllFutModelIdIguals(Long id);
+    List<EditorModel> findByFutId(Long id);
 }

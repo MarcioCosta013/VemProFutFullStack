@@ -28,7 +28,7 @@ public interface IMappersDefault {
 
     default CartoesResumoResponseDTO mapResumeCartoes (List<CartoesModel> value){
         CartoesService cartoesService = new CartoesService();
-        long id = value.getFirst().getPeladeiroIdCartoes().getId(); //Nessa lista de cartoes todos tem o mesmo id de peladeiro.
+        long id = value.getFirst().getPeladeiro().getId(); //Nessa lista de cartoes todos tem o mesmo id de peladeiro.
         return cartoesService.contarCartoesPeladeiro(id);
     }
 

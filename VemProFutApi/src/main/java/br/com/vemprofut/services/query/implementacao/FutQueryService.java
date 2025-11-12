@@ -40,7 +40,7 @@ public class FutQueryService implements IFutQueryService {
 
     @Override
     public FutModel verifyNomeFutExistRetorn(String nome) {
-        return repository.findByName(nome).orElseThrow(
+        return repository.findByNome(nome).orElseThrow(
                 () -> new EntityNotFoundException("Futebol com nome '" + nome + "' não encontrado")
         );
     }

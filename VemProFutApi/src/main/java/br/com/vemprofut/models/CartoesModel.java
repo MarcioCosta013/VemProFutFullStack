@@ -25,10 +25,10 @@ public class CartoesModel {
 
     @ManyToOne
     @JoinColumn(name = "fut_id")
-    private FutModel futId;
+    private FutModel fut;
 
     @Enumerated(EnumType.STRING) // salva o nome do ENUM (AZUL, AMARELO, VERMELHO)
-    @Column(name = "tipo_cartao", nullable = false)
+    @Column(name = "tipoCartao", nullable = false)
     private TipoCartao tipoCartao;
 
 }

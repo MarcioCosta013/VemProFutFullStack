@@ -9,5 +9,5 @@ public interface FutRepository extends JpaRepository<FutModel, Long> {
 
     Boolean existsByNomeStartingWith(String nomeFut);
 
-    Optional<FutModel> findByName(String nome);
+    Optional<FutModel> findByNome(String nome);
 }

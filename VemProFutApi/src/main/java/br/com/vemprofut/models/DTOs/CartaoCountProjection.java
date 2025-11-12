@@ -1,4 +1,6 @@
-package br.com.vemprofut.models.enuns;
+package br.com.vemprofut.models.DTOs;
+
+import br.com.vemprofut.models.enuns.TipoCartao;
 
 public interface CartaoCountProjection {
     TipoCartao getTipo();

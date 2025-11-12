@@ -23,7 +23,7 @@ public class GolsPartidaModel {
 
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "fk_peladeiro")
+    @JoinColumn(name = "peladeiro_id")
     private PeladeiroModel peladeiro;
 
     @ManyToOne

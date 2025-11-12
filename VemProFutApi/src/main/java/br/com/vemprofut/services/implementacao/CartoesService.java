@@ -4,9 +4,15 @@ import br.com.vemprofut.controllers.response.CartoesResumoResponseDTO;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.mappers.ICartoesMapper;
 import br.com.vemprofut.models.CartoesModel;
-import br.com.vemprofut.models.enuns.CartaoCountProjection;
+import br.com.vemprofut.models.DTOs.CartaoCountProjection;
+import br.com.vemprofut.models.FutModel;
+import br.com.vemprofut.models.PartidasModel;
+import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.CartoesRepository;
 import br.com.vemprofut.services.ICartoesService;
+import br.com.vemprofut.services.IFutService;
+import br.com.vemprofut.services.IPartidasService;
+import br.com.vemprofut.services.IPeladeiroService;
 import br.com.vemprofut.services.query.ICartoesQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +31,15 @@ public class CartoesService implements ICartoesService {
 
     @Autowired
     private ICartoesQueryService queryService;
+
+    @Autowired
+    private IPeladeiroService peladeiroService;
+
+    @Autowired
+    private IPartidasService partidasService;
+
+    @Autowired
+    private IFutService futService;
 
     @Override
     @Transactional
@@ -62,7 +77,8 @@ public class CartoesService implements ICartoesService {
     @Override
     @Transactional(readOnly = true)
     public List<CartoesDTO> findByPeladeiro(Long id) {
-        return repository.findByPeladeiroId(id)
+        PeladeiroModel peladeiroModel = peladeiroService.findByIdModel(id);
+        return repository.findByPeladeiro(peladeiroModel)
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
@@ -71,7 +87,8 @@ public class CartoesService implements ICartoesService {
     @Override
     @Transactional(readOnly = true)
     public List<CartoesDTO> findByPartida(Long id) {
-        return repository.findByPartidaId(id)
+        PartidasModel partidasModel = partidasService.findByIdModel(id);
+        return repository.findByPartida(partidasModel)
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
@@ -80,7 +97,8 @@ public class CartoesService implements ICartoesService {
     @Override
     @Transactional(readOnly = true)
     public List<CartoesDTO> findByFut(Long id) {
-        return repository.findByFutId(id)
+        FutModel futModel = futService.findByIdModel(id);
+        return repository.findByFut(futModel)
                 .stream()
                 .map(mapper::toDTO)
                 .toList();

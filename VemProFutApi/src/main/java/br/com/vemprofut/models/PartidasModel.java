@@ -27,9 +27,10 @@ public class PartidasModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_partida")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "reservas_partida", nullable = false)
     private Boolean reservas;
 
     @ToString.Exclude

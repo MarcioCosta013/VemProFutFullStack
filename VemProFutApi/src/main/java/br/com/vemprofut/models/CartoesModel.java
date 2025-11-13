@@ -13,18 +13,19 @@ public class CartoesModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cartoes_peladeiro")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "partida_id")
+    @JoinColumn(name = "fk_partida")
     private PartidasModel partida;
 
     @ManyToOne
-    @JoinColumn(name = "fk_Cartoes_Peladeiro_id_cartoes_peladeiro")
+    @JoinColumn(name = "fk_peladeiro")
     private PeladeiroModel peladeiro;
 
     @ManyToOne
-    @JoinColumn(name = "fut_id")
+    @JoinColumn(name = "fk_fut")
     private FutModel fut;
 
     @Enumerated(EnumType.STRING) // salva o nome do ENUM (AZUL, AMARELO, VERMELHO)

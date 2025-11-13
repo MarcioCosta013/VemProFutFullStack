@@ -12,15 +12,16 @@ public class HistoricoFutModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_historico_fut")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "gols_total_historico_fut", nullable = false)
     private Integer golsTotal = 0;
 
-    @Column(nullable = false)
+    @Column(name = "partidas_jogadas_historico_fut", nullable = false)
     private Integer totalPartidas = 0;
 
-    @Column(nullable = false)
+    @Column(name = "time_mais_vitorias_historico", nullable = false)
     private String timeMaisVitorias = "vazio";
 
 }

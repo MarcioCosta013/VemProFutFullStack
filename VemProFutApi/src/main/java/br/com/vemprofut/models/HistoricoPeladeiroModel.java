@@ -12,6 +12,7 @@ public class HistoricoPeladeiroModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_historico_peladeiro")
     private Long id;
 
     @Column(name = "gols_historico_peladeiro", nullable = false)

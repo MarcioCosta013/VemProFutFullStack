@@ -5,7 +5,6 @@ import br.com.vemprofut.controllers.request.UpdatePeladeiroRequestDTO;
 import br.com.vemprofut.controllers.response.PeladeiroDetailResponse;
 import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
 import br.com.vemprofut.controllers.response.UpdatePeladeiroResponseDTO;
-import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.PeladeiroModel;
 
 import java.util.List;

@@ -16,18 +16,19 @@ public class FutModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_fut")
     private Long id;
 
-    @Column(nullable = false, length = 50, unique = true)
+    @Column(name = "nome_fut", nullable = false, length = 50, unique = true)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(name = "jogadores_por_time_fut", nullable = false)
     private Integer jogadoresPorTime;
 
-    @Column(nullable = false)
+    @Column(name = "tempo_max_partida_fut", nullable = false)
     private Integer tempoMaxPartida;
 
-    @Column(nullable = false)
+    @Column(name = "max_gols_vitoria_fut", nullable = false)
     private Integer maxGolsVitoria;
 
     @ToString.Exclude
@@ -37,7 +38,7 @@ public class FutModel {
 
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "fk_peladeiro_adm")
+    @JoinColumn(name = "fk_peladeiro")
     private PeladeiroModel administradorPeladeiro;
 
     @OneToMany(mappedBy = "fut", cascade = CascadeType.ALL, orphanRemoval = true)

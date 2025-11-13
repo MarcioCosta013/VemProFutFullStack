@@ -29,37 +29,27 @@ public class PeladeiroController {
 
     @PostMapping
     @Operation(summary = "Cadastra um novo peladeiro")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Peladeiro criado com sucesso"),
-            @ApiResponse(responseCode = "400",
-                    description = "Dados inválidos ou e-mail já cadastrado",
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(value = """
-                                {
-                                  "error": "E-mail já cadastrado"
-                                }
-                            """))
-            )
-    })
     public ResponseEntity<SavePeladeiroResponseDTO> create (@Valid @RequestBody final SavePeladeiroRequestDTO requestDTO){
         var obj = peladeiroService.create(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Busca um Peladeiro pelo id")
     public ResponseEntity<PeladeiroDetailResponse> findById (@PathVariable final Long id){
         var obj = peladeiroService.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @PutMapping("{id}")
+    @Operation(summary = "Faz alteraçoes no Peladeiro cujo id é informado.")
     public ResponseEntity<Void> update(@PathVariable final Long id ,@Valid @RequestBody UpdatePeladeiroRequestDTO dto){
         peladeiroService.update(id, dto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")
+    @Operation(summary = "Deleta o peladeiro cujo id foi informado. Cuidado!")
     public ResponseEntity<Void> delete(@PathVariable final Long id){
         peladeiroService.delete(id);
         return ResponseEntity.noContent().build();

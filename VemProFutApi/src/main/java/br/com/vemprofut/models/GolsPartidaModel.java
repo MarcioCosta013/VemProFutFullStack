@@ -19,6 +19,7 @@ public class GolsPartidaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_gols_partida")
     private Long id;
 
     @ToString.Exclude

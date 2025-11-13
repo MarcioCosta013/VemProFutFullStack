@@ -1,6 +1,7 @@
 package br.com.vemprofut.exceptions;
 
 import io.swagger.v3.oas.annotations.Hidden;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.type.descriptor.java.ObjectJavaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,15 +20,14 @@ gerar documentação até para as classes de exception handler, e isso quebra o 
 Ou seja: o Swagger está tentando documentar o GlobalExceptionHandler, o que não deveria acontecer.
  */
 @Hidden // Isso impede o Swagger de tentar documentar essa classe
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
 
-        logger.error("Erro nao tratado!", ex.getMessage());
+        log.error("Erro nao tratado!", ex.getMessage());
 
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailInUseException.class)
     public ResponseEntity<Map<String, Object>> handleEmailCadastrado(EmailInUseException ex){
 
-        logger.warn("Email já cadastrado!", ex.getMessage());
+        log.warn("Email já cadastrado!", ex.getMessage());
 
         Map<String, Object> body = new HashMap<>();
             body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FutInUseException.class)
     public ResponseEntity<Map<String, Object>> handleFutEmUso(FutInUseException ex){
 
-        logger.warn("Nome de Fut já cadastrado!", ex.getMessage());
+        log.warn("Nome de Fut já cadastrado!", ex.getMessage());
 
         Map<String, Object> body = new HashMap<>();
             body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EditorInUseException.class)
     public ResponseEntity<Map<String, Object>> handleEditorJaIncluso(EditorInUseException ex){
 
-        logger.warn("Editor já cadastrado!", ex.getMessage());
+        log.warn("Editor já cadastrado!", ex.getMessage());
 
         Map<String, Object> body = new HashMap<>();
             body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NomeInUseException.class)
     public ResponseEntity<Map<String, Object>> handleNomeJaIncluso(NomeInUseException ex){
 
-        logger.warn("Nome já em uso!", ex.getMessage());
+        log.warn("Nome já em uso!", ex.getMessage());
 
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFound(NotFoundException ex){
 
-        logger.warn("Não encontrado!", ex.getMessage());
+        log.warn("Não encontrado!", ex.getMessage());
 
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpStatus.BAD_REQUEST.value());
@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFound(ResourceNotFoundException ex){
 
-        logger.warn("Recurso não encontrado!", ex.getMessage());
+        log.warn("Recurso não encontrado!", ex.getMessage());
 
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpStatus.BAD_REQUEST.value());

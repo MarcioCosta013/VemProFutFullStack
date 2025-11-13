@@ -14,6 +14,8 @@ import br.com.vemprofut.services.IFutService;
 import br.com.vemprofut.services.IPartidasService;
 import br.com.vemprofut.services.IPeladeiroService;
 import br.com.vemprofut.services.query.ICartoesQueryService;
+import br.com.vemprofut.services.query.IPartidasQueryService;
+import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -34,11 +36,11 @@ public class CartoesService implements ICartoesService {
     private ICartoesQueryService queryService;
 
     @Autowired
-    private IPeladeiroService peladeiroService;
+    private IPeladeiroQueryService peladeiroQueryService;
 
     @Autowired
     @Lazy //Isso diz ao Spring: “injete essa dependência só quando for realmente usada”, quebrando o ciclo de inicialização.
-    private IPartidasService partidasService;
+    private IPartidasQueryService partidasQueryService;
 
     @Autowired
     @Lazy
@@ -80,7 +82,7 @@ public class CartoesService implements ICartoesService {
     @Override
     @Transactional(readOnly = true)
     public List<CartoesDTO> findByPeladeiro(Long id) {
-        PeladeiroModel peladeiroModel = peladeiroService.findByIdModel(id);
+        PeladeiroModel peladeiroModel = peladeiroQueryService.verifyPeladeiroExist(id);
         return repository.findByPeladeiro(peladeiroModel)
                 .stream()
                 .map(mapper::toDTO)
@@ -90,7 +92,7 @@ public class CartoesService implements ICartoesService {
     @Override
     @Transactional(readOnly = true)
     public List<CartoesDTO> findByPartida(Long id) {
-        PartidasModel partidasModel = partidasService.findByIdModel(id);
+        PartidasModel partidasModel = partidasQueryService.verifyPartidaExistWithRetorn(id);
         return repository.findByPartida(partidasModel)
                 .stream()
                 .map(mapper::toDTO)

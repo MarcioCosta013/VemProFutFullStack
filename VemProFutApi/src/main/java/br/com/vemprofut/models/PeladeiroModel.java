@@ -22,29 +22,29 @@ public class PeladeiroModel {
     @Column(name = "nome_peladeiro", nullable = false, length = 50)
     private String nome;
 
+    @Column(name = "email", nullable = false, length = 80, unique = true)
+    private String email;
+
     @Column(name = "apelido_peladeiro", nullable = false, length = 30)
     private String apelido;
 
     @Column(name = "descricao_peladeiro", nullable = false, length = 100)
     private String descricao;
 
-    @Column(name = "pe_dominante_peladeiro", nullable = false, length = 10)
-    private String peDominante;
-
     @Column(name = "whatsapp_peladeiro", nullable = false, length = 15)
     private String whatsapp;
 
-    @Column(nullable = false, length = 80, unique = true)
-    private String email;
+    @Column(name = "pe_dominante_peladeiro", nullable = false, length = 10)
+    private String peDominante;
 
     @ToString.Exclude
     @OneToOne
-    @JoinColumn(name = " fk_Historico_Peladeiro_id_historico_peladeiro")
+    @JoinColumn(name = " fk_historico_peladeiro")
     private HistoricoPeladeiroModel historicoPeladeiro;
 
     @ManyToMany
     @JoinTable(
-            name = "esta_peladeiro_partida",
+            name = "esta_peladeiro_partidas",
             joinColumns = @JoinColumn(name = "fk_peladeiro"),
             inverseJoinColumns = @JoinColumn(name = "fk_partida")
     )

@@ -40,10 +40,30 @@ Crei esse projeto para aplicar todos os meus conhecimentos FullStack adqueridos 
 
 ### Tecnologias e Ferramentas Utilizadas:
 
-#### Back-End:
+#### Back-End (API):
+* Java:
+    - Maven
+    - Spring Boot
+    - Lombok
+    - MapStruct
+    - Swagger
+    - Linter
+        - Spotless
+        - PMD
 
-#### FrontEnd:
+#### FrontEnd (Web):
+* ?
+
+#### Mobile:
+* ?
+
+#### Desktop:
+* ?
 
 #### Banco de Dados:
+* MySQL
+* Flyway Migration
 
 #### DevOps:
+
+* Docker

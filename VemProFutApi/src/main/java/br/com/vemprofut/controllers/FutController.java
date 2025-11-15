@@ -48,4 +48,10 @@ public class FutController {
     futService.delete(id);
     return ResponseEntity.noContent().build();
   }
+
+  @PostMapping
+  @Operation(summary = "Criar uma nova partida...")
+  public ResponseEntity<> criarPartida(){
+
+  }
 }

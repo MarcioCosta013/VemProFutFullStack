@@ -92,14 +92,17 @@ public class FutService implements IFutService {
   @Override
   @Transactional
   public void delete(Long id) {
-    queryService.verifyFutExist(id);
+    queryService.verifyFutExistRetorn(id);
     repository.deleteById(id);
   }
 
   @Override
   @Transactional
   public void criarPartida(Boolean jogadoresReservas, FutModel futModel) {
-
+    //TODO: criar e implementar os DTOs de request e responde de Partida
+    //TODO: implementar gols
+    //TODO: implementar cartoes
+    //TODO: implementar lista de peladeiros que irão jogar
     partidasService.create(jogadoresReservas, futModel);
   }
 

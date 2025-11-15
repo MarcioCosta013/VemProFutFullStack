@@ -4,7 +4,7 @@ import br.com.vemprofut.models.GolsPartidaModel;
 
 public interface IGolsQueryService {
 
-    GolsPartidaModel verifyGolExistWithRetorn(Long id);
+  GolsPartidaModel verifyGolExistWithRetorn(Long id);
 
-    void verifyGolExist(Long id);
+  void verifyGolExist(Long id);
 }

@@ -9,20 +9,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GolsQueryService implements IGolsQueryService {
-    @Autowired
-    GolsPartidaRepository repository;
+  @Autowired GolsPartidaRepository repository;
 
-    @Override
-    public GolsPartidaModel verifyGolExistWithRetorn(Long id) {
-       return repository.findById(id).orElseThrow(
-                ()-> new NotFoundException("id Gol: " + id +" não encontrado!")
-        );
-    }
+  @Override
+  public GolsPartidaModel verifyGolExistWithRetorn(Long id) {
+    return repository
+        .findById(id)
+        .orElseThrow(() -> new NotFoundException("id Gol: " + id + " não encontrado!"));
+  }
 
-    @Override
-    public void verifyGolExist(Long id) {
-        if(!repository.existsById(id)){
-            throw new NotFoundException("Identificador de Gol" + id + " não encontrado");
-        }
+  @Override
+  public void verifyGolExist(Long id) {
+    if (!repository.existsById(id)) {
+      throw new NotFoundException("Identificador de Gol" + id + " não encontrado");
     }
+  }
 }

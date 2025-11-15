@@ -9,21 +9,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HistoricoPeladeiroQueryService implements IHistoricoPeladeiroQueryService {
-    @Autowired
-    HistoricoPeladeiroRepository repository;
+  @Autowired HistoricoPeladeiroRepository repository;
 
-    @Override
-    public HistoricoPeladeiroModel verityHistoricoPeladeiroExistReturn(Long id) {
+  @Override
+  public HistoricoPeladeiroModel verityHistoricoPeladeiroExistReturn(Long id) {
 
-        return repository.findById(id).orElseThrow(
-                () -> new NotFoundException("Não foi encontrado o Historico de Peladeiro de id " + id)
-        );
+    return repository
+        .findById(id)
+        .orElseThrow(
+            () -> new NotFoundException("Não foi encontrado o Historico de Peladeiro de id " + id));
+  }
+
+  @Override
+  public void verityHistoricoPeladeiroExist(Long id) {
+    if (!repository.existsById(id)) {
+      throw new NotFoundException("Id: " + id + "de Historico Jogador não encontrado!");
     }
-
-    @Override
-    public void verityHistoricoPeladeiroExist(Long id) {
-        if(!repository.existsById(id)){
-            throw new NotFoundException("Id: " + id + "de Historico Jogador não encontrado!");
-        }
-    }
+  }
 }

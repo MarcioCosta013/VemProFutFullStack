@@ -8,20 +8,22 @@ import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.FutModel;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {IMappersDefault.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {IMappersDefault.class})
 public interface IFutMapper {
 
-    //DTO --> Model
-    FutModel toModel(FutDTO dto);
+  // DTO --> Model
+  FutModel toModel(FutDTO dto);
 
-    FutModel saveRequestToModel(SaveFutRequestDTO dto);
+  FutModel saveRequestToModel(SaveFutRequestDTO dto);
 
-    SaveFutResponseDTO toSaveResponse(FutModel dto);
+  SaveFutResponseDTO toSaveResponse(FutModel dto);
 
-    FutDetailsResponse modelToDetailsResponse (FutModel model);
+  FutDetailsResponse modelToDetailsResponse(FutModel model);
 
-    UpdateFutResponseDTO modelToUpdateResponse (FutModel model);
+  UpdateFutResponseDTO modelToUpdateResponse(FutModel model);
 
-    //Model --> DTO
-    FutDTO toDTO(FutModel model);
+  // Model --> DTO
+  FutDTO toDTO(FutModel model);
 }

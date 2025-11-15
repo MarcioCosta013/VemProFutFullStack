@@ -5,5 +5,4 @@ public record HistoricoPeladeiroDTO(
     Integer golsDoPeladeiro,
     Double notaPeladeiro,
     Integer partidasJogadas,
-    Integer partidasGanhas
-) { }
+    Integer partidasGanhas) {}

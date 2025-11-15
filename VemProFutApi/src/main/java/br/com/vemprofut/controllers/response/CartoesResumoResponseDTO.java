@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CartoesResumoResponseDTO{
-    private Integer azul;
-    private Integer amarelo;
-    private Integer vermelho;
+public class CartoesResumoResponseDTO {
+  private Integer azul;
+  private Integer amarelo;
+  private Integer vermelho;
 }

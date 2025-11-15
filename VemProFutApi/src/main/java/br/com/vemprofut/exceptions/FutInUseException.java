@@ -1,8 +1,8 @@
 package br.com.vemprofut.exceptions;
 
-public class FutInUseException extends RuntimeException{
+public class FutInUseException extends RuntimeException {
 
-    public FutInUseException(String message){
-        super(message);
-    }
+  public FutInUseException(String message) {
+    super(message);
+  }
 }

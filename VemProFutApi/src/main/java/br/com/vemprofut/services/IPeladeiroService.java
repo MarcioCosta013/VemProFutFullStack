@@ -7,19 +7,17 @@ import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
 import br.com.vemprofut.controllers.response.UpdatePeladeiroResponseDTO;
 import br.com.vemprofut.models.PeladeiroModel;
 
-import java.util.List;
-
 public interface IPeladeiroService {
 
-    SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto);
+  SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto);
 
-    UpdatePeladeiroResponseDTO update(Long id, UpdatePeladeiroRequestDTO dto);
+  UpdatePeladeiroResponseDTO update(Long id, UpdatePeladeiroRequestDTO dto);
 
-    PeladeiroDetailResponse findById(Long id);
+  PeladeiroDetailResponse findById(Long id);
 
-    PeladeiroModel findByIdModel(Long id);
+  PeladeiroModel findByIdModel(Long id);
 
-    //List<PeladeiroDTO> findAll();
+  // List<PeladeiroDTO> findAll();
 
-    void delete(Long id);
+  void delete(Long id);
 }

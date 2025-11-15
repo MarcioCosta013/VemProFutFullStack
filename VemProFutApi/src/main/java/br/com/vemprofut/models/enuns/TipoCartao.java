@@ -6,7 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum TipoCartao {
-    AZUL,
-    AMARELO,
-    VERMELHO
+  AZUL,
+  AMARELO,
+  VERMELHO
 }

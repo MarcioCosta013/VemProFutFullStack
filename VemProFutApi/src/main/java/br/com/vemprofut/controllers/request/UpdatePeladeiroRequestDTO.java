@@ -4,11 +4,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record UpdatePeladeiroRequestDTO (
-        @NotBlank String nome,
-        @Email String email,
-        @NotNull String apelido,
-        @NotBlank String descricao,
-        @NotNull String peDominante,
-        @NotBlank String whatsapp
-){ }
+public record UpdatePeladeiroRequestDTO(
+    @NotBlank String nome,
+    @Email String email,
+    @NotNull String apelido,
+    @NotBlank String descricao,
+    @NotNull String peDominante,
+    @NotBlank String whatsapp) {}

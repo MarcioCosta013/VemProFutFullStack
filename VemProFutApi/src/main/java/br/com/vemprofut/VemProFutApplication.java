@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class VemProFutApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(VemProFutApplication.class);
-	public static void main(String[] args) {
+  private static final Logger log = LoggerFactory.getLogger(VemProFutApplication.class);
 
-		SpringApplication.run(VemProFutApplication.class, args);
-		log.info("Aplicação iniciada com sucesso!");
-	}
+  public static void main(String[] args) {
 
+    SpringApplication.run(VemProFutApplication.class, args);
+    log.info("Aplicação iniciada com sucesso!");
+  }
 }

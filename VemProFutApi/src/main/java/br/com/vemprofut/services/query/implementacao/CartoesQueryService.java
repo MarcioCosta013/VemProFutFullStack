@@ -12,33 +12,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartoesQueryService implements ICartoesQueryService {
 
-    private CartoesRepository repository;
+  private CartoesRepository repository;
 
-    @Override
-    public void verifyPeladeiroExist(PeladeiroDTO peladeiroDTO) {
-        //TODO: implementar
-    }
+  @Override
+  public void verifyPeladeiroExist(PeladeiroDTO peladeiroDTO) {
+    // TODO: implementar
+  }
 
-    @Override
-    public void verifyPartidasExist(PartidasDTO partidasDTO) {
-        //TODO: implementar
-    }
+  @Override
+  public void verifyPartidasExist(PartidasDTO partidasDTO) {
+    // TODO: implementar
+  }
 
-    // Verifica se o peladeiro, partida e fut existem
-    public void verifyEntitiesExist(CartoesDTO dto) {
-        if (!repository.existsById(dto.peladeiroId()))
-            throw new IllegalArgumentException("Peladeiro não encontrado");
+  // Verifica se o peladeiro, partida e fut existem
+  public void verifyEntitiesExist(CartoesDTO dto) {
+    if (!repository.existsById(dto.peladeiroId()))
+      throw new IllegalArgumentException("Peladeiro não encontrado");
 
-        if (!repository.existsById(dto.partidaId()))
-            throw new IllegalArgumentException("Partida não encontrada");
+    if (!repository.existsById(dto.partidaId()))
+      throw new IllegalArgumentException("Partida não encontrada");
 
-        if (!repository.existsById(dto.futId()))
-            throw new IllegalArgumentException("Fut não encontrado");
-    }
+    if (!repository.existsById(dto.futId()))
+      throw new IllegalArgumentException("Fut não encontrado");
+  }
 
-    public CartoesModel verityCartoesExist (Long id){
-        return repository.findById(id).orElseThrow(
-                () -> new NotFoundException("Não foi encontrado o Cartoes de id " + id)
-        );
-    }
+  public CartoesModel verityCartoesExist(Long id) {
+    return repository
+        .findById(id)
+        .orElseThrow(() -> new NotFoundException("Não foi encontrado o Cartoes de id " + id));
+  }
 }

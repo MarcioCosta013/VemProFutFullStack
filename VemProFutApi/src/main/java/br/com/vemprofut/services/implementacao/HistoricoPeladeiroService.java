@@ -13,52 +13,48 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
 
-    @Autowired
-    private IHistoricoPeladeiroQueryService queryService;
+  @Autowired private IHistoricoPeladeiroQueryService queryService;
 
-    @Autowired
-    private HistoricoPeladeiroRepository repository;
+  @Autowired private HistoricoPeladeiroRepository repository;
 
-    @Autowired
-    private IHistoricoPeladeiroMapper mapper;
+  @Autowired private IHistoricoPeladeiroMapper mapper;
 
-    @Override
-    @Transactional
-    public HistoricoPeladeiroDTO create() {
-        HistoricoPeladeiroModel historico = new HistoricoPeladeiroModel();
-        return mapper.toDTO(repository.save(historico));
-    }
+  @Override
+  @Transactional
+  public HistoricoPeladeiroDTO create() {
+    HistoricoPeladeiroModel historico = new HistoricoPeladeiroModel();
+    return mapper.toDTO(repository.save(historico));
+  }
 
-    @Override
-    @Transactional(readOnly = true)
-    public HistoricoPeladeiroDTO findById(Long id) {
+  @Override
+  @Transactional(readOnly = true)
+  public HistoricoPeladeiroDTO findById(Long id) {
 
-        return mapper.toDTO(queryService.verityHistoricoPeladeiroExistReturn(id));
-    }
+    return mapper.toDTO(queryService.verityHistoricoPeladeiroExistReturn(id));
+  }
 
-    @Override
-    @Transactional(readOnly = true)
-    public HistoricoPeladeiroModel findByIdModel(Long id) {
+  @Override
+  @Transactional(readOnly = true)
+  public HistoricoPeladeiroModel findByIdModel(Long id) {
 
-        return queryService.verityHistoricoPeladeiroExistReturn(id);
-    }
+    return queryService.verityHistoricoPeladeiroExistReturn(id);
+  }
 
+  @Override
+  public HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto) {
+    HistoricoPeladeiroModel historico = queryService.verityHistoricoPeladeiroExistReturn(id);
 
-    @Override
-    public HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto) {
-        HistoricoPeladeiroModel historico = queryService.verityHistoricoPeladeiroExistReturn(id);
+    historico.setGolsDoPeladeiro(dto.golsDoPeladeiro());
+    historico.setNotaPeladeiro(dto.notaPeladeiro());
+    historico.setPartidasJogadas(dto.partidasJogadas());
+    historico.setPartidasGanhas(dto.partidasGanhas());
 
-        historico.setGolsDoPeladeiro(dto.golsDoPeladeiro());
-        historico.setNotaPeladeiro(dto.notaPeladeiro());
-        historico.setPartidasJogadas(dto.partidasJogadas());
-        historico.setPartidasGanhas(dto.partidasGanhas());
+    return mapper.toDTO(repository.save(historico));
+  }
 
-        return mapper.toDTO(repository.save(historico));
-    }
-
-    @Override
-    public void delete(Long id) {
-        queryService.verityHistoricoPeladeiroExist(id);
-        repository.deleteById(id);
-    }
+  @Override
+  public void delete(Long id) {
+    queryService.verityHistoricoPeladeiroExist(id);
+    repository.deleteById(id);
+  }
 }

@@ -7,31 +7,29 @@ import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
 import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
-import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
-
 import java.util.List;
 
 public interface IFutService {
 
-    SaveFutResponseDTO create(SaveFutRequestDTO dto);
+  SaveFutResponseDTO create(SaveFutRequestDTO dto);
 
-    FutDetailsResponse findById(Long id);
+  FutDetailsResponse findById(Long id);
 
-    FutModel findByIdModel(Long id);
+  FutModel findByIdModel(Long id);
 
-    FutDTO findByNome(String nome);
+  FutDTO findByNome(String nome);
 
-    List<FutDTO> findAll();
+  List<FutDTO> findAll();
 
-    UpdateFutResponseDTO update(Long id, UpdateFutRequestDTO dto);
+  UpdateFutResponseDTO update(Long id, UpdateFutRequestDTO dto);
 
-    void delete(Long id);
+  void delete(Long id);
 
-    void criarPartida(Boolean jogadoresReservas, FutModel futModel);
+  void criarPartida(Boolean jogadoresReservas, FutModel futModel);
 
-    void addPeladeiro(FutDTO dto, PeladeiroDTO peladeiroDTO);
+  void addPeladeiro(FutDTO dto, PeladeiroDTO peladeiroDTO);
 
-    void addCartoes(FutDTO dto, CartoesDTO cartoesDTO);
+  void addCartoes(FutDTO dto, CartoesDTO cartoesDTO);
 }

@@ -5,4 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("partida/")
-public class PartidaController {}
+public class PartidaController {
+
+}

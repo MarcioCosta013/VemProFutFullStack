@@ -6,7 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum PeDominante {
-  CANHOTO,
-  DESTRO,
-  AMBIDESTRO;
+    CANHOTO,
+    DESTRO,
+    AMBIDESTRO;
 }

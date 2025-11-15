@@ -5,4 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("historico/fut/")
-public class HistoricoFutController {}
+public class HistoricoFutController {
+
+}

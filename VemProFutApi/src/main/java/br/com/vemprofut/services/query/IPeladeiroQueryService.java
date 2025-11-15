@@ -4,7 +4,8 @@ import br.com.vemprofut.models.PeladeiroModel;
 
 public interface IPeladeiroQueryService {
 
-  void verifyEmail(final String email);
+    void verifyEmail(final String email);
 
-  PeladeiroModel verifyPeladeiroExist(final Long id);
+    PeladeiroModel verifyPeladeiroExist(final Long id);
+
 }

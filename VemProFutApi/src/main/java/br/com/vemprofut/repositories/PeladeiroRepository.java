@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PeladeiroRepository extends JpaRepository<PeladeiroModel, Long> {
 
-  Boolean existsByEmail(final String email);
+    Boolean existsByEmail(final String email);
+
 }

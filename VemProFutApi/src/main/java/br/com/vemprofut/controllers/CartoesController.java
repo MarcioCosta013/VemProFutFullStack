@@ -5,4 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("cartoes/")
-public class CartoesController {}
+public class CartoesController {
+
+}

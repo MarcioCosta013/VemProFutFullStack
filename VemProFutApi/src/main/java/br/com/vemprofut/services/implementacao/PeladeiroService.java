@@ -20,93 +20,102 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j // para gerar logs para verificacao futura de erros
+@Slf4j //para gerar logs para verificacao futura de erros
 @Service
 public class PeladeiroService implements IPeladeiroService {
 
-  @Autowired private IPeladeiroQueryService queryService;
 
-  @Autowired private PeladeiroRepository repository;
+    @Autowired
+    private IPeladeiroQueryService queryService;
 
-  @Autowired private IPeladeiroMapper IPeladeiroMapper;
+    @Autowired
+    private PeladeiroRepository repository;
 
-  @Autowired private IHistoricoPeladeiroMapper historicoMapper;
+    @Autowired
+    private IPeladeiroMapper IPeladeiroMapper;
 
-  @Autowired private IHistoricoPeladeiroService historicoPeladeiroService;
+    @Autowired
+    private IHistoricoPeladeiroMapper historicoMapper;
 
-  @Autowired private ICartoesService cartoesService;
+    @Autowired
+    private IHistoricoPeladeiroService historicoPeladeiroService;
 
-  @Override
-  @Transactional
-  public SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto) {
-    queryService.verifyEmail(dto.email());
-    log.info("Email verificado!");
-    PeladeiroModel peladeiroModel = IPeladeiroMapper.saveRequestToModel(dto);
-    PeladeiroModel peladeiroSalvo = repository.save(peladeiroModel);
+    @Autowired
+    private ICartoesService cartoesService;
 
-    HistoricoPeladeiroDTO historico = historicoPeladeiroService.create();
-    peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
+    @Override
+    @Transactional
+    public SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto) {
+        queryService.verifyEmail(dto.email());
+        log.info("Email verificado!");
+        PeladeiroModel peladeiroModel = IPeladeiroMapper.saveRequestToModel(dto);
+        PeladeiroModel peladeiroSalvo = repository.save(peladeiroModel);
 
-    log.info("Peladeiro cadastrado com sucesso!");
-    return IPeladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
-  }
+        HistoricoPeladeiroDTO historico = historicoPeladeiroService.create();
+        peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
 
-  @Override
-  @Transactional
-  public UpdatePeladeiroResponseDTO update(Long id, UpdatePeladeiroRequestDTO dto) {
-    var peladeiroModel = queryService.verifyPeladeiroExist(id);
-    log.info("Verificado a existencia de Peladeiro");
+        log.info("Peladeiro cadastrado com sucesso!");
+        return IPeladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
+    }
 
-    peladeiroModel.setNome(dto.nome());
-    peladeiroModel.setEmail(dto.email());
-    peladeiroModel.setApelido(dto.apelido());
-    peladeiroModel.setDescricao(dto.descricao());
-    peladeiroModel.setWhatsapp(dto.whatsapp());
-    peladeiroModel.setPeDominante(dto.peDominante());
+    @Override
+    @Transactional
+    public UpdatePeladeiroResponseDTO update(Long id, UpdatePeladeiroRequestDTO dto) {
+        var peladeiroModel = queryService.verifyPeladeiroExist(id);
+        log.info("Verificado a existencia de Peladeiro");
 
-    log.info("Peladeiro alterado com sucesso!");
-    return IPeladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
-  }
+        peladeiroModel.setNome(dto.nome());
+        peladeiroModel.setEmail(dto.email());
+        peladeiroModel.setApelido(dto.apelido());
+        peladeiroModel.setDescricao(dto.descricao());
+        peladeiroModel.setWhatsapp(dto.whatsapp());
+        peladeiroModel.setPeDominante(dto.peDominante());
 
-  @Override
-  @Transactional(readOnly = true)
-  public PeladeiroDetailResponse findById(Long id) {
-    log.info("Buscando peladeiro pelo id... saida de resposta");
-    PeladeiroModel retorno = queryService.verifyPeladeiroExist(id);
-    CartoesResumoResponseDTO resumo = cartoesService.contarCartoesPeladeiro(id);
-    return new PeladeiroDetailResponse(
-        retorno.getId(),
-        retorno.getNome(),
-        retorno.getEmail(),
-        retorno.getApelido(),
-        retorno.getDescricao(),
-        retorno.getWhatsapp(),
-        retorno.getPeDominante(),
-        resumo);
-  }
+        log.info("Peladeiro alterado com sucesso!");
+        return IPeladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
+    }
 
-  @Override
-  @Transactional(readOnly = true)
-  public PeladeiroModel findByIdModel(Long id) {
-    log.info("Buscando peladeiro pelo id... saida de uso interno");
-    return queryService.verifyPeladeiroExist(id);
-  }
+    @Override
+    @Transactional(readOnly = true)
+    public PeladeiroDetailResponse findById(Long id) {
+        log.info("Buscando peladeiro pelo id... saida de resposta");
+        PeladeiroModel retorno = queryService.verifyPeladeiroExist(id);
+        CartoesResumoResponseDTO resumo = cartoesService.contarCartoesPeladeiro(id);
+        return new PeladeiroDetailResponse(
+                retorno.getId(),
+                retorno.getNome(),
+                retorno.getEmail(),
+                retorno.getApelido(),
+                retorno.getDescricao(),
+                retorno.getWhatsapp(),
+                retorno.getPeDominante(),
+                resumo
+        );
 
-  //    @Override
-  //    @Transactional(readOnly = true)
-  //    public List<PeladeiroDTO> findAll() {
-  //
-  //        return repository.findAll()
-  //                .stream()
-  //                .map(IPeladeiroMapper::toDTO)
-  //                .toList();
-  //    }
+    }
 
-  @Override
-  @Transactional
-  public void delete(Long id) {
-    queryService.verifyPeladeiroExist(id);
-    log.info("Existência de Peladeiro confirmada com sucesso!");
-    repository.deleteById(id);
-  }
+    @Override
+    @Transactional(readOnly = true)
+    public PeladeiroModel findByIdModel(Long id) {
+        log.info("Buscando peladeiro pelo id... saida de uso interno");
+        return queryService.verifyPeladeiroExist(id);
+    }
+
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<PeladeiroDTO> findAll() {
+//
+//        return repository.findAll()
+//                .stream()
+//                .map(IPeladeiroMapper::toDTO)
+//                .toList();
+//    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        queryService.verifyPeladeiroExist(id);
+        log.info("Existência de Peladeiro confirmada com sucesso!");
+        repository.deleteById(id);
+    }
 }

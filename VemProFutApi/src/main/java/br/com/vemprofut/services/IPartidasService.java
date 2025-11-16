@@ -1,5 +1,7 @@
 package br.com.vemprofut.services;
 
+import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
+import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
 import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
@@ -7,7 +9,7 @@ import br.com.vemprofut.models.PartidasModel;
 
 public interface IPartidasService {
 
-  PartidasDTO create(Boolean jogadoresReservas, FutModel futModel);
+  SavePartidasResponseDTO create(SavePartidaRequestDTO requestDTO, FutModel futModel);
 
   PartidasDTO findById(Long id);
 

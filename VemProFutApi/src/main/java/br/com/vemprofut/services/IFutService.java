@@ -1,9 +1,11 @@
 package br.com.vemprofut.services;
 
 import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
+import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
 import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
 import br.com.vemprofut.controllers.response.FutDetailsResponse;
 import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
+import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
 import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
@@ -27,7 +29,7 @@ public interface IFutService {
 
   void delete(Long id);
 
-  void criarPartida(Boolean jogadoresReservas, FutModel futModel);
+  SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel);
 
   void addPeladeiro(FutDTO dto, PeladeiroDTO peladeiroDTO);
 

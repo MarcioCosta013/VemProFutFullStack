@@ -1,5 +1,7 @@
 package br.com.vemprofut.services.implementacao;
 
+import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
+import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
 import br.com.vemprofut.mappers.ICartoesMapper;
 import br.com.vemprofut.mappers.IPartidasMapper;
 import br.com.vemprofut.mappers.IPeladeiroMapper;
@@ -11,10 +13,7 @@ import br.com.vemprofut.models.GolsPartidaModel;
 import br.com.vemprofut.models.PartidasModel;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.PartidasRepository;
-import br.com.vemprofut.services.ICartoesService;
-import br.com.vemprofut.services.IGolsPartidaService;
-import br.com.vemprofut.services.IPartidasService;
-import br.com.vemprofut.services.IPeladeiroService;
+import br.com.vemprofut.services.*;
 import br.com.vemprofut.services.query.IPartidasQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +40,10 @@ public class PartidasService implements IPartidasService {
 
   @Override
   @Transactional
-  public PartidasDTO create(Boolean jogadoresReservas, FutModel futModel) {
-    PartidasModel partidasModel = new PartidasModel(jogadoresReservas, futModel);
-    return mapperPartidas.toDTO(repository.save(partidasModel));
+  public SavePartidasResponseDTO create(SavePartidaRequestDTO requestDTO, FutModel futModel) {
+
+    PartidasModel partidasModel = new PartidasModel(requestDTO.reservas(), futModel);
+    return mapperPartidas.toResponse(repository.save(partidasModel));
   }
 
   @Override

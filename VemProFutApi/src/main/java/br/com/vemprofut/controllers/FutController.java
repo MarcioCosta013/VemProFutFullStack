@@ -1,10 +1,13 @@
 package br.com.vemprofut.controllers;
 
 import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
+import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
 import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
 import br.com.vemprofut.controllers.response.FutDetailsResponse;
 import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
+import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
 import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
+import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.services.IFutService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -49,9 +52,10 @@ public class FutController {
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping
+  @PostMapping("partida")
   @Operation(summary = "Criar uma nova partida...")
-  public ResponseEntity<> criarPartida(){
-
+  public ResponseEntity<SavePartidasResponseDTO> criarPartida(SavePartidaRequestDTO requestDTO){
+    FutModel futModel = futService.findByIdModel(requestDTO.futId());
+    return ResponseEntity.status(HttpStatus.CREATED).body(futService.criarPartida(requestDTO, futModel));
   }
 }

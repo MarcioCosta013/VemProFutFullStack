@@ -1,9 +1,11 @@
 package br.com.vemprofut.services.implementacao;
 
 import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
+import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
 import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
 import br.com.vemprofut.controllers.response.FutDetailsResponse;
 import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
+import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
 import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
 import br.com.vemprofut.mappers.IFutMapper;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
@@ -98,12 +100,12 @@ public class FutService implements IFutService {
 
   @Override
   @Transactional
-  public void criarPartida(Boolean jogadoresReservas, FutModel futModel) {
+  public SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel) {
     //TODO: criar e implementar os DTOs de request e responde de Partida
     //TODO: implementar gols
     //TODO: implementar cartoes
     //TODO: implementar lista de peladeiros que irão jogar
-    partidasService.create(jogadoresReservas, futModel);
+    return partidasService.create(requestDTO, futModel);
   }
 
   // TODO: Adicionar editores

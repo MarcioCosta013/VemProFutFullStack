@@ -1,5 +1,7 @@
 package br.com.vemprofut.mappers;
 
+import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
+import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
 import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.PartidasModel;
 import org.mapstruct.Mapper;
@@ -14,4 +16,6 @@ public interface IPartidasMapper {
 
   // Model-> DTO
   PartidasDTO toDTO(PartidasModel model);
+
+  SavePartidasResponseDTO toResponse(PartidasModel model);
 }

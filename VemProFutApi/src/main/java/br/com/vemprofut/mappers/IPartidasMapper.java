@@ -1,9 +1,9 @@
 package br.com.vemprofut.mappers;
 
-import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
 import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
 import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.PartidasModel;
+import java.util.List;
 import org.mapstruct.Mapper;
 
 @Mapper(
@@ -18,4 +18,6 @@ public interface IPartidasMapper {
   PartidasDTO toDTO(PartidasModel model);
 
   SavePartidasResponseDTO toResponse(PartidasModel model);
+
+  List<SavePartidasResponseDTO> toResponseList(List<PartidasModel> models);
 }

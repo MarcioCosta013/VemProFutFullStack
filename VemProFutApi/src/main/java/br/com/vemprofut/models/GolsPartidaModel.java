@@ -2,6 +2,7 @@ package br.com.vemprofut.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import lombok.ToString;
 @Table(name = "gols_partida")
 @Getter
 @Setter
+@NoArgsConstructor
 public class GolsPartidaModel {
 
   public GolsPartidaModel(PeladeiroModel peladeiro, PartidasModel partida) {
@@ -23,10 +25,10 @@ public class GolsPartidaModel {
 
   @ToString.Exclude
   @ManyToOne
-  @JoinColumn(name = "peladeiro_id")
+  @JoinColumn(name = "fk_peladeiro")
   private PeladeiroModel peladeiro;
 
   @ManyToOne
-  @JoinColumn(name = "partida_id")
+  @JoinColumn(name = "fk_partida")
   private PartidasModel partida;
 }

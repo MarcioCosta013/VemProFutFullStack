@@ -1,29 +1,27 @@
 package br.com.vemprofut.services.implementacao;
 
-import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
-import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
-import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
-import br.com.vemprofut.controllers.response.FutDetailsResponse;
-import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
-import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
-import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
+import br.com.vemprofut.controllers.request.*;
+import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.mappers.IFutMapper;
+import br.com.vemprofut.mappers.IPartidasMapper;
+import br.com.vemprofut.models.*;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
-import br.com.vemprofut.models.FutModel;
-import br.com.vemprofut.models.HistoricoFutModel;
-import br.com.vemprofut.repositories.FutRepository;
+import br.com.vemprofut.repositories.*;
 import br.com.vemprofut.services.IFutService;
 import br.com.vemprofut.services.IHistoricoFutService;
 import br.com.vemprofut.services.IPartidasService;
 import br.com.vemprofut.services.query.IFutQueryService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
+import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class FutService implements IFutService {
 
@@ -31,13 +29,23 @@ public class FutService implements IFutService {
 
   @Autowired private IFutMapper mapper;
 
+  @Autowired private IPartidasMapper partidasMapper;
+
   @Autowired private FutRepository repository;
 
   @Autowired private IPartidasService partidasService;
 
+  @Autowired private PartidasRepository partidasRepository;
+
   @Autowired private IPeladeiroQueryService peladeiroQueryService;
 
+  @Autowired private PeladeiroRepository peladeiroRepository;
+
   @Autowired private IHistoricoFutService historicoFutService;
+
+  @Autowired private CartoesRepository cartoesRepository;
+
+  @Autowired private GolsPartidaRepository golsRepository;
 
   @Override
   @Transactional
@@ -101,11 +109,73 @@ public class FutService implements IFutService {
   @Override
   @Transactional
   public SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel) {
-    //TODO: criar e implementar os DTOs de request e responde de Partida
-    //TODO: implementar gols
-    //TODO: implementar cartoes
-    //TODO: implementar lista de peladeiros que irão jogar
+    // TODO: criar e implementar os DTOs de request e responde de Partida
+    // TODO: implementar gols
+    // TODO: implementar cartoes
+    // TODO: implementar lista de peladeiros que irão jogar
     return partidasService.create(requestDTO, futModel);
+  }
+
+  public List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS) {
+
+    List<PartidasModel> partidaList = new ArrayList<>();
+
+    for (SavePartidaRequestDTO dto : requestDTOS) {
+      // 1 - criando partida
+      log.info("criando Partida...");
+      PartidasModel partida = new PartidasModel();
+      partida.setReservas(dto.reservas());
+      partida.setFutId(queryService.verifyFutExistRetorn(dto.futId()));
+      // salvando partida para pegar o id.
+      partidasRepository.save(partida);
+      log.info("Partida criada, adicionando Cartao...");
+
+      // 2 - criando cartoes
+      if (dto.cartoes() != null) {
+        for (CartoesRequestDTO c : dto.cartoes()) {
+          CartoesModel cartoesModel = new CartoesModel();
+          cartoesModel.setFut(queryService.verifyFutExistRetorn(dto.futId()));
+          cartoesModel.setTipoCartao(c.tipoCartao());
+          cartoesModel.setPeladeiro(peladeiroQueryService.verifyPeladeiroExist(c.peladeiroId()));
+          cartoesModel.setPartida(partida);
+
+          cartoesRepository.save(cartoesModel);
+          partida.getCartoes().add(cartoesModel); // pegar a lista para adicionar nela.
+          log.info("Cartao adicionado, Adicionando Gol ");
+        }
+      }
+
+      // 3 - criando Gols
+      if (dto.gols() != null) {
+        for (GolsPartidaRequestDTO g : dto.gols()) {
+          GolsPartidaModel golsPartida = new GolsPartidaModel();
+          golsPartida.setPeladeiro(peladeiroQueryService.verifyPeladeiroExist(g.peladeiro()));
+          golsPartida.setPartida(partida);
+
+          golsRepository.save(golsPartida);
+          partida.getGolsPartida().add(golsPartida);
+          log.info("Gol adicionado, Adicionando Peladeiro");
+        }
+      }
+
+      // 4 - criando peladeiro
+      if (dto.peladeiros() != null) {
+        for (PeladeiroRequestDTO p : dto.peladeiros()) {
+          PeladeiroModel peladeiroModel = peladeiroQueryService.verifyPeladeiroExist(p.id());
+
+          //Para sincronizar a tabela intermédiaria da relacao @ManyToMany.
+          partida.getPeladeiros().add(peladeiroModel);
+          peladeiroModel.getPartidas().add(partida);
+
+          //para garantir que vai ser salvo.
+          peladeiroRepository.save(peladeiroModel);
+
+          log.info("Peladeiro adicionado");
+        }
+      }
+      partidaList.add(partida);
+    }
+    return partidasMapper.toResponseList(partidaList);
   }
 
   // TODO: Adicionar editores

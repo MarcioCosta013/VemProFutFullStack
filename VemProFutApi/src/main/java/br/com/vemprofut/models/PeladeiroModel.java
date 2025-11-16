@@ -45,7 +45,7 @@ public class PeladeiroModel {
   @JoinTable(
       name = "esta_peladeiro_partidas",
       joinColumns = @JoinColumn(name = "fk_peladeiro"),
-      inverseJoinColumns = @JoinColumn(name = "fk_partida"))
+      inverseJoinColumns = @JoinColumn(name = "fk_partidas"))
   private List<PartidasModel> partidas = new ArrayList<>();
 
   @OneToMany(mappedBy = "peladeiro")
@@ -62,4 +62,15 @@ public class PeladeiroModel {
 
   @OneToMany(mappedBy = "peladeiro")
   private List<GolsPartidaModel> golsPeladeiro = new ArrayList<>();
+
+  /*
+    Metodo Helper para manter as duas listas com tabelas intermediarias
+    no banco de dados sincronizadas... e para a tabela intermediaria ser alimentada
+    sempre o lado owner side (lado dono) deve adicionar...(quem tem o @JoinTable
+    com o name="nome da tabela intermediaria"
+   */
+  public void addPartida(PartidasModel partidasModel){
+    this.partidas.add(partidasModel); //adicione essa partida aqui na lista em peladeiro
+    partidasModel.getPeladeiros().add(this); //adicione esse peladeiro lá em partidas
+  }
 }

@@ -3,14 +3,12 @@ package br.com.vemprofut.controllers;
 import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
 import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
 import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
-import br.com.vemprofut.controllers.response.FutDetailsResponse;
-import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
-import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
-import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
+import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.services.IFutService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +52,17 @@ public class FutController {
 
   @PostMapping("partida")
   @Operation(summary = "Criar uma nova partida...")
-  public ResponseEntity<SavePartidasResponseDTO> criarPartida(SavePartidaRequestDTO requestDTO){
+  public ResponseEntity<SavePartidasResponseDTO> criarPartida(
+      @RequestBody SavePartidaRequestDTO requestDTO) {
     FutModel futModel = futService.findByIdModel(requestDTO.futId());
-    return ResponseEntity.status(HttpStatus.CREATED).body(futService.criarPartida(requestDTO, futModel));
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(futService.criarPartida(requestDTO, futModel));
+  }
+
+  @PostMapping("partidaslist")
+  @Operation(summary = "Cria varias partidas de uma só vez, todas com resultados preenchidos")
+  public ResponseEntity<List<SavePartidasResponseDTO>> criarPartidasLista(
+      @RequestBody List<SavePartidaRequestDTO> requestDTO) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(futService.criarPartidasList(requestDTO));
   }
 }

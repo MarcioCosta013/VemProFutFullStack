@@ -45,4 +45,15 @@ public class PartidasModel {
 
   @ManyToMany(mappedBy = "partidas")
   private List<PeladeiroModel> peladeiros = new ArrayList<>();
+
+  /*
+    Metodo Helper para manter as duas listas com tabelas intermediarias
+    no banco de dados sincronizadas... e para a tabela intermediaria ser alimentada
+    sempre o lado owner side (lado dono) deve adicionar...(quem tem o @JoinTable
+    com o name="nome da tabela intermediaria"
+   */
+  public void addPeladeiro(PeladeiroModel peladeiroModel){
+    this.peladeiros.add(peladeiroModel); //adicione na lista dessa classe um peladeiro
+    peladeiroModel.getPartidas().add(this);// e lá em peladeiro, na lista de partidas adicione essa partida que vos fala.
+  }
 }

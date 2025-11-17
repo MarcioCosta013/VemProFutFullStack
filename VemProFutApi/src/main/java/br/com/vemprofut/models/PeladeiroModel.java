@@ -73,4 +73,9 @@ public class PeladeiroModel {
     this.partidas.add(partidasModel); //adicione essa partida aqui na lista em peladeiro
     partidasModel.getPeladeiros().add(this); //adicione esse peladeiro lá em partidas
   }
+
+  public void addFut(FutModel futModel){
+    this.getFuts().add(futModel);
+    futModel.getPeladeiros().add(this);
+  }
 }

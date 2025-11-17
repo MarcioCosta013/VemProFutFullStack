@@ -73,4 +73,8 @@ public class HistoricoFutService implements IHistoricoFutService {
     queryService.verityHistoricoFutExist(id);
     repository.deleteById(id);
   }
+
+  //TODO: implementar a somatoria de gols ao historico
+  //TODO: implementar a somatoria de partidas jogadas ao historico
+  //TODO: implementar a a string de time que mais venceu
 }

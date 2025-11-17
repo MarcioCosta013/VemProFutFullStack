@@ -124,8 +124,10 @@ public class FutService implements IFutService {
       // 1 - criando partida
       log.info("criando Partida...");
       PartidasModel partida = new PartidasModel();
+      FutModel futModel = queryService.verifyFutExistRetorn(dto.futId());
       partida.setReservas(dto.reservas());
-      partida.setFutId(queryService.verifyFutExistRetorn(dto.futId()));
+      partida.setFutId(futModel);
+
       // salvando partida para pegar o id.
       partidasRepository.save(partida);
       log.info("Partida criada, adicionando Cartao...");
@@ -165,9 +167,11 @@ public class FutService implements IFutService {
 
           //Para sincronizar a tabela intermédiaria da relacao @ManyToMany.
           partida.getPeladeiros().add(peladeiroModel);
-          peladeiroModel.getPartidas().add(partida);
+          peladeiroModel.getPartidas().add(partida); //Esse adiciona pa tabela: "esta_peladeiro_partidas".
+          futModel.getPeladeiros().add(peladeiroModel); //Esse adiciona a tabela: "participa_peladeiro_fut".
 
           //para garantir que vai ser salvo.
+          repository.save(futModel);
           peladeiroRepository.save(peladeiroModel);
 
           log.info("Peladeiro adicionado");

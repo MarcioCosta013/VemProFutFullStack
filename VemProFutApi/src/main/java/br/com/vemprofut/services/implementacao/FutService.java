@@ -171,8 +171,8 @@ public class FutService implements IFutService {
           futModel.getPeladeiros().add(peladeiroModel); //Esse adiciona a tabela: "participa_peladeiro_fut".
 
           //para garantir que vai ser salvo.
-          repository.save(futModel);
-          peladeiroRepository.save(peladeiroModel);
+          repository.save(futModel); //Esse salva em FutModel (que é onde a table intermediaria foi criada)
+          peladeiroRepository.save(peladeiroModel); //Esse salva em PeladeiroModel (que é onde a table intermediaria foi criada)
 
           log.info("Peladeiro adicionado");
         }
@@ -191,10 +191,4 @@ public class FutService implements IFutService {
     futDTO.peladeiros().add(peladeiroDTO.id());
   }
 
-  @Override
-  @Transactional
-  public void addCartoes(FutDTO futDTO, CartoesDTO cartoesDTO) {
-    // TODO:Verity
-    futDTO.cartoes().add(cartoesDTO.id());
-  }
 }

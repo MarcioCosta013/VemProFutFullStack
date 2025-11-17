@@ -33,7 +33,5 @@ public interface IFutService {
 
   void addPeladeiro(FutDTO dto, PeladeiroDTO peladeiroDTO);
 
-  void addCartoes(FutDTO dto, CartoesDTO cartoesDTO);
-
   List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS);
 }

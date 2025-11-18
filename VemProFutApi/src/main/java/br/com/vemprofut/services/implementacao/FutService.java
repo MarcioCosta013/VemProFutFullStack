@@ -202,7 +202,7 @@ public class FutService implements IFutService {
                                                                                 Esse metodo retorna futModel já com peladeiros carregado... resolvendo o problema abaixo.
                                                                                 @ManyToMany é LAZY, Ou seja:
                                                                                 - O Hibernate carrega os objetos da lista somente quando necessário.
-                                                                                - MAS… apenas carrega os campos que estão presentes na tabela Many-to-Many(id , nome, email...).
+                                                       /                         - MAS… apenas carrega os campos que estão presentes na tabela Many-to-Many(id , nome, email...).
                                                                                 - A tabela intermediária NÃO contém o ID do Peladeiro (Ex. id: null nome: null ...).
                                                                                 - Portanto o Hibernate cria um “proxy”(Pense em um proxy como um “representante” de um objeto real.)
                                                                                  com ID NULL até realmente precisar buscar do banco.

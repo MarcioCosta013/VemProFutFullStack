@@ -1,9 +1,6 @@
 package br.com.vemprofut.services;
 
-import br.com.vemprofut.controllers.request.AddPeladeiroInFutListRequestDTO;
-import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
-import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
-import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
+import br.com.vemprofut.controllers.request.*;
 import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.FutModel;
@@ -32,4 +29,8 @@ public interface IFutService {
   List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS);
 
   List<PeladeiroResponseDTO> listarPeladeiroCadastradosFut(Long futId);
+
+  void addEditor(AddEditorInFutListResquestDTO resquestDTO);
+
+  List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut);
 }

@@ -164,8 +164,18 @@ public interface IMappersDefault {
     if (model == null) {
       return null;
     }
-
     Long idPeladeiro = model.getId();
     return new PeladeiroResponseDTO(idPeladeiro);
   }
+
+  //  default PeladeiroNameIdResponseDTO toResponseNameId(EditorModel model) {
+  //    if (model == null) {
+  //      return null;
+  //    }
+  //    PeladeiroModel peladeiroModel = model.getPeladeiro();
+  //    Long peladeiroId = peladeiroModel.getId();
+  //    String nome = peladeiroModel.getNome();
+  //
+  //    return new PeladeiroNameIdResponseDTO(peladeiroId, nome);
+  //  }
 }

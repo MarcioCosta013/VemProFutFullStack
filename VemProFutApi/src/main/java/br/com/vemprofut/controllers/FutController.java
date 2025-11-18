@@ -1,9 +1,6 @@
 package br.com.vemprofut.controllers;
 
-import br.com.vemprofut.controllers.request.AddPeladeiroInFutListRequestDTO;
-import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
-import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
-import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
+import br.com.vemprofut.controllers.request.*;
 import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.services.IFutService;
@@ -80,5 +77,21 @@ public class FutController {
   public ResponseEntity<List<PeladeiroResponseDTO>> listarPeladeirosCadastrados(
       @PathVariable final Long idFut) {
     return ResponseEntity.ok().body(futService.listarPeladeiroCadastradosFut(idFut));
+  }
+
+  @PostMapping("add-editor")
+  @Operation(summary = "Adiciona um Editor a lista de editores de um fut em especifico")
+  public ResponseEntity<Void> adicionarEditorLista(
+      @RequestBody AddEditorInFutListResquestDTO editor) {
+    futService.addEditor(editor);
+    return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("lista-editores/{idFut}")
+  @Operation(summary = "busca a lista de editores de um fut em especifico")
+  public ResponseEntity<List<PeladeiroNameIdResponseDTO>> listarEditoresFut(
+      @PathVariable final Long idFut) {
+
+    return ResponseEntity.ok().body(futService.listarEditoresCadastradosFut(idFut)); // testar
   }
 }

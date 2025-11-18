@@ -37,7 +37,15 @@ public class FutQueryService implements IFutQueryService {
     return repository
         .buscarFutComListPeladeiros(id)
         .orElseThrow(
-            () -> new NotFoundException("Não foi encontrado o Fut de id ou lista de peladeiro"));
+            () -> new NotFoundException("Não foi encontrado o Fut de id ou lista de Peladeiro"));
+  }
+
+  @Override
+  public FutModel verifyFutExistRetornListEditores(Long id) {
+    return repository
+        .buscarFutComListEditores(id)
+        .orElseThrow(
+            () -> new NotFoundException("Não foi encontrado o Fut de id ou lista de Editores"));
   }
 
   @Override

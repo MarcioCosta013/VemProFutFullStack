@@ -1,8 +1,10 @@
 package br.com.vemprofut.mappers;
 
+import br.com.vemprofut.controllers.response.PeladeiroNameIdResponseDTO;
 import br.com.vemprofut.models.DTOs.EditorDTO;
 import br.com.vemprofut.models.EditorModel;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(
     componentModel = "spring",
@@ -14,4 +16,8 @@ public interface IEditorMapper {
 
   // Model --> DTO
   EditorDTO toDTO(EditorModel model);
+
+  @Mapping(expression = "java(model.getPeladeiro().getId())", target = "peladeiroId")
+  @Mapping(expression = "java(model.getPeladeiro().getNome())", target = "nome")
+  PeladeiroNameIdResponseDTO toResponseNameId(EditorModel model);
 }

@@ -2,12 +2,14 @@ package br.com.vemprofut.services.implementacao;
 
 import br.com.vemprofut.controllers.request.*;
 import br.com.vemprofut.controllers.response.*;
+import br.com.vemprofut.mappers.IEditorMapper;
 import br.com.vemprofut.mappers.IFutMapper;
 import br.com.vemprofut.mappers.IPartidasMapper;
 import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.*;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.repositories.*;
+import br.com.vemprofut.services.IEditorService;
 import br.com.vemprofut.services.IFutService;
 import br.com.vemprofut.services.IHistoricoFutService;
 import br.com.vemprofut.services.IPartidasService;
@@ -47,6 +49,10 @@ public class FutService implements IFutService {
   @Autowired private CartoesRepository cartoesRepository;
 
   @Autowired private GolsPartidaRepository golsRepository;
+
+  @Autowired private IEditorService editorService;
+
+  @Autowired private IEditorMapper editorMapper;
 
   @Override
   @Transactional
@@ -197,6 +203,7 @@ public class FutService implements IFutService {
   }
 
   @Override
+  @Transactional
   public List<PeladeiroResponseDTO> listarPeladeiroCadastradosFut(Long futId) {
     FutModel futModel = queryService.verifyFutExistRetornListPeladeiro(futId); /*
                                                                                 Esse metodo retorna futModel já com peladeiros carregado... resolvendo o problema abaixo.
@@ -212,12 +219,41 @@ public class FutService implements IFutService {
     List<PeladeiroResponseDTO> listResponce = new ArrayList<>();
 
     for (PeladeiroModel p : futModel.getPeladeiros()) {
-      System.out.println("objeto real:" + p.getClass());
-      System.out.println("id direto:" + p.getId());
       listResponce.add(peladeiroMapper.modelToPeladeiroResponse(p));
     }
     return listResponce;
   }
 
-  // TODO: Adicionar editores
+  public void addEditor(AddEditorInFutListResquestDTO resquestDTO) {
+    EditorModel editorModel = new EditorModel();
+    // TODO: adicionar editores a partir da lista de peladeiros cadstrados.
+    FutModel futModel = queryService.verifyFutExistRetorn(resquestDTO.fut());
+    PeladeiroModel peladeiroModel =
+        peladeiroQueryService.verifyPeladeiroExist(resquestDTO.peladeiro());
+
+    editorModel.setFut(futModel);
+    editorModel.setPeladeiro(peladeiroModel);
+    // Salvando Editor
+    editorService.create(editorModel);
+    // Adicionando Editor na lista de Editores de Fut.
+    futModel.getEditores().add(editorModel);
+    repository.save(futModel);
+    // Adicionado Editor na lista de Editores de Peladeiro.
+    peladeiroModel.getEditores().add(editorModel);
+    peladeiroRepository.save(peladeiroModel);
+  }
+
+  @Override
+  public List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut) {
+    FutModel futModel = queryService.verifyFutExistRetornListEditores(idFut);
+    log.info("Verificacao de existencia de Fut realizada com sucesso!");
+
+    List<PeladeiroNameIdResponseDTO> listResponse = new ArrayList<>();
+
+    for (EditorModel e : futModel.getEditores()) {
+      listResponse.add(editorMapper.toResponseNameId(e));
+    }
+
+    return listResponse;
+  }
 }

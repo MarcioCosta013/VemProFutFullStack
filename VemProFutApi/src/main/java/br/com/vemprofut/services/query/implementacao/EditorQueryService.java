@@ -3,15 +3,16 @@ package br.com.vemprofut.services.query.implementacao;
 import br.com.vemprofut.exceptions.EditorInUseException;
 import br.com.vemprofut.exceptions.NotFoundException;
 import br.com.vemprofut.mappers.IEditorMapper;
-import br.com.vemprofut.models.DTOs.EditorDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.EditorModel;
 import br.com.vemprofut.repositories.EditorRepository;
 import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.services.query.IEditorQueryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class EditorQueryService implements IEditorQueryService {
 
@@ -22,12 +23,12 @@ public class EditorQueryService implements IEditorQueryService {
   @Autowired private FutRepository futRepository;
 
   @Override
-  public void verityEditorExist(EditorDTO dto) {
-    EditorModel model = mapper.toModel(dto);
-
-    if (repository.findByPeladeiroAndFut(model.getPeladeiro(), model.getFut())) {
-      throw new EditorInUseException("Editor já cadastrado!");
+  public void verityEditorExist(EditorModel model) {
+    log.info("Verificando se o editor já foi cadastrado...");
+    if (repository.findByPeladeiroAndFut(model.getPeladeiro(), model.getFut()) != null) {
+      throw new EditorInUseException("Editor já cadastrado no Fut!");
     }
+    log.info("Editor verificado com sucesso!");
   }
 
   @Override

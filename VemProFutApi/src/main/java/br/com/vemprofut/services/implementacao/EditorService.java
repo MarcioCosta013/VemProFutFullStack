@@ -22,10 +22,9 @@ public class EditorService implements IEditorService {
   @Autowired private EditorRepository repository;
 
   @Override
-  public EditorDTO create(EditorDTO dto) {
-    queryService.verityEditorExist(dto);
-    EditorModel editorModel = mapper.toModel(dto);
-    return mapper.toDTO(repository.save(editorModel));
+  public EditorModel create(EditorModel model) {
+    queryService.verityEditorExist(model);
+    return repository.save(model);
   }
 
   @Override

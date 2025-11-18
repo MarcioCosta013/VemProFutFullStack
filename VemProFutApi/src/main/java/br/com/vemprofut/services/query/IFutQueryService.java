@@ -10,6 +10,8 @@ public interface IFutQueryService {
 
   FutModel verifyFutExistRetornListPeladeiro(Long id);
 
+  FutModel verifyFutExistRetornListEditores(Long id);
+
   void verifyNomeFutExist(String nome);
 
   FutModel verifyNomeFutExistRetorn(String nome);

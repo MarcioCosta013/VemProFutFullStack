@@ -15,8 +15,9 @@ public interface FutRepository extends JpaRepository<FutModel, Long> {
   @Query(
       """
           SELECT f FROM FutModel f JOIN FETCH f.peladeiros WHERE f.id = :id
-          """)
+         """)
   Optional<FutModel> buscarFutComListPeladeiros(@Param("id") Long id);
+
   /*
   Você diz ao Hibernate: "Busque o FutModel e já aproveita para carregar os peladeiros"
 
@@ -25,4 +26,9 @@ public interface FutRepository extends JpaRepository<FutModel, Long> {
   SELECT * FROM fut f JOIN peladeiros_fut pf ON pf.fut_id = f.id JOIN peladeiro p ON p.id = pf.peladeiro_id
   WHERE f.id = ?
    */
+
+  @Query("""
+          SELECT f FROM FutModel f JOIN FETCH f.editores WHERE f.id = :id
+         """)
+  Optional<FutModel> buscarFutComListEditores(@Param("id") Long id);
 }

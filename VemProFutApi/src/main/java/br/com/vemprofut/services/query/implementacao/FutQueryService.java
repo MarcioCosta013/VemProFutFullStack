@@ -33,6 +33,14 @@ public class FutQueryService implements IFutQueryService {
   }
 
   @Override
+  public FutModel verifyFutExistRetornListPeladeiro(Long id) {
+    return repository
+        .buscarFutComListPeladeiros(id)
+        .orElseThrow(
+            () -> new NotFoundException("Não foi encontrado o Fut de id ou lista de peladeiro"));
+  }
+
+  @Override
   public void verifyNomeFutExist(String nome) {
     log.info("Iniciando a verificacao do nome...");
     boolean exists = repository.existsByNomeStartingWith(nome);

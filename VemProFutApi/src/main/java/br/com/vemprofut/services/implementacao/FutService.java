@@ -4,10 +4,9 @@ import br.com.vemprofut.controllers.request.*;
 import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.mappers.IFutMapper;
 import br.com.vemprofut.mappers.IPartidasMapper;
+import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.*;
-import br.com.vemprofut.models.DTOs.CartoesDTO;
 import br.com.vemprofut.models.DTOs.FutDTO;
-import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.repositories.*;
 import br.com.vemprofut.services.IFutService;
 import br.com.vemprofut.services.IHistoricoFutService;
@@ -40,6 +39,8 @@ public class FutService implements IFutService {
   @Autowired private IPeladeiroQueryService peladeiroQueryService;
 
   @Autowired private PeladeiroRepository peladeiroRepository;
+
+  @Autowired private IPeladeiroMapper peladeiroMapper;
 
   @Autowired private IHistoricoFutService historicoFutService;
 
@@ -109,10 +110,6 @@ public class FutService implements IFutService {
   @Override
   @Transactional
   public SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel) {
-    // TODO: criar e implementar os DTOs de request e responde de Partida
-    // TODO: implementar gols
-    // TODO: implementar cartoes
-    // TODO: implementar lista de peladeiros que irão jogar
     return partidasService.create(requestDTO, futModel);
   }
 
@@ -165,14 +162,16 @@ public class FutService implements IFutService {
         for (PeladeiroRequestDTO p : dto.peladeiros()) {
           PeladeiroModel peladeiroModel = peladeiroQueryService.verifyPeladeiroExist(p.id());
 
-          //Para sincronizar a tabela intermédiaria da relacao @ManyToMany.
+          // Para sincronizar a tabela intermédiaria da relacao @ManyToMany.
           partida.getPeladeiros().add(peladeiroModel);
-          peladeiroModel.getPartidas().add(partida); //Esse adiciona pa tabela: "esta_peladeiro_partidas".
-          futModel.getPeladeiros().add(peladeiroModel); //Esse adiciona a tabela: "participa_peladeiro_fut".
+          peladeiroModel
+              .getPartidas()
+              .add(partida); // Esse adiciona pa tabela: "esta_peladeiro_partidas".
 
-          //para garantir que vai ser salvo.
-          repository.save(futModel); //Esse salva em FutModel (que é onde a table intermediaria foi criada)
-          peladeiroRepository.save(peladeiroModel); //Esse salva em PeladeiroModel (que é onde a table intermediaria foi criada)
+          // para garantir que vai ser salvo.
+          peladeiroRepository.save(
+              peladeiroModel); // Esse salva em PeladeiroModel (que é onde a table intermediaria foi
+          // criada)
 
           log.info("Peladeiro adicionado");
         }
@@ -182,13 +181,43 @@ public class FutService implements IFutService {
     return partidasMapper.toResponseList(partidaList);
   }
 
-  // TODO: Adicionar editores
-
   @Override
   @Transactional
-  public void addPeladeiro(FutDTO futDTO, PeladeiroDTO peladeiroDTO) {
-    // TODO:Verity
-    futDTO.peladeiros().add(peladeiroDTO.id());
+  public void addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO) {
+    PeladeiroModel peladeiroModel =
+        peladeiroQueryService.verifyPeladeiroExist(requestDTO.peladeiroId());
+    FutModel futModel = queryService.verifyFutExistRetorn(requestDTO.futId());
+    log.info("Verificacao do Peladeiro e do Fut realizadas com sucesso! Salvando dados...");
+
+    futModel
+        .getPeladeiros()
+        .add(peladeiroModel); // Esse adiciona a tabela: "participa_peladeiro_fut".
+    repository.save(
+        futModel); // Esse salva em FutModel (que é onde a table intermediaria foi criada)
   }
 
+  @Override
+  public List<PeladeiroResponseDTO> listarPeladeiroCadastradosFut(Long futId) {
+    FutModel futModel = queryService.verifyFutExistRetornListPeladeiro(futId); /*
+                                                                                Esse metodo retorna futModel já com peladeiros carregado... resolvendo o problema abaixo.
+                                                                                @ManyToMany é LAZY, Ou seja:
+                                                                                - O Hibernate carrega os objetos da lista somente quando necessário.
+                                                                                - MAS… apenas carrega os campos que estão presentes na tabela Many-to-Many(id , nome, email...).
+                                                                                - A tabela intermediária NÃO contém o ID do Peladeiro (Ex. id: null nome: null ...).
+                                                                                - Portanto o Hibernate cria um “proxy”(Pense em um proxy como um “representante” de um objeto real.)
+                                                                                 com ID NULL até realmente precisar buscar do banco.
+                                                                                */
+    log.info("Verificacao de existencia de Fut realizada com sucesso!");
+
+    List<PeladeiroResponseDTO> listResponce = new ArrayList<>();
+
+    for (PeladeiroModel p : futModel.getPeladeiros()) {
+      System.out.println("objeto real:" + p.getClass());
+      System.out.println("id direto:" + p.getId());
+      listResponce.add(peladeiroMapper.modelToPeladeiroResponse(p));
+    }
+    return listResponce;
+  }
+
+  // TODO: Adicionar editores
 }

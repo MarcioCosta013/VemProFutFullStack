@@ -53,7 +53,7 @@ public class FutModel {
   @OneToMany(mappedBy = "fut")
   private List<CartoesModel> cartoes = new ArrayList<>();
 
-  public void addPeladeiroFut(PeladeiroModel peladeiroModel){
+  public void addPeladeiroFut(PeladeiroModel peladeiroModel) {
     this.getPeladeiros().add(peladeiroModel);
     peladeiroModel.getFuts().add(this);
   }

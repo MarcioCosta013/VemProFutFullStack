@@ -74,7 +74,7 @@ public class HistoricoFutService implements IHistoricoFutService {
     repository.deleteById(id);
   }
 
-  //TODO: implementar a somatoria de gols ao historico
-  //TODO: implementar a somatoria de partidas jogadas ao historico
-  //TODO: implementar a a string de time que mais venceu
+  // TODO: implementar a somatoria de gols ao historico
+  // TODO: implementar a somatoria de partidas jogadas ao historico
+  // TODO: implementar a a string de time que mais venceu
 }

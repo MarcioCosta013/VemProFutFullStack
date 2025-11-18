@@ -58,8 +58,8 @@ public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
     repository.deleteById(id);
   }
 
-  //TODO: implementar a somatoria de gols ao historico peladeiro
-  //TODO: implementar a somatoria das notas do peladeiro, e como vai ser a pontuacao
-  //TODO: implementar a somatoria de partidas jogadas
-  //TODO: implementar a somatoria de partidas ganhas
+  // TODO: implementar a somatoria de gols ao historico peladeiro
+  // TODO: implementar a somatoria das notas do peladeiro, e como vai ser a pontuacao
+  // TODO: implementar a somatoria de partidas jogadas
+  // TODO: implementar a somatoria de partidas ganhas
 }

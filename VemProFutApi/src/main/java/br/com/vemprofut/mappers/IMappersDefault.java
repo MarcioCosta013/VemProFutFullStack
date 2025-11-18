@@ -1,6 +1,7 @@
 package br.com.vemprofut.mappers;
 
 import br.com.vemprofut.controllers.response.CartoesResumoResponseDTO;
+import br.com.vemprofut.controllers.response.PeladeiroResponseDTO;
 import br.com.vemprofut.models.CartoesModel;
 import br.com.vemprofut.models.EditorModel;
 import br.com.vemprofut.models.FutModel;
@@ -157,5 +158,14 @@ public interface IMappersDefault {
   default PeladeiroModel mapPeladeiro(Long id) {
     IPeladeiroService service = new PeladeiroService();
     return service.findByIdModel(id);
+  }
+
+  default PeladeiroResponseDTO mapModelToResponse(PeladeiroModel model) {
+    if (model == null) {
+      return null;
+    }
+
+    Long idPeladeiro = model.getId();
+    return new PeladeiroResponseDTO(idPeladeiro);
   }
 }

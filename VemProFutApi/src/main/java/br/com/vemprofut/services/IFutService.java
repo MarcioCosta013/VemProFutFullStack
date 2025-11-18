@@ -1,15 +1,11 @@
 package br.com.vemprofut.services;
 
+import br.com.vemprofut.controllers.request.AddPeladeiroInFutListRequestDTO;
 import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
 import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
 import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
-import br.com.vemprofut.controllers.response.FutDetailsResponse;
-import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
-import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
-import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
-import br.com.vemprofut.models.DTOs.CartoesDTO;
+import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.models.DTOs.FutDTO;
-import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
 import java.util.List;
 
@@ -31,7 +27,9 @@ public interface IFutService {
 
   SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel);
 
-  void addPeladeiro(FutDTO dto, PeladeiroDTO peladeiroDTO);
+  void addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO);
 
   List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS);
+
+  List<PeladeiroResponseDTO> listarPeladeiroCadastradosFut(Long futId);
 }

@@ -1,5 +1,6 @@
 package br.com.vemprofut.controllers;
 
+import br.com.vemprofut.controllers.request.AddPeladeiroInFutListRequestDTO;
 import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
 import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
 import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
@@ -64,5 +65,20 @@ public class FutController {
   public ResponseEntity<List<SavePartidasResponseDTO>> criarPartidasLista(
       @RequestBody List<SavePartidaRequestDTO> requestDTO) {
     return ResponseEntity.status(HttpStatus.CREATED).body(futService.criarPartidasList(requestDTO));
+  }
+
+  @PostMapping("add-peladeiro")
+  @Operation(summary = "Adiciona um peladeiro a lista de peladeiros cadastrado no fut")
+  public ResponseEntity<Void> adicionarPeladeiroLista(
+      @RequestBody AddPeladeiroInFutListRequestDTO addPeladeiroRequestDTO) {
+    futService.addPeladeiro(addPeladeiroRequestDTO);
+    return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("lista-peladeiros/{idFut}")
+  @Operation(summary = "busca a lista de todos peldadeiros cadastrados no fut")
+  public ResponseEntity<List<PeladeiroResponseDTO>> listarPeladeirosCadastrados(
+      @PathVariable final Long idFut) {
+    return ResponseEntity.ok().body(futService.listarPeladeiroCadastradosFut(idFut));
   }
 }

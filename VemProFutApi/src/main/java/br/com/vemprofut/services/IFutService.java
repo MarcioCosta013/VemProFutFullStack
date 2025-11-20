@@ -1,15 +1,8 @@
 package br.com.vemprofut.services;
 
-import br.com.vemprofut.controllers.request.SaveFutRequestDTO;
-import br.com.vemprofut.controllers.request.SavePartidaRequestDTO;
-import br.com.vemprofut.controllers.request.UpdateFutRequestDTO;
-import br.com.vemprofut.controllers.response.FutDetailsResponse;
-import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
-import br.com.vemprofut.controllers.response.SavePartidasResponseDTO;
-import br.com.vemprofut.controllers.response.UpdateFutResponseDTO;
-import br.com.vemprofut.models.DTOs.CartoesDTO;
+import br.com.vemprofut.controllers.request.*;
+import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.models.DTOs.FutDTO;
-import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
 import java.util.List;
 
@@ -31,9 +24,13 @@ public interface IFutService {
 
   SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel);
 
-  void addPeladeiro(FutDTO dto, PeladeiroDTO peladeiroDTO);
-
-  void addCartoes(FutDTO dto, CartoesDTO cartoesDTO);
+  void addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO);
 
   List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS);
+
+  List<PeladeiroResponseDTO> listarPeladeiroCadastradosFut(Long futId);
+
+  void addEditor(AddEditorInFutListResquestDTO resquestDTO);
+
+  List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut);
 }

@@ -2,6 +2,7 @@ package br.com.vemprofut.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import lombok.ToString;
 @Table(name = "editores_fut")
 @Getter
 @Setter
+@NoArgsConstructor
 public class EditorModel {
 
   @Id

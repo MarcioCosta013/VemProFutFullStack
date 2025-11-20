@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IEditorService {
 
-  EditorDTO create(EditorDTO dto);
+  EditorModel create(EditorModel dto);
 
   EditorDTO findById(Long id);
 

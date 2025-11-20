@@ -4,6 +4,7 @@ import br.com.vemprofut.exceptions.FutInUseException;
 import br.com.vemprofut.exceptions.NomeInUseException;
 import br.com.vemprofut.exceptions.NotFoundException;
 import br.com.vemprofut.models.FutModel;
+import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.services.query.IFutQueryService;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,6 +34,22 @@ public class FutQueryService implements IFutQueryService {
   }
 
   @Override
+  public FutModel verifyFutExistRetornListPeladeiro(Long id) {
+    return repository
+        .buscarFutComListPeladeiros(id)
+        .orElseThrow(
+            () -> new NotFoundException("Não foi encontrado o Fut de id ou lista de Peladeiro"));
+  }
+
+  @Override
+  public FutModel verifyFutExistRetornListEditores(Long id) {
+    return repository
+        .buscarFutComListEditores(id)
+        .orElseThrow(
+            () -> new NotFoundException("Não foi encontrado o Fut de id ou lista de Editores"));
+  }
+
+  @Override
   public void verifyNomeFutExist(String nome) {
     log.info("Iniciando a verificacao do nome...");
     boolean exists = repository.existsByNomeStartingWith(nome);
@@ -49,5 +66,15 @@ public class FutQueryService implements IFutQueryService {
         .findByNome(nome)
         .orElseThrow(
             () -> new EntityNotFoundException("Futebol com nome '" + nome + "' não encontrado"));
+  }
+
+  @Override
+  public void verifyPeladeiroExistInListOrAdm(FutModel futModel, PeladeiroModel model) {
+    if (!(futModel.getPeladeiros().contains(model))) {
+      throw new NotFoundException("Editor nao cadastrado na lista de peladeiros do fut!");
+    }
+    if (futModel.getAdministradorPeladeiro().equals(model)) {
+      throw new NotFoundException("O Editor selecionado já é o Administrador do Fut!");
+    }
   }
 }

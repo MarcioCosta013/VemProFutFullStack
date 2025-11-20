@@ -2,6 +2,7 @@ package br.com.vemprofut.mappers;
 
 import br.com.vemprofut.controllers.request.SavePeladeiroRequestDTO;
 import br.com.vemprofut.controllers.response.PeladeiroDetailResponse;
+import br.com.vemprofut.controllers.response.PeladeiroResponseDTO;
 import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
 import br.com.vemprofut.controllers.response.UpdatePeladeiroResponseDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
@@ -36,4 +37,7 @@ public interface IPeladeiroMapper {
   UpdatePeladeiroResponseDTO modelToUpdateResponse(PeladeiroModel model);
 
   SavePeladeiroResponseDTO modelToSaveResponse(PeladeiroModel model);
+
+  @Mapping(source = "id", target = "peladeiroId")
+  PeladeiroResponseDTO modelToPeladeiroResponse(PeladeiroModel model);
 }

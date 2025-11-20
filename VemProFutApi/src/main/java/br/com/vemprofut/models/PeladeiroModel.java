@@ -38,7 +38,7 @@ public class PeladeiroModel {
 
   @ToString.Exclude
   @OneToOne
-  @JoinColumn(name = " fk_historico_peladeiro")
+  @JoinColumn(name = "fk_historico_peladeiro")
   private HistoricoPeladeiroModel historicoPeladeiro;
 
   @ManyToMany
@@ -64,13 +64,18 @@ public class PeladeiroModel {
   private List<GolsPartidaModel> golsPeladeiro = new ArrayList<>();
 
   /*
-    Metodo Helper para manter as duas listas com tabelas intermediarias
-    no banco de dados sincronizadas... e para a tabela intermediaria ser alimentada
-    sempre o lado owner side (lado dono) deve adicionar...(quem tem o @JoinTable
-    com o name="nome da tabela intermediaria"
-   */
-  public void addPartida(PartidasModel partidasModel){
-    this.partidas.add(partidasModel); //adicione essa partida aqui na lista em peladeiro
-    partidasModel.getPeladeiros().add(this); //adicione esse peladeiro lá em partidas
+   Metodo Helper para manter as duas listas com tabelas intermediarias
+   no banco de dados sincronizadas... e para a tabela intermediaria ser alimentada
+   sempre o lado owner side (lado dono) deve adicionar...(quem tem o @JoinTable
+   com o name="nome da tabela intermediaria"
+  */
+  public void addPartida(PartidasModel partidasModel) {
+    this.partidas.add(partidasModel); // adicione essa partida aqui na lista em peladeiro
+    partidasModel.getPeladeiros().add(this); // adicione esse peladeiro lá em partidas
+  }
+
+  public void addFut(FutModel futModel) {
+    this.getFuts().add(futModel);
+    futModel.getPeladeiros().add(this);
   }
 }

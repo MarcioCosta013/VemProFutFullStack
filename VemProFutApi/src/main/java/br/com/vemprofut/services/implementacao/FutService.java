@@ -226,10 +226,12 @@ public class FutService implements IFutService {
 
   public void addEditor(AddEditorInFutListResquestDTO resquestDTO) {
     EditorModel editorModel = new EditorModel();
-    // TODO: adicionar editores a partir da lista de peladeiros cadstrados.
+
+    // Verificacoes
     FutModel futModel = queryService.verifyFutExistRetorn(resquestDTO.fut());
     PeladeiroModel peladeiroModel =
         peladeiroQueryService.verifyPeladeiroExist(resquestDTO.peladeiro());
+    queryService.verifyPeladeiroExistInListOrAdm(futModel, peladeiroModel);
 
     editorModel.setFut(futModel);
     editorModel.setPeladeiro(peladeiroModel);

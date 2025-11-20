@@ -1,6 +1,7 @@
 package br.com.vemprofut.services.query;
 
 import br.com.vemprofut.models.FutModel;
+import br.com.vemprofut.models.PeladeiroModel;
 
 public interface IFutQueryService {
 
@@ -15,4 +16,6 @@ public interface IFutQueryService {
   void verifyNomeFutExist(String nome);
 
   FutModel verifyNomeFutExistRetorn(String nome);
+
+  void verifyPeladeiroExistInListOrAdm(FutModel futModel, PeladeiroModel model);
 }

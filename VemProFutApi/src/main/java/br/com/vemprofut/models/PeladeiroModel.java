@@ -63,6 +63,12 @@ public class PeladeiroModel {
   @OneToMany(mappedBy = "peladeiro")
   private List<GolsPartidaModel> golsPeladeiro = new ArrayList<>();
 
+  @Column(name = "auth_provider", length = 50)
+  private String authProvider;
+
+  @Column(name = "foto_url", length = 255)
+  private String fotoUrl; // Melhora a UX do seu sistema...
+
   /*
    Metodo Helper para manter as duas listas com tabelas intermediarias
    no banco de dados sincronizadas... e para a tabela intermediaria ser alimentada

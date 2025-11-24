@@ -1,13 +1,17 @@
 package br.com.vemprofut.services.query.implementacao;
 
 import br.com.vemprofut.exceptions.EmailInUseException;
+import br.com.vemprofut.exceptions.FileStorageException;
 import br.com.vemprofut.exceptions.NotFoundException;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.PeladeiroRepository;
+import br.com.vemprofut.services.IUploadLocalService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j // para gerar logs para verificacao futura de erros
 @Service
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class PeladeiroQueryService implements IPeladeiroQueryService {
 
   private final PeladeiroRepository repository;
+  private final IUploadLocalService uploadLocalService;
 
   @Override
   public void verifyEmail(String email) {
@@ -40,5 +45,19 @@ public class PeladeiroQueryService implements IPeladeiroQueryService {
 
     log.debug("Peladeiro encontrado: {}", peladeiro);
     return peladeiro;
+  }
+
+  @Override
+  public void verifyPeladeiroSaveFile(Long id, MultipartFile file) {
+    PeladeiroModel peladeiroModel = verifyPeladeiroExist(id);
+    try {
+      String url = uploadLocalService.upload(file, "peladeiro");
+      peladeiroModel.setFotoUrl(url);
+      repository.save(peladeiroModel);
+      log.info("Foto salva!");
+    } catch (IOException ex) {
+      throw new FileStorageException(
+          "Erro ao salvar a foto do peladeiro com id: " + id, ex.getCause());
+    }
   }
 }

@@ -1,16 +1,20 @@
 package br.com.vemprofut.services.query.implementacao;
 
+import br.com.vemprofut.exceptions.FileStorageException;
 import br.com.vemprofut.exceptions.FutInUseException;
 import br.com.vemprofut.exceptions.NomeInUseException;
 import br.com.vemprofut.exceptions.NotFoundException;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.FutRepository;
+import br.com.vemprofut.services.IUploadLocalService;
 import br.com.vemprofut.services.query.IFutQueryService;
 import jakarta.persistence.EntityNotFoundException;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class FutQueryService implements IFutQueryService {
 
   private final FutRepository repository;
+  private final IUploadLocalService uploadLocalService;
 
   @Override
   public void verifyFutExist(Long dto) {
@@ -75,6 +80,19 @@ public class FutQueryService implements IFutQueryService {
     }
     if (futModel.getAdministradorPeladeiro().equals(model)) {
       throw new NotFoundException("O Editor selecionado já é o Administrador do Fut!");
+    }
+  }
+
+  @Override
+  public void verifyFutSaveFile(Long id, MultipartFile file) {
+    FutModel futModel = verifyFutExistRetorn(id);
+    try {
+      String url = uploadLocalService.upload(file, "fut");
+      futModel.setFoto_url(url);
+      repository.save(futModel);
+    } catch (IOException ex) {
+      throw new FileStorageException(
+          "Erro ao salvar a foto do peladeiro com id: " + id, ex.getCause());
     }
   }
 }

@@ -9,8 +9,10 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("fut/")
@@ -93,5 +95,14 @@ public class FutController {
       @PathVariable final Long idFut) {
 
     return ResponseEntity.ok().body(futService.listarEditoresCadastradosFut(idFut)); // testar
+  }
+
+  @PostMapping(value = "uploadFoto/{id}",
+  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @Operation(summary = "Para enviar a foto de capa do Fut")
+  public ResponseEntity<String> uploadFotoFut(
+      @PathVariable Long id, @RequestPart("file") MultipartFile file) {
+    futService.atualizarFotoCapa(id, file);
+    return ResponseEntity.ok("Foto de capa Salva!");
   }
 }

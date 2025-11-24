@@ -18,7 +18,10 @@ public class SecurityConfig {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers("/", "/public/**").permitAll().anyRequest().authenticated())
+                auth.requestMatchers("/", "/swagger-ui/index.html#/")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
         // OAuth2 login (Auth0)
         .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2LoginSuccessHandler)) // login via OAuth2
         .oauth2ResourceServer(

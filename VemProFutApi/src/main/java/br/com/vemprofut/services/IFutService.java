@@ -5,6 +5,7 @@ import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.FutModel;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface IFutService {
 
@@ -33,4 +34,6 @@ public interface IFutService {
   void addEditor(AddEditorInFutListResquestDTO resquestDTO);
 
   List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut);
+
+  void atualizarFotoCapa(Long id, MultipartFile file);
 }

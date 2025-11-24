@@ -6,6 +6,8 @@ CREATE TABLE peladeiro (
     pe_dominante_peladeiro varchar(10),
     whatsapp_peladeiro varchar(15),
     email varchar(80) NOT NULL UNIQUE,
+    auth_provider varchar(50),
+    foto_url varchar(255),
     fk_historico_peladeiro BIGINT
     -- As colunas de chave estrangeira (FK) foram removidas.
     -- É melhor adicioná-las em uma migration separada,

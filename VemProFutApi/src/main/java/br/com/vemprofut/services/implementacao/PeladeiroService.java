@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j // para gerar logs para verificacao futura de erros
 @Service
@@ -108,5 +109,11 @@ public class PeladeiroService implements IPeladeiroService {
     queryService.verifyPeladeiroExist(id);
     log.info("Existência de Peladeiro confirmada com sucesso!");
     repository.deleteById(id);
+  }
+
+  @Override
+  @Transactional
+  public void atualizarFoto(Long id, MultipartFile file) {
+    queryService.verifyPeladeiroSaveFile(id, file);
   }
 }

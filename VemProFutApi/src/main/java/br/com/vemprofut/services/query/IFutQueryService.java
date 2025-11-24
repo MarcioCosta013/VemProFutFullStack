@@ -2,6 +2,7 @@ package br.com.vemprofut.services.query;
 
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PeladeiroModel;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface IFutQueryService {
 
@@ -18,4 +19,6 @@ public interface IFutQueryService {
   FutModel verifyNomeFutExistRetorn(String nome);
 
   void verifyPeladeiroExistInListOrAdm(FutModel futModel, PeladeiroModel model);
+
+  void verifyFutSaveFile(Long id, MultipartFile file);
 }

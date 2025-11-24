@@ -30,6 +30,9 @@ public class FutModel {
   @Column(name = "max_gols_vitoria_fut", nullable = false)
   private Integer maxGolsVitoria;
 
+  @Column(name = "foto_url", length = 255)
+  private String foto_url;
+
   @ToString.Exclude
   @OneToOne
   @JoinColumn(name = "fk_historico_fut")

@@ -7,10 +7,13 @@ import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
 import br.com.vemprofut.services.IPeladeiroService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("peladeiro/")
@@ -47,5 +50,14 @@ public class PeladeiroController {
   public ResponseEntity<Void> delete(@PathVariable final Long id) {
     peladeiroService.delete(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping(value = "uploadFoto/{id}",
+  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @Operation(summary = "Caso nao logado pelo gmail, enviar a foto do perfil")
+  public ResponseEntity<String> uploadFotoPeladeiro(
+      @PathVariable Long id, @RequestPart("file") MultipartFile file) throws IOException {
+    peladeiroService.atualizarFoto(id, file);
+    return ResponseEntity.ok("Foto salva!");
   }
 }

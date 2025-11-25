@@ -36,4 +36,10 @@ public interface IFutService {
   List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut);
 
   void atualizarFotoCapa(Long id, MultipartFile file);
+
+  SaveBanimentoResponseDTO addBanimentoList(SaveBanimentoRequestDTO dto);
+
+  List<BanimentoDetailsResponseDTO> findAllBanidos(Long idFut);
+
+  void removeBanido(Long idPeladeiro, Long idFut);
 }

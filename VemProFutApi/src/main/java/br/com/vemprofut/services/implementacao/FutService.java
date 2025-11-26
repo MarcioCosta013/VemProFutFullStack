@@ -9,10 +9,7 @@ import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.*;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.repositories.*;
-import br.com.vemprofut.services.IEditorService;
-import br.com.vemprofut.services.IFutService;
-import br.com.vemprofut.services.IHistoricoFutService;
-import br.com.vemprofut.services.IPartidasService;
+import br.com.vemprofut.services.*;
 import br.com.vemprofut.services.query.IFutQueryService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import java.util.ArrayList;
@@ -54,6 +51,10 @@ public class FutService implements IFutService {
   @Autowired private IEditorService editorService;
 
   @Autowired private IEditorMapper editorMapper;
+
+  @Autowired private IBanimentoService banidoService;
+
+  // ======================== CRUD basico ==========================
 
   @Override
   @Transactional
@@ -114,12 +115,16 @@ public class FutService implements IFutService {
     repository.deleteById(id);
   }
 
+  // ======================== acoes partidas ==========================
+
   @Override
   @Transactional
   public SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel) {
     return partidasService.create(requestDTO, futModel);
   }
 
+  @Override
+  @Transactional
   public List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS) {
 
     List<PartidasModel> partidaList = new ArrayList<>();
@@ -188,12 +193,15 @@ public class FutService implements IFutService {
     return partidasMapper.toResponseList(partidaList);
   }
 
+  // ======================== lista peladeiro ========================
+
   @Override
   @Transactional
   public void addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO) {
     PeladeiroModel peladeiroModel =
         peladeiroQueryService.verifyPeladeiroExist(requestDTO.peladeiroId());
     FutModel futModel = queryService.verifyFutExistRetorn(requestDTO.futId());
+    queryService.verityPeladeiroInList(futModel, peladeiroModel);
     log.info("Verificacao do Peladeiro e do Fut realizadas com sucesso! Salvando dados...");
 
     futModel
@@ -225,6 +233,9 @@ public class FutService implements IFutService {
     return listResponce;
   }
 
+  // ===================== lista Editores =============================
+  @Override
+  @Transactional
   public void addEditor(AddEditorInFutListResquestDTO resquestDTO) {
     EditorModel editorModel = new EditorModel();
 
@@ -247,6 +258,7 @@ public class FutService implements IFutService {
   }
 
   @Override
+  @Transactional
   public List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut) {
     FutModel futModel = queryService.verifyFutExistRetornListEditores(idFut);
     log.info("Verificacao de existencia de Fut realizada com sucesso!");
@@ -260,8 +272,42 @@ public class FutService implements IFutService {
     return listResponse;
   }
 
+  // ===================== upload arquivos fotos ======================
+
   @Override
+  @Transactional
   public void atualizarFotoCapa(Long id, MultipartFile file) {
     queryService.verifyFutSaveFile(id, file);
+  }
+
+  // ============================= Banimentos ============================
+
+  @Override
+  @Transactional
+  public SaveBanimentoResponseDTO addBanimentoList(SaveBanimentoRequestDTO dto) {
+    FutModel futModel = queryService.verifyFutExistRetorn(dto.fut());
+    PeladeiroModel peladeiroModel = peladeiroQueryService.verifyPeladeiroExist(dto.peladeiro());
+
+    // Verificacao de existe o peladeiro em questao na lista de peladeiro...
+    queryService.verifyBanidoListPeladeiros(futModel, peladeiroModel);
+
+    return banidoService.create(dto);
+  }
+
+  @Override
+  @Transactional
+  public List<BanimentoDetailsResponseDTO> findAllBanidos(Long idFut) {
+    return banidoService.findAll(idFut);
+  }
+
+  @Override
+  @Transactional
+  public void removeBanido(Long idPeladeiro, Long idFut) {
+    // TODO: retirar um Banido da lista
+    queryService.verifyBanidoListPeladeiros(
+        queryService.verifyFutExistRetorn(idFut),
+        peladeiroQueryService.verifyPeladeiroExist(idPeladeiro));
+
+    banidoService.delete(idPeladeiro);
   }
 }

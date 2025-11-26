@@ -56,8 +56,17 @@ public class FutModel {
   @OneToMany(mappedBy = "fut")
   private List<CartoesModel> cartoes = new ArrayList<>();
 
+  @OneToMany(mappedBy = "fut")
+  private List<BanimentoModel> banidos;
+
   public void addPeladeiroFut(PeladeiroModel peladeiroModel) {
     this.getPeladeiros().add(peladeiroModel);
     peladeiroModel.getFuts().add(this);
+  }
+
+  // Para adicionar nas duas entidades simultaneamente...
+  public void addBanimento(BanimentoModel banimentoModel) {
+    this.getBanidos().add(banimentoModel);
+    banimentoModel.setFut(this);
   }
 }

@@ -63,6 +63,9 @@ public class PeladeiroModel {
   @OneToMany(mappedBy = "peladeiro")
   private List<GolsPartidaModel> golsPeladeiro = new ArrayList<>();
 
+  @OneToMany(mappedBy = "peladeiro")
+  private List<BanimentoModel> banimentos;
+
   @Column(name = "auth_provider", length = 50)
   private String authProvider;
 
@@ -83,5 +86,10 @@ public class PeladeiroModel {
   public void addFut(FutModel futModel) {
     this.getFuts().add(futModel);
     futModel.getPeladeiros().add(this);
+  }
+
+  public void addBanimento(BanimentoModel banimentoModel) {
+    this.getBanimentos().add(banimentoModel);
+    banimentoModel.setPeladeiro(this);
   }
 }

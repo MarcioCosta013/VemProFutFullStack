@@ -7,10 +7,10 @@ services:
     ports:
       - "3306:3306"
     environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - vemprofut-db-data:/var/lib/mysql
 
@@ -19,14 +19,20 @@ services:
     build: .
     container_name: vemprofut-api
     restart: on-failure
-    ports:
-      - "8080:8080"
     depends_on:
       - db
+    ports:
+      - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      # URL do banco dentro da rede Docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      # Auth0 movido para variáveis
+      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+      AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
+      AUTH0_ISSUER: ${AUTH0_ISSUER}
 
 volumes:
-  vemprofut-db-data: #  garante que os dados do banco de dados não sejam perdidos quando o contêiner do MySQL for reiniciado.
+  vemprofut-db-data: #  garante que os dados do DB não sejam perdidos quando o contêiner do MySQL for reiniciado.

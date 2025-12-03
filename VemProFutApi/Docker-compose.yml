@@ -1,7 +1,7 @@
 services:
   # Serviço do Banco de Dados MySQL
   db:
-    image: mysql:8.0
+    image: mysql:8.0.32
     container_name: vemprofut-db
     restart: always
     ports:

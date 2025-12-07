@@ -14,7 +14,12 @@ import lombok.*;
 @AllArgsConstructor
 public class PeladeiroModel {
 
-  public PeladeiroModel(String nome,String email, String apelido,String descricao,String whatsapp, String peDominante){
+  public PeladeiroModel(String nome,
+                        String email,
+                        String apelido,
+                        String descricao,
+                        String whatsapp,
+                        String peDominante){
     this.nome = nome;
     this.email = email;
     this.apelido = apelido;

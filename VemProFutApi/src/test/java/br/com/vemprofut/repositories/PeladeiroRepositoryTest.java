@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -86,12 +85,22 @@ Porque:
 
     @Test
     @DisplayName("Deve retornar uma lista de Peladeiro")
-    void findAllDeveRetornaLista(){
+    void findAllDeveRetornaListaPeladeiro(){
         peladeiroRepository.saveAndFlush(new PeladeiroModel(
-                "A", "a@test.com", "A", "333", "81555555555", "Destro"
+                "A",
+                "a@test.com",
+                "A",
+                "333",
+                "81555555555",
+                "Destro"
         ));
         peladeiroRepository.saveAndFlush(new PeladeiroModel(
-                "B", "b@test.com", "B", "444", "82000000000", "Destro"
+                "B",
+                "b@test.com",
+                "B",
+                "444",
+                "82000000000",
+                "Destro"
         ));
 
         List<PeladeiroModel> todos = peladeiroRepository.findAll();
@@ -101,12 +110,79 @@ Porque:
     @Test
     @DisplayName("remover deve deletar um registro")
     void deleteDeveRemover(){
-        PeladeiroModel p = peladeiroRepository.saveAndFlush(new PeladeiroModel("C", "c@test.com", "C", "", "3", "Destro"));
+        PeladeiroModel p = peladeiroRepository.saveAndFlush(new PeladeiroModel(
+                "C",
+                "c@test.com",
+                "C",
+                "",
+                "3",
+                "Destro"));
         Long id = p.getId();
         peladeiroRepository.deleteById(id);
         assertFalse(peladeiroRepository.findById(id).isPresent());
     }
 
-    //TODO: testar existsByEmail e findByEmail ques estao no PeladeiroRepository.
+    @Test
+    @DisplayName("deve retorna de o email ja foi castrado ou nao")
+    void existeEmailCadastradoRetornaTrue(){
+        peladeiroRepository.saveAndFlush(new PeladeiroModel(
+                "C",
+                "test@test.com",
+                "C",
+                "",
+                "3",
+                "Destro"));
+        String email = "test@test.com";
+        Boolean exist = peladeiroRepository.existsByEmail(email);
+
+        assertTrue(exist);
+    }
+
+    @Test
+    @DisplayName("deve retorna de o email ja foi castrado ou nao")
+    void existeEmailCadastradoRetornaFalse(){
+        peladeiroRepository.saveAndFlush(new PeladeiroModel(
+                "C",
+                "test@test.com",
+                "C",
+                "",
+                "3",
+                "Destro"));
+        String email = "test2@test.com";
+        Boolean exist = peladeiroRepository.existsByEmail(email);
+
+        assertTrue(exist);
+    }
+
+    @Test
+    @DisplayName("Deve retornar um Peladeiro ao pesquisar pelo email")
+    void buscarPeladeiroPeloEmailRetornaPeladeiro(){
+        PeladeiroModel p = peladeiroRepository.saveAndFlush(new PeladeiroModel(
+                "C",
+                "test@test.com",
+                "C",
+                "descricao",
+                "377777777777",
+                "Destro"));
+        String email = "test@test.com";
+        PeladeiroModel peladeiroModel = peladeiroRepository.findByEmail(email);
+
+        assertEquals(p.getNome(), peladeiroModel.getNome());
+        assertEquals(p.getEmail(), peladeiroModel.getEmail());
+        assertEquals(p.getApelido(), peladeiroModel.getApelido());
+        assertEquals(p.getWhatsapp(), peladeiroModel.getWhatsapp());
+        assertEquals(p.getDescricao(), peladeiroModel.getDescricao());
+        assertEquals(p.getPeDominante(), peladeiroModel.getPeDominante());
+    }
+
+    @Test
+    @DisplayName("Deve retornar null ao buscar um peladeiro pelo email")
+    void buscarPeladeiroPeloEmailRetornaNull(){
+        PeladeiroModel p = peladeiroRepository.saveAndFlush(new PeladeiroModel("C", "test@test.com", "C", "descricao", "377777777777", "Destro"));
+        String email = "test1@test.com";
+        PeladeiroModel peladeiroModel = peladeiroRepository.findByEmail(email);
+
+        assertNull(peladeiroModel);
+    }
 
 }

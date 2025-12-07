@@ -1,13 +1,13 @@
 package br.com.vemprofut.config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
@@ -15,10 +15,12 @@ import java.util.Collections;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@Testcontainers
 public abstract class BaseIntegrationTest {
 
     // Configuração do Container MySQL
-    static MySQLContainer<?> mySQLContainer = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"))
+    @Container
+    protected static MySQLContainer<?> mySQLContainer = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"))
             .withDatabaseName("testdb")
             .withUsername("testuser")
             .withPassword("testpass")
@@ -37,9 +39,9 @@ public abstract class BaseIntegrationTest {
             );
 
     // Inicia o container uma vez para toda a suíte de testes
-    static {
-        mySQLContainer.start();
-    }
+//    static {
+//        mySQLContainer.start();
+//    }
 
     // Configuração dinâmica do Spring para usar o container
     @DynamicPropertySource

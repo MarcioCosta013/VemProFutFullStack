@@ -13,6 +13,20 @@ import lombok.ToString;
 @Setter
 public class FutModel {
 
+  public FutModel(String nome,
+                  Integer jogadoresPorTime,
+                  Integer tempoMaxPartida,
+                  Integer maxGolsVitoria,
+                  HistoricoFutModel historicoFutId,
+                  PeladeiroModel administradorPeladeiro) {
+    this.nome = nome;
+    this.jogadoresPorTime = jogadoresPorTime;
+    this.tempoMaxPartida = tempoMaxPartida;
+    this.maxGolsVitoria = maxGolsVitoria;
+    this.historicoFutId = historicoFutId;
+    this.administradorPeladeiro = administradorPeladeiro;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id_fut")

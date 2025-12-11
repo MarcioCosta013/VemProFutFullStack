@@ -3,7 +3,6 @@ package br.com.vemprofut.models;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.*;
 
 @Entity
@@ -14,12 +13,13 @@ import lombok.*;
 @AllArgsConstructor
 public class PeladeiroModel {
 
-  public PeladeiroModel(String nome,
-                        String email,
-                        String apelido,
-                        String descricao,
-                        String whatsapp,
-                        String peDominante){
+  public PeladeiroModel(
+      String nome,
+      String email,
+      String apelido,
+      String descricao,
+      String whatsapp,
+      String peDominante) {
     this.nome = nome;
     this.email = email;
     this.apelido = apelido;

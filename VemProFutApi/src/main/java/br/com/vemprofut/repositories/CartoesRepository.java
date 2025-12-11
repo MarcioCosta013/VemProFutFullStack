@@ -24,7 +24,7 @@ public interface CartoesRepository extends JpaRepository<CartoesModel, Long> {
            FROM CartoesModel c
            WHERE c.peladeiro.id = :peladeiroId
            GROUP BY c.tipoCartao
-           """)
+         """)
   List<CartaoCountProjection> countByTipoAndPeladeiro(@Param("peladeiroId") Long peladeiroId);
 
   @Query(
@@ -33,7 +33,7 @@ public interface CartoesRepository extends JpaRepository<CartoesModel, Long> {
            FROM CartoesModel c
            WHERE c.fut.id = :futId
            GROUP BY c.tipoCartao
-           """)
+         """)
   List<CartaoCountProjection> countByTipoAndFut(@Param("futId") Long futId);
 
   /*

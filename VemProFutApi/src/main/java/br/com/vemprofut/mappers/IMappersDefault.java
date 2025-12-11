@@ -179,8 +179,8 @@ public interface IMappersDefault {
   //    return new PeladeiroNameIdResponseDTO(peladeiroId, nome);
   //  }
 
-  //======================Banimento=================================
-  //TODO: coversao de peladeiro para o long no DTODetails
-  //TODO: coversao de fut para o long no DTODetails
+  // ======================Banimento=================================
+  // TODO: coversao de peladeiro para o long no DTODetails
+  // TODO: coversao de fut para o long no DTODetails
 
 }

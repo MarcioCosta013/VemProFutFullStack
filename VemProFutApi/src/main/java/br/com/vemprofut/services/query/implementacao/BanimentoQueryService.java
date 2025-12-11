@@ -7,9 +7,8 @@ import br.com.vemprofut.mappers.IBanimentoMapper;
 import br.com.vemprofut.models.BanimentoModel;
 import br.com.vemprofut.repositories.BanimentoRepository;
 import br.com.vemprofut.services.query.IBanimentoQueryService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BanimentoQueryService implements IBanimentoQueryService {

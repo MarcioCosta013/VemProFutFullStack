@@ -1,4 +1,4 @@
-package br.com.vemprofut.repositories;
+package br.com.vemprofut.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,9 @@ import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.BanimentoModel;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.repositories.BanimentoRepository;
+import br.com.vemprofut.repositories.FutRepository;
+import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.implementacao.UploadLocalService;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
@@ -23,7 +26,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-public class BanimentoRepositoryTest {
+public class BanimentoRepositoryIT {
 
   @MockitoBean private OAuth2AuthorizedClientService authorizedClientService;
 
@@ -36,11 +39,14 @@ public class BanimentoRepositoryTest {
 
   @MockitoBean private UploadLocalService uploadLocalService;
 
-  @Autowired BanimentoRepository banimentoRepository;
+  @Autowired
+  BanimentoRepository banimentoRepository;
 
-  @Autowired PeladeiroRepository peladeiroRepository;
+  @Autowired
+  PeladeiroRepository peladeiroRepository;
 
-  @Autowired FutRepository futRepository;
+  @Autowired
+  FutRepository futRepository;
 
   @Test
   @DisplayName("Deve gerar salvar um banimento e retornar um id")

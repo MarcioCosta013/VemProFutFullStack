@@ -1,9 +1,10 @@
-package br.com.vemprofut.repositories;
+package br.com.vemprofut.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.FutModel;
+import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.services.implementacao.UploadLocalService;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -20,7 +21,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-public class FutRepositoryTest {
+public class FutRepositoryIT {
 
   @MockitoBean private OAuth2AuthorizedClientService authorizedClientService;
 
@@ -32,7 +33,8 @@ public class FutRepositoryTest {
 
   @MockitoBean private JwtDecoder jwtDecoder;
 
-  @Autowired FutRepository futRepository;
+  @Autowired
+  FutRepository futRepository;
 
   @Test
   // @DisplayName("deve gerar um Fut e retornar um id")

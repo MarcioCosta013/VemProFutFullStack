@@ -1,4 +1,4 @@
-package br.com.vemprofut.repositories;
+package br.com.vemprofut.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,6 +9,10 @@ import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PartidasModel;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.models.enuns.TipoCartao;
+import br.com.vemprofut.repositories.CartoesRepository;
+import br.com.vemprofut.repositories.FutRepository;
+import br.com.vemprofut.repositories.PartidasRepository;
+import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.implementacao.UploadLocalService;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-public class CartoesRepositoryTest {
+public class CartoesRepositoryIT {
 
   @MockitoBean private OAuth2AuthorizedClientService authorizedClientService;
 
@@ -41,13 +45,17 @@ public class CartoesRepositoryTest {
 
   @MockitoBean private JwtDecoder jwtDecoder;
 
-  @Autowired CartoesRepository cartoesRepository;
+  @Autowired
+  CartoesRepository cartoesRepository;
 
-  @Autowired PartidasRepository partidasRepository;
+  @Autowired
+  PartidasRepository partidasRepository;
 
-  @Autowired FutRepository futRepository;
+  @Autowired
+  FutRepository futRepository;
 
-  @Autowired PeladeiroRepository peladeiroRepository;
+  @Autowired
+  PeladeiroRepository peladeiroRepository;
 
   @Test
   @DisplayName("Deve criar um novo cartao ligado ao peladeiro e a partida")

@@ -1,9 +1,9 @@
-package br.com.vemprofut.repositories;
+package br.com.vemprofut.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.implementacao.UploadLocalService;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -21,7 +21,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-public class PeladeiroRepositoryTest {
+public class PeladeiroRepositoryIT {
   /*
   - Isso roda usando MySQL real via Docker
   - Isso roda com Flyway
@@ -48,7 +48,8 @@ public class PeladeiroRepositoryTest {
 
   @MockitoBean private JwtDecoder jwtDecoder;
 
-  @Autowired PeladeiroRepository peladeiroRepository;
+  @Autowired
+  PeladeiroRepository peladeiroRepository;
 
   @Test
   @DisplayName("Deve gerar salvar um paladeiro e retornar um id")

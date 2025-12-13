@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,7 +12,23 @@ import lombok.ToString;
 @Table(name = "fut")
 @Getter
 @Setter
+@NoArgsConstructor
 public class FutModel {
+
+  public FutModel(
+      String nome,
+      Integer jogadoresPorTime,
+      Integer tempoMaxPartida,
+      Integer maxGolsVitoria,
+      HistoricoFutModel historicoFutId,
+      PeladeiroModel administradorPeladeiro) {
+    this.nome = nome;
+    this.jogadoresPorTime = jogadoresPorTime;
+    this.tempoMaxPartida = tempoMaxPartida;
+    this.maxGolsVitoria = maxGolsVitoria;
+    this.historicoFutId = historicoFutId;
+    this.administradorPeladeiro = administradorPeladeiro;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

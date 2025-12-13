@@ -12,7 +12,6 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -25,7 +24,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
   // Agora vamos interceptar o retorno do Auth0...
 
   private final PeladeiroRepository peladeiroRepository;
-  private final OAuth2AuthorizedClientService authorizedClientService;
+  // private final OAuth2AuthorizedClientService authorizedClientService;
   private final IHistoricoPeladeiroService historicoPeladeiroService;
   private final IHistoricoPeladeiroMapper historicoPeladeiroMapper;
 

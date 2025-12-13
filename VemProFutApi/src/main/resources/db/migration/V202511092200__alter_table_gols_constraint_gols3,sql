@@ -1,4 +1,0 @@
-ALTER TABLE Gols_Partida ADD CONSTRAINT FK_Gols_Partida_2
-    FOREIGN KEY (fk_partida)
-    REFERENCES Partida (id_partida)
-    ON DELETE CASCADE;

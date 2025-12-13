@@ -13,7 +13,7 @@ public interface EditorRepository extends JpaRepository<EditorModel, Long> {
   @Query(
       """
           SELECT e FROM EditorModel e WHERE e.peladeiro = :peladeiro AND e.fut= :fut
-          """)
+         """)
   EditorModel findByPeladeiroAndFut(
       @Param("peladeiro") PeladeiroModel peladeiroModel, @Param("fut") FutModel futModel);
 

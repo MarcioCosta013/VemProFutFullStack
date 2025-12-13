@@ -2,7 +2,6 @@ package br.com.vemprofut.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,9 +10,21 @@ import lombok.Setter;
 @Table(name = "banimento")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class BanimentoModel {
+
+  public BanimentoModel(
+      String motivo,
+      LocalDate dataBanimento,
+      LocalDate dataFimBanimento,
+      PeladeiroModel peladeiro,
+      FutModel fut) {
+    this.motivo = motivo;
+    this.dataBanimento = dataBanimento;
+    this.dataFimBanimento = dataFimBanimento;
+    this.peladeiro = peladeiro;
+    this.fut = fut;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

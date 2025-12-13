@@ -23,6 +23,7 @@ jobs:
 
       - name: Run Maven verify (tests + Spotless + SpotBugs)
         run: mvn -B clean verify
+        working-directory: ./VemProFutApi
 
   docker:
     runs-on: ubuntu-latest

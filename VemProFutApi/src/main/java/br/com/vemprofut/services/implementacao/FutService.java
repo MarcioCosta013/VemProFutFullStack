@@ -60,7 +60,7 @@ public class FutService implements IFutService {
   @Transactional
   public SaveFutResponseDTO create(SaveFutRequestDTO dto) {
     queryService.verifyNomeFutExist(dto.nome());
-    var peladeiro = peladeiroQueryService.verifyPeladeiroExist(dto.administradorPeladeiroId());
+    var peladeiro = peladeiroQueryService.verifyPeladeiroExist(dto.administradorPeladeiro());
 
     FutModel saved = repository.save(mapper.saveRequestToModel(dto));
 

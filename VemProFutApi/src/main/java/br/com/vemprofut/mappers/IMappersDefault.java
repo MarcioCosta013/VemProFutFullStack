@@ -65,14 +65,14 @@ public interface IMappersDefault {
     return resultados;
   }
 
-  default CartoesResponseDTO mapResponceCartoesDTO (CartoesModel model){
-    CartoesResponseDTO cartoesResponseDTO = new CartoesResponseDTO(
+  default CartoesResponseDTO mapResponceCartoesDTO(CartoesModel model) {
+    CartoesResponseDTO cartoesResponseDTO =
+        new CartoesResponseDTO(
             model.getId(),
             model.getPartida().getId(),
             model.getPeladeiro().getId(),
             model.getFut().getId(),
-            model.getTipoCartao()
-    );
+            model.getTipoCartao());
 
     return cartoesResponseDTO;
   }

@@ -26,5 +26,5 @@ public interface ICartoesMapper { // Não precisa implementar, o Maptruct vai fa
   // De Entity/Model --> DTO
   CartoesDTO toDTO(CartoesModel model);
 
-  CartoesResponseDTO toResponseDTO (CartoesModel model);
+  CartoesResponseDTO toResponseDTO(CartoesModel model);
 }

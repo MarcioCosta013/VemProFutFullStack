@@ -9,7 +9,7 @@ public record FutDTO(
     Integer tempoMaxPartida,
     Integer maxGolsVitoria,
     Long historicoFutId,
-    Long administradorPeladeiroId,
+    Long administradorPeladeiro,
     List<Long> editores,
     List<Long> peladeiros,
     List<Long> cartoes) {}

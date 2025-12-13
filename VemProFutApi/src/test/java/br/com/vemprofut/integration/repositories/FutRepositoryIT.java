@@ -33,8 +33,7 @@ public class FutRepositoryIT {
 
   @MockitoBean private JwtDecoder jwtDecoder;
 
-  @Autowired
-  FutRepository futRepository;
+  @Autowired FutRepository futRepository;
 
   @Test
   // @DisplayName("deve gerar um Fut e retornar um id")

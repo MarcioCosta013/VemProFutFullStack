@@ -7,10 +7,6 @@ import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 
 public interface ICartoesQueryService {
 
-  void verifyPeladeiroExist(PeladeiroDTO peladeiroDTO);
-
-  void verifyPartidasExist(PartidasDTO partidasDTO);
-
   void verifyEntitiesExist(CartoesDTO dto);
 
   CartoesModel verityCartoesExist(Long id);

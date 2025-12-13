@@ -1,6 +1,7 @@
 package br.com.vemprofut.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.PeladeiroRepository;
@@ -48,8 +49,7 @@ public class PeladeiroRepositoryIT {
 
   @MockitoBean private JwtDecoder jwtDecoder;
 
-  @Autowired
-  PeladeiroRepository peladeiroRepository;
+  @Autowired PeladeiroRepository peladeiroRepository;
 
   @Test
   @DisplayName("Deve gerar salvar um paladeiro e retornar um id")

@@ -197,19 +197,25 @@
 				</executions>
 			</plugin>
 
-			<!-- PMD Lint -->
+			<!-- SpotBugs -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.21.0</version>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.8.3.0</version>
 				<configuration>
-					<printFailingErrors>true</printFailingErrors>
+					<effort>Max</effort> <!-- nível de profundidade da análise -->
+					<threshold>Low</threshold> <!-- severidade mínima reportada -->
+					<xmlOutput>true</xmlOutput> <!-- gera XML -->
+					<htmlOutput>true</htmlOutput> <!-- gera HTML -->
+					<outputDirectory>${project.build.directory}/spotbugs</outputDirectory>
+                    <excludeFilterFile>${project.basedir}/excludeFilter.xml</excludeFilterFile>
 				</configuration>
 				<executions>
 					<execution>
 						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
+							<goal>spotbugs</goal>
 						</goals>
 					</execution>
 				</executions>

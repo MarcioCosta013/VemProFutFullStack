@@ -10,13 +10,12 @@ import org.springframework.data.repository.query.Param;
 
 public interface EditorRepository extends JpaRepository<EditorModel, Long> {
 
-  @Query("""
+  @Query(
+      """
           SELECT e FROM EditorModel e WHERE e.peladeiro = :peladeiro AND e.fut= :fut
          """)
   EditorModel findByPeladeiroAndFut(
-      @Param("peladeiro") PeladeiroModel peladeiroModel,
-      @Param("fut") FutModel futModel
-  );
+      @Param("peladeiro") PeladeiroModel peladeiroModel, @Param("fut") FutModel futModel);
 
   List<EditorModel> findByFutId(Long id);
 }

@@ -39,14 +39,11 @@ public class BanimentoRepositoryIT {
 
   @MockitoBean private UploadLocalService uploadLocalService;
 
-  @Autowired
-  BanimentoRepository banimentoRepository;
+  @Autowired BanimentoRepository banimentoRepository;
 
-  @Autowired
-  PeladeiroRepository peladeiroRepository;
+  @Autowired PeladeiroRepository peladeiroRepository;
 
-  @Autowired
-  FutRepository futRepository;
+  @Autowired FutRepository futRepository;
 
   @Test
   @DisplayName("Deve gerar salvar um banimento e retornar um id")

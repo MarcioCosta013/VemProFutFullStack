@@ -1,5 +1,6 @@
 package br.com.vemprofut.mappers;
 
+import br.com.vemprofut.controllers.response.CartoesResponseDTO;
 import br.com.vemprofut.models.CartoesModel;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import org.mapstruct.Mapper;
@@ -24,4 +25,6 @@ public interface ICartoesMapper { // Não precisa implementar, o Maptruct vai fa
 
   // De Entity/Model --> DTO
   CartoesDTO toDTO(CartoesModel model);
+
+  CartoesResponseDTO toResponseDTO (CartoesModel model);
 }

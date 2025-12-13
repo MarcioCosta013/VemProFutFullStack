@@ -8,14 +8,15 @@ import br.com.vemprofut.models.BanimentoModel;
 import br.com.vemprofut.repositories.BanimentoRepository;
 import br.com.vemprofut.services.query.IBanimentoQueryService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BanimentoQueryService implements IBanimentoQueryService {
 
-  private BanimentoRepository repository;
+  @Autowired private BanimentoRepository repository;
 
-  private IBanimentoMapper mapper;
+  @Autowired private IBanimentoMapper mapper;
 
   @Override
   public void verifyPeladeiroBanidoExist(Long idFut, Long idPeladeiro) {

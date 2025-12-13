@@ -45,17 +45,13 @@ public class CartoesRepositoryIT {
 
   @MockitoBean private JwtDecoder jwtDecoder;
 
-  @Autowired
-  CartoesRepository cartoesRepository;
+  @Autowired CartoesRepository cartoesRepository;
 
-  @Autowired
-  PartidasRepository partidasRepository;
+  @Autowired PartidasRepository partidasRepository;
 
-  @Autowired
-  FutRepository futRepository;
+  @Autowired FutRepository futRepository;
 
-  @Autowired
-  PeladeiroRepository peladeiroRepository;
+  @Autowired PeladeiroRepository peladeiroRepository;
 
   @Test
   @DisplayName("Deve criar um novo cartao ligado ao peladeiro e a partida")

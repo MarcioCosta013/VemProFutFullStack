@@ -1,6 +1,7 @@
 package br.com.vemprofut.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.EditorModel;
 import br.com.vemprofut.models.FutModel;
@@ -25,72 +26,65 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 public class EditorRepositoryIT {
 
-    @MockitoBean private OAuth2AuthorizedClientService authorizedClientService;
+  @MockitoBean private OAuth2AuthorizedClientService authorizedClientService;
 
-    @MockitoBean private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+  @MockitoBean private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-    @MockitoBean private ClientRegistrationRepository clientRegistrationRepository;
+  @MockitoBean private ClientRegistrationRepository clientRegistrationRepository;
 
-    @MockitoBean private UploadLocalService uploadLocalService;
+  @MockitoBean private UploadLocalService uploadLocalService;
 
-    @MockitoBean private JwtDecoder jwtDecoder;
+  @MockitoBean private JwtDecoder jwtDecoder;
 
-    @Autowired
-    EditorRepository editorRepository;
+  @Autowired EditorRepository editorRepository;
 
-    @Autowired
-    PeladeiroRepository peladeiroRepository;
+  @Autowired PeladeiroRepository peladeiroRepository;
 
-    @Autowired
-    FutRepository futRepository;
+  @Autowired FutRepository futRepository;
 
-    @Test
-    @DisplayName("Deve salvar um novo Editor em um Fut especifico")
-    void save_quandoEditorValido_retornaEditorSalvo(){
+  @Test
+  @DisplayName("Deve salvar um novo Editor em um Fut especifico")
+  void save_quandoEditorValido_retornaEditorSalvo() {
 
-        FutModel futModel = futRepository.saveAndFlush(new FutModel());
+    FutModel futModel = futRepository.saveAndFlush(new FutModel());
 
-        PeladeiroModel peladeiroModel = peladeiroRepository.saveAndFlush(new PeladeiroModel(
+    PeladeiroModel peladeiroModel =
+        peladeiroRepository.saveAndFlush(
+            new PeladeiroModel(
                 "Marcio Teste",
                 "teste@test.com",
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"
-        ));
+                "Destro"));
 
+    EditorModel editorModel =
+        editorRepository.saveAndFlush(new EditorModel(peladeiroModel, futModel));
 
-        EditorModel editorModel = editorRepository.saveAndFlush(new EditorModel(
-                peladeiroModel,
-                futModel)
-        );
+    assertNotNull(editorModel.getId());
+    assertTrue(editorModel.getId() > 0);
+  }
 
-        assertNotNull(editorModel.getId());
-        assertTrue(editorModel.getId() > 0);
-    }
+  @Test
+  @DisplayName("Deve buscar e retornar um Editor salvo")
+  void findById_quandoEditorExiste_retornaEditorSalvo() {
+    FutModel futModel = futRepository.saveAndFlush(new FutModel());
 
-    @Test
-    @DisplayName("Deve buscar e retornar um Editor salvo")
-    void findById_quandoEditorExiste_retornaEditorSalvo(){
-        FutModel futModel = futRepository.saveAndFlush(new FutModel());
-
-        PeladeiroModel peladeiroModel = peladeiroRepository.saveAndFlush(new PeladeiroModel(
+    PeladeiroModel peladeiroModel =
+        peladeiroRepository.saveAndFlush(
+            new PeladeiroModel(
                 "Marcio Teste",
                 "teste@test.com",
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"
-        ));
+                "Destro"));
 
+    EditorModel editorModel =
+        editorRepository.saveAndFlush(new EditorModel(peladeiroModel, futModel));
 
-        EditorModel editorModel = editorRepository.saveAndFlush(new EditorModel(
-                peladeiroModel,
-                futModel)
-        );
+    Long id = editorModel.getId();
 
-        Long id = editorModel.getId();
-
-        assertTrue(editorRepository.findById(id).isPresent());
-    }
+    assertTrue(editorRepository.findById(id).isPresent());
+  }
 }

@@ -1,4 +1,4 @@
-ALTER TABLE Gols_Partida ADD CONSTRAINT FK_Gols_Partida_2
+ALTER TABLE gols_partida ADD CONSTRAINT FK_Gols_Partida_2
     FOREIGN KEY (fk_peladeiro)
-    REFERENCES Peladeiro (id_peladeiro)
+    REFERENCES peladeiro (id_peladeiro)
     ON DELETE CASCADE;

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.7</version>
+		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.vemprofut</groupId>
@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -46,6 +47,7 @@
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
+			<version>8.0.32</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -83,6 +85,7 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
+			<version>10.20.0</version>
 		</dependency>
 
 		<dependency>
@@ -118,11 +121,25 @@
 			<version>10.6</version>
 		</dependency>
 
-		<!-- Se for enviar e-mail -->
-		<dependency>
+		<!-- Se for enviar e-mail( -->
+		<!--dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency-->
+
+		<!--Testes -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -180,19 +197,25 @@
 				</executions>
 			</plugin>
 
-			<!-- PMD Lint -->
+			<!-- SpotBugs -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.21.0</version>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.8.3.0</version>
 				<configuration>
-					<printFailingErrors>true</printFailingErrors>
+					<effort>Max</effort> <!-- nível de profundidade da análise -->
+					<threshold>Low</threshold> <!-- severidade mínima reportada -->
+					<xmlOutput>true</xmlOutput> <!-- gera XML -->
+					<htmlOutput>true</htmlOutput> <!-- gera HTML -->
+					<outputDirectory>${project.build.directory}/spotbugs</outputDirectory>
+                    <excludeFilterFile>${project.basedir}/excludeFilter.xml</excludeFilterFile>
 				</configuration>
 				<executions>
 					<execution>
 						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
+							<goal>spotbugs</goal>
 						</goals>
 					</execution>
 				</executions>

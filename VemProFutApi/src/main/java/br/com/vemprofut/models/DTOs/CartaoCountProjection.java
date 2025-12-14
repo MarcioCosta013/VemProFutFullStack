@@ -2,6 +2,7 @@ package br.com.vemprofut.models.DTOs;
 
 import br.com.vemprofut.models.enuns.TipoCartao;
 
+// Essa interface está em DTOs porque ela representa um objeto de transferência de dados.
 public interface CartaoCountProjection {
   TipoCartao getTipo();
 

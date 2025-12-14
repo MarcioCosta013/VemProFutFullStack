@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Run Maven verify (tests + Spotless + SpotBugs)
-        run: mvn -B clean verify
+        run: mvn spotless:apply && mvn -B clean verify
         working-directory: ./VemProFutApi
 
   docker:

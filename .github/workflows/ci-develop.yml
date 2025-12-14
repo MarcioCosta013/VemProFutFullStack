@@ -30,4 +30,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Run Maven verify (tests + Spotless + SpotBugs)
-        run: mvn -B clean verifyl
+        run: mvn spotless:apply && mvn -B clean verify
+        working-directory: ./VemProFutApi

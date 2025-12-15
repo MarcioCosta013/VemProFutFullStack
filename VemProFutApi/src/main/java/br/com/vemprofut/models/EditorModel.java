@@ -12,6 +12,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EditorModel {
 
+  public EditorModel(PeladeiroModel peladeiro, FutModel fut) {
+    this.peladeiro = peladeiro;
+    this.fut = fut;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id_editor")

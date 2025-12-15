@@ -8,4 +8,5 @@ public record UpdatePeladeiroResponseDTO(
     @JsonProperty("apelido") String apelido,
     @JsonProperty("descricao") String descricao,
     @JsonProperty("whatsapp") String whatsapp,
-    @JsonProperty("peDominante") String peDominante) {}
+    @JsonProperty("peDominante") String peDominante,
+    @JsonProperty("fotoURL") String fotoUrl) {}

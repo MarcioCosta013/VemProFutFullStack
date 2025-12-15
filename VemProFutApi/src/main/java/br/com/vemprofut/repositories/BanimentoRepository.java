@@ -11,13 +11,13 @@ public interface BanimentoRepository extends JpaRepository<BanimentoModel, Long>
 
   @Query(
       """
-            SELECT b FROM BanimentoModel b WHERE b.fut = :idFut AND b.peladeiro = :idPeladeiro
-            """)
+          SELECT b FROM BanimentoModel b WHERE b.fut = :idFut AND b.peladeiro = :idPeladeiro
+        """)
   Optional<BanimentoModel> buscarBanimentoFutPeladeiro(
       @Param("idFut") Long idFut, @Param("idPeladeiro") Long idPeladeiro);
 
   @Query("""
-            SELECT b FROM BanimentoModel b WHERE b.fut = :idFut
-            """)
+          SELECT b FROM BanimentoModel b WHERE b.fut = :idFut
+        """)
   List<BanimentoModel> buscarListBanidos(@Param("idFut") Long idFut);
 }

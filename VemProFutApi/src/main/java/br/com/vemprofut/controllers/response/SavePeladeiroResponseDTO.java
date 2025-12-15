@@ -12,7 +12,7 @@ public record SavePeladeiroResponseDTO(
     @JsonProperty("peDominante") String peDominante,
     @JsonProperty("whatsapp") String whatsapp,
     @JsonProperty("historicoPeladeiro") Long historicoPeladeiro,
-    @JsonProperty("foto_url") String foto_url,
+    @JsonProperty("fotoUrl") String fotoUrl,
     @JsonProperty("partidasIDs") List<Long> partidas,
     @JsonProperty("futsIDs") List<Long> futs,
     @JsonProperty("cartoes") List<Long> cartoes) {}

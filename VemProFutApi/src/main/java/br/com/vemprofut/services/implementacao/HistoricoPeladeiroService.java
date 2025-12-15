@@ -15,9 +15,9 @@ public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
 
   @Autowired private IHistoricoPeladeiroQueryService queryService;
 
-  @Autowired private HistoricoPeladeiroRepository repository;
-
   @Autowired private IHistoricoPeladeiroMapper mapper;
+
+  @Autowired private HistoricoPeladeiroRepository repository;
 
   @Override
   @Transactional

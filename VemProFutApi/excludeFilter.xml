@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- arquivo para spotbugs ignorar algumas pastas-->
+<FindBugsFilter>
+    <!-- Ignorar DTOs -->
+    <Match>
+        <Package name="~br.com.vemprofut.controllers.request.*"/>
+    </Match>
+    <Match>
+        <Package name="~br.com.vemprofut.controllers.response.*"/>
+    </Match>
+    <Match>
+        <Package name="~br.com.vemprofut.models.DTOs.*"/>
+    </Match>
+
+    <!-- Ignorar Models -->
+    <Match>
+        <Package name="~br.com.vemprofut.models.*"/>
+    </Match>
+
+    <!-- Ignorar Mappers gerados pelo MapStruct -->
+    <Match>
+        <Package name="~br.com.vemprofut.mappers.*"/>
+    </Match>
+
+    <!-- Não é bug real em injeção Spring -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="~br.com.vemprofut.controllers.*"/>
+    </Match>
+
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="~br.com.vemprofut.configs.*"/>
+    </Match>
+</FindBugsFilter>

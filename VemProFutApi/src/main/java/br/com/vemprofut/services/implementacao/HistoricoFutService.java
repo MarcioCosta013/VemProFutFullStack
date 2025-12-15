@@ -4,7 +4,7 @@ import br.com.vemprofut.mappers.IHistoricoFutMapper;
 import br.com.vemprofut.models.DTOs.HistoricoFutDTO;
 import br.com.vemprofut.models.HistoricoFutModel;
 import br.com.vemprofut.models.PeladeiroModel;
-import br.com.vemprofut.repositories.HisotricoFutRepository;
+import br.com.vemprofut.repositories.HistoricoFutRepository;
 import br.com.vemprofut.services.IHistoricoFutService;
 import br.com.vemprofut.services.query.IHistoricoFutQueryService;
 import java.util.List;
@@ -18,7 +18,7 @@ public class HistoricoFutService implements IHistoricoFutService {
 
   @Autowired private IHistoricoFutMapper mapper;
 
-  @Autowired private HisotricoFutRepository repository;
+  @Autowired private HistoricoFutRepository repository;
 
   @Autowired private IHistoricoFutQueryService queryService;
 

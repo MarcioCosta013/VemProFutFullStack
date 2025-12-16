@@ -23,7 +23,9 @@ public class PeladeiroController {
   private final IPeladeiroService peladeiroService;
 
   @PostMapping
-  @Operation(summary = "Cadastra um novo peladeiro")
+  @Operation(
+      summary = "Cadastra um novo peladeiro",
+      tags = {"PeladeiroController"})
   public ResponseEntity<SavePeladeiroResponseDTO> create(
       @Valid @RequestBody final SavePeladeiroRequestDTO requestDTO) {
     var obj = peladeiroService.create(requestDTO);
@@ -31,14 +33,18 @@ public class PeladeiroController {
   }
 
   @GetMapping("{id}")
-  @Operation(summary = "Busca um Peladeiro pelo id")
+  @Operation(
+      summary = "Busca um Peladeiro pelo id",
+      tags = {"PeladeiroController"})
   public ResponseEntity<PeladeiroDetailResponse> findById(@PathVariable final Long id) {
     var obj = peladeiroService.findById(id);
     return ResponseEntity.ok(obj);
   }
 
   @PutMapping("{id}")
-  @Operation(summary = "Faz alteraçoes no Peladeiro cujo id é informado.")
+  @Operation(
+      summary = "Faz alteraçoes no Peladeiro cujo id é informado.",
+      tags = {"PeladeiroController"})
   public ResponseEntity<Void> update(
       @PathVariable final Long id, @Valid @RequestBody UpdatePeladeiroRequestDTO dto) {
     peladeiroService.update(id, dto);
@@ -46,15 +52,18 @@ public class PeladeiroController {
   }
 
   @DeleteMapping("{id}")
-  @Operation(summary = "Deleta o peladeiro cujo id foi informado. Cuidado!")
+  @Operation(
+      summary = "Deleta o peladeiro cujo id foi informado. Cuidado!",
+      tags = {"PeladeiroController"})
   public ResponseEntity<Void> delete(@PathVariable final Long id) {
     peladeiroService.delete(id);
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping(value = "uploadFoto/{id}",
-  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  @Operation(summary = "Caso nao logado pelo gmail, enviar a foto do perfil")
+  @PostMapping(value = "uploadFoto/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @Operation(
+      summary = "Caso nao logado pelo gmail, enviar a foto do perfil",
+      tags = {"PeladeiroController"})
   public ResponseEntity<String> uploadFotoPeladeiro(
       @PathVariable Long id, @RequestPart("file") MultipartFile file) throws IOException {
     peladeiroService.atualizarFoto(id, file);

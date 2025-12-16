@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,7 +12,23 @@ import lombok.ToString;
 @Table(name = "fut")
 @Getter
 @Setter
+@NoArgsConstructor
 public class FutModel {
+
+  public FutModel(
+      String nome,
+      Integer jogadoresPorTime,
+      Integer tempoMaxPartida,
+      Integer maxGolsVitoria,
+      HistoricoFutModel historicoFutId,
+      PeladeiroModel administradorPeladeiro) {
+    this.nome = nome;
+    this.jogadoresPorTime = jogadoresPorTime;
+    this.tempoMaxPartida = tempoMaxPartida;
+    this.maxGolsVitoria = maxGolsVitoria;
+    this.historicoFutId = historicoFutId;
+    this.administradorPeladeiro = administradorPeladeiro;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,8 +73,17 @@ public class FutModel {
   @OneToMany(mappedBy = "fut")
   private List<CartoesModel> cartoes = new ArrayList<>();
 
+  @OneToMany(mappedBy = "fut")
+  private List<BanimentoModel> banidos;
+
   public void addPeladeiroFut(PeladeiroModel peladeiroModel) {
     this.getPeladeiros().add(peladeiroModel);
     peladeiroModel.getFuts().add(this);
+  }
+
+  // Para adicionar nas duas entidades simultaneamente...
+  public void addBanimento(BanimentoModel banimentoModel) {
+    this.getBanidos().add(banimentoModel);
+    banimentoModel.setFut(this);
   }
 }

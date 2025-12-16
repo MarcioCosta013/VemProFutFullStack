@@ -1,32 +1,62 @@
 services:
   # Serviço do Banco de Dados MySQL
   db:
-    image: mysql:8.0
+    image: mysql:8.0.32
     container_name: vemprofut-db
     restart: always
     ports:
-      - "3306:3306"
+      - "3307:3306"
+    env_file:
+      - .env
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - vemprofut-db-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d # criar o usuario automaticamente dentro do container MySQL
+
+    # 👇 Healthcheck para garantir que o MySQL está pronto
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
 
   # Serviço da API VemProFut
   api:
     build: .
     container_name: vemprofut-api
+    env_file:
+      - .env
     restart: on-failure
+    depends_on:
+       db:
+         condition: service_healthy
     ports:
       - "8080:8080"
-    depends_on:
-      - db
     environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
-      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      SPRING_PROFILES_ACTIVE: prod
+
+      # Conexão com MySQL com URL do banco dentro da rede Docker
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&connectTimeout=30000&socketTimeout=60000
+
+      # Flyway - tenta reconectar várias vezes enquanto MySQL inicializa
+      SPRING_FLYWAY_CONNECT_RETRIES: 10
+      SPRING_FLYWAY_CONNECT_RETRIES_INTERVAL: 5s
+
+      # Auth0 - Dessa forma, o Spring vai ler direto do ambiente, sem precisar de '.properties' para mapear
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_AUTH0_ISSUER_URI: ${AUTH0_ISSUER}
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: ${AUTH0_ISSUER}
+
+      # Forca Spring Boot a ouvir em todas interfaces (necessario para Docker)
+      SERVER_ADDRESS: 0.0.0.0
+      SERVER_PORT: 8080
+      SERVER_SERVLET_SESSION_COOKIE_SECURE: false
 
 volumes:
-  vemprofut-db-data: #  garante que os dados do banco de dados não sejam perdidos quando o contêiner do MySQL for reiniciado.
+  vemprofut-db-data: #  garante que os dados do DB não sejam perdidos quando o contêiner do MySQL for reiniciado.

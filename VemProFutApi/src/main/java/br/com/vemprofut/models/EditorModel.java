@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "editores_fut")
@@ -13,17 +12,20 @@ import lombok.ToString;
 @NoArgsConstructor
 public class EditorModel {
 
+  public EditorModel(PeladeiroModel peladeiro, FutModel fut) {
+    this.peladeiro = peladeiro;
+    this.fut = fut;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id_editor")
   private Long id;
 
-  @ToString.Exclude
   @ManyToOne
   @JoinColumn(name = "fk_peladeiro", nullable = false)
   private PeladeiroModel peladeiro;
 
-  @ToString.Exclude
   @ManyToOne
   @JoinColumn(name = "fk_fut", nullable = false)
   private FutModel fut;

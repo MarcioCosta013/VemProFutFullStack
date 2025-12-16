@@ -1,5 +1,6 @@
 package br.com.vemprofut.mappers;
 
+import br.com.vemprofut.controllers.response.CartoesResponseDTO;
 import br.com.vemprofut.controllers.response.CartoesResumoResponseDTO;
 import br.com.vemprofut.controllers.response.PeladeiroResponseDTO;
 import br.com.vemprofut.models.CartoesModel;
@@ -62,6 +63,18 @@ public interface IMappersDefault {
     resultados.setVermelho(vermelho);
 
     return resultados;
+  }
+
+  default CartoesResponseDTO mapResponceCartoesDTO(CartoesModel model) {
+    CartoesResponseDTO cartoesResponseDTO =
+        new CartoesResponseDTO(
+            model.getId(),
+            model.getPartida().getId(),
+            model.getPeladeiro().getId(),
+            model.getFut().getId(),
+            model.getTipoCartao());
+
+    return cartoesResponseDTO;
   }
 
   // ========================EDITOR=====================
@@ -178,4 +191,9 @@ public interface IMappersDefault {
   //
   //    return new PeladeiroNameIdResponseDTO(peladeiroId, nome);
   //  }
+
+  // ======================Banimento=================================
+  // TODO: coversao de peladeiro para o long no DTODetails
+  // TODO: coversao de fut para o long no DTODetails
+
 }

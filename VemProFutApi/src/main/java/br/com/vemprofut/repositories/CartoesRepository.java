@@ -24,17 +24,17 @@ public interface CartoesRepository extends JpaRepository<CartoesModel, Long> {
            FROM CartoesModel c
            WHERE c.peladeiro.id = :peladeiroId
            GROUP BY c.tipoCartao
-           """)
+         """)
   List<CartaoCountProjection> countByTipoAndPeladeiro(@Param("peladeiroId") Long peladeiroId);
 
   @Query(
       """
            SELECT c.tipoCartao AS tipo, COUNT(c) AS quantidade
            FROM CartoesModel c
-           WHERE c.fut.id = :futId
+           WHERE c.fut.id = :fut
            GROUP BY c.tipoCartao
-           """)
-  List<CartaoCountProjection> countByTipoAndFut(@Param("futId") Long futId);
+         """)
+  List<CartaoCountProjection> countByTipoAndFut(@Param("fut") Long futId);
 
   /*
   Agora o retorno já vem fortemente tipado: cada item da lista é um 'CartaoCountProjection' com getTipo()

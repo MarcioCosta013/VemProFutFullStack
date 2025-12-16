@@ -21,4 +21,8 @@ public interface IFutQueryService {
   void verifyPeladeiroExistInListOrAdm(FutModel futModel, PeladeiroModel model);
 
   void verifyFutSaveFile(Long id, MultipartFile file);
+
+  void verityPeladeiroInList(FutModel futModel, PeladeiroModel peladeiroModel);
+
+  void verifyBanidoListPeladeiros(FutModel futModel, PeladeiroModel peladeiroModel);
 }

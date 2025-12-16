@@ -2,7 +2,7 @@ package br.com.vemprofut.services.query.implementacao;
 
 import br.com.vemprofut.exceptions.NotFoundException;
 import br.com.vemprofut.models.HistoricoFutModel;
-import br.com.vemprofut.repositories.HisotricoFutRepository;
+import br.com.vemprofut.repositories.HistoricoFutRepository;
 import br.com.vemprofut.services.query.IHistoricoFutQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HistoricoFutQueryService implements IHistoricoFutQueryService {
 
-  @Autowired private HisotricoFutRepository repository;
+  @Autowired private HistoricoFutRepository repository;
 
   @Override
   public HistoricoFutModel verityHistoricoFutExistRetorn(Long id) {

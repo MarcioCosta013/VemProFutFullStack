@@ -1,12 +1,10 @@
 package br.com.vemprofut.services.query.implementacao;
 
-import br.com.vemprofut.exceptions.FileStorageException;
-import br.com.vemprofut.exceptions.FutInUseException;
-import br.com.vemprofut.exceptions.NomeInUseException;
-import br.com.vemprofut.exceptions.NotFoundException;
+import br.com.vemprofut.exceptions.*;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.FutRepository;
+import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.IUploadLocalService;
 import br.com.vemprofut.services.query.IFutQueryService;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +21,7 @@ public class FutQueryService implements IFutQueryService {
 
   private final FutRepository repository;
   private final IUploadLocalService uploadLocalService;
+  private final PeladeiroRepository peladeiroRepository;
 
   @Override
   public void verifyFutExist(Long dto) {
@@ -93,6 +92,20 @@ public class FutQueryService implements IFutQueryService {
     } catch (IOException ex) {
       throw new FileStorageException(
           "Erro ao salvar a foto do peladeiro com id: " + id, ex.getCause());
+    }
+  }
+
+  @Override
+  public void verityPeladeiroInList(FutModel futModel, PeladeiroModel peladeiroModel) {
+    if (futModel.getPeladeiros().contains(peladeiroModel)) {
+      throw new PeladeiroNotExistException("Peladeiro já cadastrado na lista de peladeiros!");
+    }
+  }
+
+  @Override
+  public void verifyBanidoListPeladeiros(FutModel futModel, PeladeiroModel peladeiroModel) {
+    if (!(futModel.getPeladeiros().contains(peladeiroModel))) {
+      throw new NotFoundException("Nao consta esse Peladeiro na lista de Peladeiros");
     }
   }
 }

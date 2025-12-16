@@ -8,4 +8,4 @@ public record SaveFutRequestDTO(
     @PositiveOrZero Integer jogadoresPorTime,
     @PositiveOrZero Integer tempoMaxPartida,
     @PositiveOrZero Integer maxGolsVitoria,
-    @PositiveOrZero Long administradorPeladeiroId) {}
+    @PositiveOrZero Long administradorPeladeiro) {}

@@ -15,6 +15,7 @@ import br.com.vemprofut.exceptions.NotFoundException;
 import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
 import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.ICartoesService;
 import br.com.vemprofut.services.IHistoricoPeladeiroService;
@@ -63,7 +64,7 @@ public class PeladeiroServiceTest {
             "marcio-costa@gmail.com",
             "ronaldinho",
             "o cara forte",
-            "destro",
+            PeDominante.DESTRO,
             "81999999999");
 
     // cria listas simuladas
@@ -82,7 +83,7 @@ public class PeladeiroServiceTest {
                 "marcio-costa@gmail.com",
                 "ronaldinho",
                 "o cara forte",
-                "destro",
+                PeDominante.DESTRO,
                 "81999999999",
                 1L,
                 "foto.com/url",
@@ -111,7 +112,7 @@ public class PeladeiroServiceTest {
             "marcio-costa@gmail.com",
             "ronaldinho",
             "o cara forte",
-            "destro",
+            PeDominante.DESTRO,
             "81999999999");
 
     // cria listas simuladas
@@ -140,7 +141,12 @@ public class PeladeiroServiceTest {
     // Arrange
     UpdatePeladeiroRequestDTO requestDTO =
         new UpdatePeladeiroRequestDTO(
-            "maria", "maria@gmail.com", "mari", "mulher que joga", "Canhoto", "81999993332");
+            "maria",
+            "maria@gmail.com",
+            "mari",
+            "mulher que joga",
+            PeDominante.CANHOTO,
+            "81999993332");
 
     when(queryService.verifyPeladeiroExist(1L)).thenReturn(peladeiroModel);
     when(repository.save(peladeiroModel)).thenReturn(peladeiroModel);
@@ -151,8 +157,8 @@ public class PeladeiroServiceTest {
                 "maria@gmail.com",
                 "mari",
                 "mulher que joga",
-                "Canhoto",
                 "81999993332",
+                PeDominante.DESTRO,
                 "foto.com/url"));
 
     // Act
@@ -173,7 +179,12 @@ public class PeladeiroServiceTest {
     // Arrange
     UpdatePeladeiroRequestDTO requestDTO =
         new UpdatePeladeiroRequestDTO(
-            "maria", "maria@gmail.com", "mari", "mulher que joga", "Canhoto", "81999993332");
+            "maria",
+            "maria@gmail.com",
+            "mari",
+            "mulher que joga",
+            PeDominante.CANHOTO,
+            "81999993332");
 
     when(queryService.verifyPeladeiroExist(99L))
         .thenThrow(new NotFoundException("Não foi encontrado o Peladeiro de id" + 99L));

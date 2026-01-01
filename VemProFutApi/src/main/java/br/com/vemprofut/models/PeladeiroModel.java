@@ -1,5 +1,6 @@
 package br.com.vemprofut.models;
 
+import br.com.vemprofut.models.enuns.PeDominante;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class PeladeiroModel {
       String apelido,
       String descricao,
       String whatsapp,
-      String peDominante) {
+      PeDominante peDominante) {
     this.nome = nome;
     this.email = email;
     this.apelido = apelido;
@@ -49,7 +50,8 @@ public class PeladeiroModel {
   private String whatsapp;
 
   @Column(name = "pe_dominante_peladeiro", nullable = false, length = 10)
-  private String peDominante;
+  @Enumerated(EnumType.STRING) // salva como texto no banco
+  private PeDominante peDominante; // TODO: mudar para usar um enum...
 
   @ToString.Exclude
   @OneToOne

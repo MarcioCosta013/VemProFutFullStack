@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.implementacao.UploadLocalService;
 import jakarta.transaction.Transactional;
@@ -56,7 +57,12 @@ public class PeladeiroRepositoryIT {
   public void save_quandoPeladeiroValido_retornaIdGerado() {
     PeladeiroModel peladeiroModel =
         new PeladeiroModel(
-            "Marcio Teste", "teste@test.com", "Ronaldo", "o cara nota 10", "81992235678", "Destro");
+            "Marcio Teste",
+            "teste@test.com",
+            "Ronaldo",
+            "o cara nota 10",
+            "81992235678",
+            PeDominante.DESTRO);
 
     PeladeiroModel salvo = peladeiroRepository.save(peladeiroModel);
 
@@ -75,9 +81,9 @@ public class PeladeiroRepositoryIT {
   @DisplayName("findAll deve retornar lista com todos os Peladeiros")
   public void findAll_quandoExistemRegistros_retornaListaComTodos() {
     peladeiroRepository.saveAndFlush(
-        new PeladeiroModel("A", "a@test.com", "A", "333", "81555555555", "Destro"));
+        new PeladeiroModel("A", "a@test.com", "A", "333", "81555555555", PeDominante.DESTRO));
     peladeiroRepository.saveAndFlush(
-        new PeladeiroModel("B", "b@test.com", "B", "444", "82000000000", "Destro"));
+        new PeladeiroModel("B", "b@test.com", "B", "444", "82000000000", PeDominante.DESTRO));
 
     List<PeladeiroModel> todos = peladeiroRepository.findAll();
     assertTrue(todos.size() >= 2);
@@ -88,7 +94,7 @@ public class PeladeiroRepositoryIT {
   public void deleteById_quandoIdExistente_registroEhRemovido() {
     PeladeiroModel p =
         peladeiroRepository.saveAndFlush(
-            new PeladeiroModel("C", "c@test.com", "C", "", "3", "Destro"));
+            new PeladeiroModel("C", "c@test.com", "C", "", "3", PeDominante.DESTRO));
     Long id = p.getId();
     peladeiroRepository.deleteById(id);
     assertFalse(peladeiroRepository.findById(id).isPresent());
@@ -98,7 +104,7 @@ public class PeladeiroRepositoryIT {
   @DisplayName("deve retorna de o email ja foi castrado ou nao")
   public void existsByEmail_quandoEmailCadastrado_retornaTrue() {
     peladeiroRepository.saveAndFlush(
-        new PeladeiroModel("C", "test@test.com", "C", "", "3", "Destro"));
+        new PeladeiroModel("C", "test@test.com", "C", "", "3", PeDominante.DESTRO));
     String email = "test@test.com";
     Boolean exist = peladeiroRepository.existsByEmail(email);
 
@@ -109,7 +115,7 @@ public class PeladeiroRepositoryIT {
   @DisplayName("deve retorna falso de o email ja foi castrado ou nao")
   public void existsByEmail_quandoEmailNaoCadastrado_retornaFalse() {
     peladeiroRepository.saveAndFlush(
-        new PeladeiroModel("C", "test@test.com", "C", "", "3", "Destro"));
+        new PeladeiroModel("C", "test@test.com", "C", "", "3", PeDominante.DESTRO));
     String email = "test2@test.com";
     Boolean exist = peladeiroRepository.existsByEmail(email);
 
@@ -121,7 +127,8 @@ public class PeladeiroRepositoryIT {
   public void buscarPeladeiroPeloEmailRetornaPeladeiro() {
     PeladeiroModel p =
         peladeiroRepository.saveAndFlush(
-            new PeladeiroModel("C", "test@test.com", "C", "descricao", "377777777777", "Destro"));
+            new PeladeiroModel(
+                "C", "test@test.com", "C", "descricao", "377777777777", PeDominante.DESTRO));
     String email = "test@test.com";
     PeladeiroModel peladeiroModel = peladeiroRepository.findByEmail(email);
 
@@ -138,7 +145,8 @@ public class PeladeiroRepositoryIT {
   public void buscarPeladeiroPeloEmailRetornaNull() {
     PeladeiroModel p =
         peladeiroRepository.saveAndFlush(
-            new PeladeiroModel("C", "test@test.com", "C", "descricao", "377777777777", "Destro"));
+            new PeladeiroModel(
+                "C", "test@test.com", "C", "descricao", "377777777777", PeDominante.DESTRO));
     String email = "test1@test.com";
     PeladeiroModel peladeiroModel = peladeiroRepository.findByEmail(email);
 

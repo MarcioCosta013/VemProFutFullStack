@@ -6,6 +6,7 @@ import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.BanimentoModel;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.BanimentoRepository;
 import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.repositories.PeladeiroRepository;
@@ -57,7 +58,7 @@ public class BanimentoRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     BanimentoModel banimentoModel =
         new BanimentoModel(
@@ -86,7 +87,7 @@ public class BanimentoRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
     PeladeiroModel peladeiroModel2 =
         peladeiroRepository.saveAndFlush(
             new PeladeiroModel(
@@ -95,7 +96,7 @@ public class BanimentoRepositoryIT {
                 "Apelido2",
                 "descricao qualquer2",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     BanimentoModel banimentoModel1 =
         new BanimentoModel(
@@ -132,7 +133,7 @@ public class BanimentoRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     BanimentoModel banimentoModel =
         new BanimentoModel(

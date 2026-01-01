@@ -1,5 +1,6 @@
 package br.com.vemprofut.controllers.response;
 
+import br.com.vemprofut.models.enuns.PeDominante;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record PeladeiroDetailResponse(
@@ -9,5 +10,5 @@ public record PeladeiroDetailResponse(
     @JsonProperty("apelido") String apelido,
     @JsonProperty("descricao") String descricao,
     @JsonProperty("whatsapp") String whatsapp,
-    @JsonProperty("peDominante") String peDominante,
+    @JsonProperty("peDominante") PeDominante peDominante,
     @JsonProperty("numeroCartoes") CartoesResumoResponseDTO cartoes) {}

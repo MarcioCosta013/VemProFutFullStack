@@ -8,6 +8,7 @@ import br.com.vemprofut.models.DTOs.CartaoCountProjection;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PartidasModel;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.models.enuns.TipoCartao;
 import br.com.vemprofut.repositories.CartoesRepository;
 import br.com.vemprofut.repositories.FutRepository;
@@ -69,7 +70,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     CartoesModel cartoesModel =
         cartoesRepository.saveAndFlush(
@@ -96,7 +97,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     PeladeiroModel peladeiroModel2 =
         peladeiroRepository.saveAndFlush(
@@ -106,7 +107,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer2",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     cartoesRepository.saveAndFlush(
         new CartoesModel(partidasModel, peladeiroModel, futModel, TipoCartao.AMARELO));
@@ -134,7 +135,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     CartoesModel cartoesModel =
         cartoesRepository.saveAndFlush(
@@ -160,7 +161,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     CartoesModel cartoesModel =
         cartoesRepository.saveAndFlush(
@@ -186,7 +187,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     PeladeiroModel peladeiroModel2 =
         peladeiroRepository.saveAndFlush(
@@ -196,7 +197,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer2",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     cartoesRepository.saveAndFlush(
         new CartoesModel(partidasModel, peladeiroModel, futModel, TipoCartao.AMARELO));
@@ -228,7 +229,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     cartoesRepository.saveAndFlush(
         new CartoesModel(partidasModel, peladeiroModel, futModel, TipoCartao.AMARELO));
@@ -260,7 +261,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     cartoesRepository.saveAndFlush(
         new CartoesModel(partidasModel, peladeiroModel, futModel, TipoCartao.AMARELO));
@@ -288,7 +289,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     PeladeiroModel peladeiroModel2 =
         peladeiroRepository.saveAndFlush(
@@ -298,7 +299,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer2",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     FutModel futModel = futRepository.saveAndFlush(new FutModel());
     FutModel futModel2 = futRepository.saveAndFlush(new FutModel());
@@ -361,7 +362,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     PeladeiroModel peladeiroModel2 =
         peladeiroRepository.saveAndFlush(
@@ -371,7 +372,7 @@ public class CartoesRepositoryIT {
                 "Apelido",
                 "descricao qualquer2",
                 "81999999999",
-                "Destro"));
+                PeDominante.DESTRO));
 
     FutModel futModel = futRepository.saveAndFlush(new FutModel());
     FutModel futModel2 = futRepository.saveAndFlush(new FutModel());

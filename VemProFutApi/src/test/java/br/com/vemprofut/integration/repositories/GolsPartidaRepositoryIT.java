@@ -6,6 +6,7 @@ import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.GolsPartidaModel;
 import br.com.vemprofut.models.PartidasModel;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.GolsPartidaRepository;
 import br.com.vemprofut.repositories.PartidasRepository;
 import br.com.vemprofut.repositories.PeladeiroRepository;
@@ -54,7 +55,7 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
 
     GolsPartidaModel golsPartidaSalvo =
@@ -75,7 +76,7 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
     GolsPartidaModel golsPartidaSalvo =
         golsPartidaRepository.save(new GolsPartidaModel(peladeiroSalvo, partidasSalvo));
@@ -95,7 +96,7 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
     golsPartidaRepository.save(new GolsPartidaModel(peladeiroSalvo, partidasSalvo));
 
@@ -113,7 +114,7 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
     GolsPartidaModel golsPartidaSalvo =
         golsPartidaRepository.save(new GolsPartidaModel(peladeiroSalvo, partidasSalvo));
@@ -133,7 +134,7 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
     golsPartidaRepository.save(new GolsPartidaModel(peladeiroSalvo, partidasSalvo));
 
@@ -152,7 +153,7 @@ public class GolsPartidaRepositoryIT {
                   "Ronaldo",
                   "o cara nota 10",
                   "81992235678",
-                  "Destro"));
+                  PeDominante.DESTRO));
       PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
       golsPartidaRepository.saveAndFlush(new GolsPartidaModel(peladeiroSalvo, partidasSalvo));
     }
@@ -173,10 +174,10 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PeladeiroModel peladeiroModel2 =
         peladeiroRepository.saveAndFlush(
-            new PeladeiroModel("A", "a@test.com", "A", "333", "81555555555", "Destro"));
+            new PeladeiroModel("A", "a@test.com", "A", "333", "81555555555", PeDominante.DESTRO));
 
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
     PartidasModel partidasSalvo2 = partidasRepository.saveAndFlush(new PartidasModel());
@@ -210,10 +211,10 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PeladeiroModel peladeiroModel2 =
         peladeiroRepository.saveAndFlush(
-            new PeladeiroModel("A", "a@test.com", "A", "333", "81555555555", "Destro"));
+            new PeladeiroModel("A", "a@test.com", "A", "333", "81555555555", PeDominante.DESTRO));
 
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
     PartidasModel partidasSalvo2 = partidasRepository.saveAndFlush(new PartidasModel());
@@ -247,7 +248,7 @@ public class GolsPartidaRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.DESTRO));
     PartidasModel partidasSalvo = partidasRepository.saveAndFlush(new PartidasModel());
 
     GolsPartidaModel golsPartidaSalvo =

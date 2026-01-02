@@ -1,5 +1,6 @@
 package br.com.vemprofut.controllers.response;
 
+import br.com.vemprofut.models.enuns.PeDominante;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public record SavePeladeiroResponseDTO(
     @JsonProperty("email") String email,
     @JsonProperty("apelido") String apelido,
     @JsonProperty("descricao") String descricao,
-    @JsonProperty("peDominante") String peDominante,
+    @JsonProperty("peDominante") PeDominante peDominante,
     @JsonProperty("whatsapp") String whatsapp,
     @JsonProperty("historicoPeladeiro") Long historicoPeladeiro,
     @JsonProperty("fotoUrl") String fotoUrl,

@@ -3,6 +3,7 @@ package br.com.vemprofut.configs;
 import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
 import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.IHistoricoPeladeiroService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,7 +63,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
       usuario.setApelido(name);
       usuario.setDescricao("Usuário criado via OAuth2");
       usuario.setWhatsapp("000000000");
-      usuario.setPeDominante("Destro"); // escolha padrão
+      usuario.setPeDominante(PeDominante.DESTRO); // escolha padrão
       usuario.setAuthProvider(provider);
       usuario.setFotoUrl(picture);
       usuario.setHistoricoPeladeiro(historicoPeladeiroMapper.toModel(historicoPeladeiro));

@@ -29,7 +29,7 @@ public class PeladeiroService implements IPeladeiroService {
 
   @Autowired private PeladeiroRepository repository;
 
-  @Autowired private IPeladeiroMapper IPeladeiroMapper;
+  @Autowired private IPeladeiroMapper peladeiroMapper;
 
   @Autowired private IHistoricoPeladeiroMapper historicoMapper;
 
@@ -42,14 +42,14 @@ public class PeladeiroService implements IPeladeiroService {
   public SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto) {
     queryService.verifyEmail(dto.email());
     log.info("Email verificado!");
-    PeladeiroModel peladeiroModel = IPeladeiroMapper.saveRequestToModel(dto);
+    PeladeiroModel peladeiroModel = peladeiroMapper.saveRequestToModel(dto);
     PeladeiroModel peladeiroSalvo = repository.save(peladeiroModel);
 
     HistoricoPeladeiroDTO historico = historicoPeladeiroService.create();
     peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
 
     log.info("Peladeiro cadastrado com sucesso!");
-    return IPeladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
+    return peladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
   }
 
   @Override
@@ -66,7 +66,7 @@ public class PeladeiroService implements IPeladeiroService {
     peladeiroModel.setPeDominante(dto.peDominante());
 
     log.info("Peladeiro alterado com sucesso!");
-    return IPeladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
+    return peladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
   }
 
   @Override
@@ -99,7 +99,7 @@ public class PeladeiroService implements IPeladeiroService {
   //
   //        return repository.findAll()
   //                .stream()
-  //                .map(IPeladeiroMapper::toDTO)
+  //                .map(peladeiroMapper::toDTO)
   //                .toList();
   //    }
 

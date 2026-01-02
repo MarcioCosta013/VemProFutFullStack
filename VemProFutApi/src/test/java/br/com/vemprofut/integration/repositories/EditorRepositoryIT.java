@@ -6,6 +6,7 @@ import br.com.vemprofut.configs.OAuth2LoginSuccessHandler;
 import br.com.vemprofut.models.EditorModel;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PeladeiroModel;
+import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.EditorRepository;
 import br.com.vemprofut.repositories.FutRepository;
 import br.com.vemprofut.repositories.PeladeiroRepository;
@@ -56,7 +57,7 @@ public class EditorRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.CANHOTO));
 
     EditorModel editorModel =
         editorRepository.saveAndFlush(new EditorModel(peladeiroModel, futModel));
@@ -78,7 +79,7 @@ public class EditorRepositoryIT {
                 "Ronaldo",
                 "o cara nota 10",
                 "81992235678",
-                "Destro"));
+                PeDominante.CANHOTO));
 
     EditorModel editorModel =
         editorRepository.saveAndFlush(new EditorModel(peladeiroModel, futModel));

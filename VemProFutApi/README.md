@@ -1,4 +1,4 @@
-# VemProFut! API (Em andamento...)
+# VemProFut! API (Concluída)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
@@ -32,3 +32,28 @@ API base de todo o projeto VemProFut!
     ├── excludeFilter.xml     → Configuração de exclusões (provavelmente Sonar ou Checkstyle)
     └── README.md             → Documentação inicial da API
 ```
+
+# 🚀 Como rodar a aplicação
+
+A aplicação suporta múltiplos perfis (`dev`, `test`, `prod`) configurados via **Spring Profiles**.
+
+---
+## 🏭 Ambiente de Produção (`prod`)
+
+Rodar com **Docker Compose**:
+```bash
+docker compose up
+```
+## 🔧 Ambiente de Desenvolvimento (`dev`)
+
+Rodar diretamente com **Maven**:
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+## 🧪 Ambiente de Testes (`test`)
+
+Rodar diretamente com **Maven**:
+```bash
+mvn test 
+```
+

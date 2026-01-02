@@ -15,8 +15,10 @@ import br.com.vemprofut.services.ICartoesService;
 import br.com.vemprofut.services.IHistoricoPeladeiroService;
 import br.com.vemprofut.services.IPeladeiroService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
+import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +41,7 @@ public class PeladeiroService implements IPeladeiroService {
 
   @Override
   @Transactional
-  public SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto) {
+  public CompletableFuture<SavePeladeiroResponseDTO> create(SavePeladeiroRequestDTO dto) {
     queryService.verifyEmail(dto.email());
     log.info("Email verificado!");
     PeladeiroModel peladeiroModel = peladeiroMapper.saveRequestToModel(dto);
@@ -49,12 +51,17 @@ public class PeladeiroService implements IPeladeiroService {
     peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
 
     log.info("Peladeiro cadastrado com sucesso!");
-    return peladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
+    SavePeladeiroResponseDTO response =
+        peladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
+
+    return CompletableFuture.completedFuture(response);
   }
 
   @Override
   @Transactional
-  public UpdatePeladeiroResponseDTO update(Long id, UpdatePeladeiroRequestDTO dto) {
+  @Async
+  public CompletableFuture<UpdatePeladeiroResponseDTO> update(
+      Long id, UpdatePeladeiroRequestDTO dto) {
     var peladeiroModel = queryService.verifyPeladeiroExist(id);
     log.info("Verificado a existencia de Peladeiro");
 
@@ -66,35 +73,44 @@ public class PeladeiroService implements IPeladeiroService {
     peladeiroModel.setPeDominante(dto.peDominante());
 
     log.info("Peladeiro alterado com sucesso!");
-    return peladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
+    UpdatePeladeiroResponseDTO response =
+        peladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
+    return CompletableFuture.completedFuture(response);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public PeladeiroDetailResponse findById(Long id) {
+  @Async
+  public CompletableFuture<PeladeiroDetailResponse> findById(Long id) {
     log.info("Buscando peladeiro pelo id... saida de resposta");
     PeladeiroModel retorno = queryService.verifyPeladeiroExist(id);
     CartoesResumoResponseDTO resumo = cartoesService.contarCartoesPeladeiro(id);
-    return new PeladeiroDetailResponse(
-        retorno.getId(),
-        retorno.getNome(),
-        retorno.getEmail(),
-        retorno.getApelido(),
-        retorno.getDescricao(),
-        retorno.getWhatsapp(),
-        retorno.getPeDominante(),
-        resumo);
+    var response =
+        new PeladeiroDetailResponse(
+            retorno.getId(),
+            retorno.getNome(),
+            retorno.getEmail(),
+            retorno.getApelido(),
+            retorno.getDescricao(),
+            retorno.getWhatsapp(),
+            retorno.getPeDominante(),
+            resumo);
+
+    return CompletableFuture.completedFuture(response);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public PeladeiroModel findByIdModel(Long id) {
+  @Async
+  public CompletableFuture<PeladeiroModel> findByIdModel(Long id) {
     log.info("Buscando peladeiro pelo id... saida de uso interno");
-    return queryService.verifyPeladeiroExist(id);
+    PeladeiroModel response = queryService.verifyPeladeiroExist(id);
+    return CompletableFuture.completedFuture(response);
   }
 
   //    @Override
-  //    @Transactional(readOnly = true)
+  //    @Transactional
+  //    @Async(readOnly = true)
   //    public List<PeladeiroDTO> findAll() {
   //
   //        return repository.findAll()
@@ -105,15 +121,17 @@ public class PeladeiroService implements IPeladeiroService {
 
   @Override
   @Transactional
-  public void delete(Long id) {
+  public CompletableFuture<Void> delete(Long id) {
     queryService.verifyPeladeiroExist(id);
     log.info("Existência de Peladeiro confirmada com sucesso!");
     repository.deleteById(id);
+    return CompletableFuture.completedFuture(null);
   }
 
   @Override
   @Transactional
-  public void atualizarFoto(Long id, MultipartFile file) {
+  public CompletableFuture<Void> atualizarFoto(Long id, MultipartFile file) {
     queryService.verifyPeladeiroSaveFile(id, file);
+    return CompletableFuture.completedFuture(null);
   }
 }

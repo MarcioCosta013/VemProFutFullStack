@@ -30,6 +30,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.multipart.MultipartFile;
 
 @ExtendWith(MockitoExtension.class)
 public class PeladeiroServiceTest {
@@ -91,7 +92,7 @@ public class PeladeiroServiceTest {
                 futs,
                 cartoes));
     // Act
-    SavePeladeiroResponseDTO response = peladeiroService.create(savePeladeiroRequestDTO);
+    SavePeladeiroResponseDTO response = peladeiroService.create(savePeladeiroRequestDTO).join();
 
     // Assert
     assertThat(response.nome()).isEqualTo("Marcio");
@@ -162,7 +163,7 @@ public class PeladeiroServiceTest {
                 "foto.com/url"));
 
     // Act
-    UpdatePeladeiroResponseDTO responseDTO = peladeiroService.update(1L, requestDTO);
+    UpdatePeladeiroResponseDTO responseDTO = peladeiroService.update(1L, requestDTO).join();
 
     // Assert
     assertThat(responseDTO).isNotNull();
@@ -206,7 +207,7 @@ public class PeladeiroServiceTest {
     when(cartoesService.contarCartoesPeladeiro(1L)).thenReturn(cartoesResumoResponseDTO);
 
     // Act
-    PeladeiroDetailResponse peladeiroDetailResponse = peladeiroService.findById(1L);
+    PeladeiroDetailResponse peladeiroDetailResponse = peladeiroService.findById(1L).join();
 
     // Assert
     assertThat(peladeiroDetailResponse).isNotNull();
@@ -239,13 +240,13 @@ public class PeladeiroServiceTest {
   }
 
   @Test
-  @DisplayName("")
+  @DisplayName("Deve retornar PeladeiroModel quando ID existe")
   void findByIdModel_quandoPeladeiroExiste_retornaPeladeiroModel() {
     // Arrenge
     when(queryService.verifyPeladeiroExist(1L)).thenReturn(peladeiroModel);
 
     // Act
-    PeladeiroModel response = peladeiroService.findByIdModel(1L);
+    PeladeiroModel response = peladeiroService.findByIdModel(1L).join();
 
     // Assert
     assertThat(response.getId()).isEqualTo(1L);
@@ -256,7 +257,7 @@ public class PeladeiroServiceTest {
   }
 
   @Test
-  @DisplayName("")
+  @DisplayName("Deve retornar erro NotFoundException quando ID nao existe")
   void findByIdModel_quandoPeladeiroInexistente_retornaNotFoundException() {
     // Arrenge
     when(queryService.verifyPeladeiroExist(99L))
@@ -278,7 +279,7 @@ public class PeladeiroServiceTest {
     doNothing().when(repository).deleteById(1L);
 
     // Act
-    peladeiroService.delete(1L);
+    peladeiroService.delete(1L).join();
 
     // Assert
     verify(queryService).verifyPeladeiroExist(1L);
@@ -299,5 +300,34 @@ public class PeladeiroServiceTest {
         .hasMessage("Não foi encontrado o Peladeiro de id " + 99L);
 
     verify(queryService).verifyPeladeiroExist(99L);
+  }
+
+  @Test
+  @DisplayName("Deve atualizar a foto do Peladeiro")
+  void atualizarFoto_quandoPeladeiroExiste() {
+    MultipartFile file = mock(MultipartFile.class);
+
+    doNothing().when(queryService).verifyPeladeiroSaveFile(1L, file);
+    peladeiroService.atualizarFoto(1L, file).join();
+
+    verify(queryService).verifyPeladeiroSaveFile(1L, file);
+  }
+
+  @Test
+  @DisplayName("Deve lançar NotFoundException ao tentar atualizar foto de Peladeiro inexistente")
+  void atualizarFoto_quandoPeladeiroInexistente_retornaNotFoundException() {
+    MultipartFile file = mock(MultipartFile.class);
+
+    // Arrange: simula que o queryService lança exceção
+    doThrow(new NotFoundException("Não foi encontrado o Peladeiro de id 99"))
+        .when(queryService)
+        .verifyPeladeiroSaveFile(99L, file);
+
+    // Act + Assert
+    assertThatThrownBy(() -> peladeiroService.atualizarFoto(99L, file).join())
+        .isInstanceOf(NotFoundException.class)
+        .hasMessage("Não foi encontrado o Peladeiro de id 99");
+
+    verify(queryService).verifyPeladeiroSaveFile(99L, file);
   }
 }

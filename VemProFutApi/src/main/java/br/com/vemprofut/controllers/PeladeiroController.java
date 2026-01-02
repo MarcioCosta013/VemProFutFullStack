@@ -8,6 +8,7 @@ import br.com.vemprofut.services.IPeladeiroService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,47 +27,48 @@ public class PeladeiroController {
   @Operation(
       summary = "Cadastra um novo peladeiro",
       tags = {"PeladeiroController"})
-  public ResponseEntity<SavePeladeiroResponseDTO> create(
+  public CompletableFuture<ResponseEntity<SavePeladeiroResponseDTO>> create(
       @Valid @RequestBody final SavePeladeiroRequestDTO requestDTO) {
-    var obj = peladeiroService.create(requestDTO);
-    return ResponseEntity.status(HttpStatus.CREATED).body(obj);
+
+    return peladeiroService
+        .create(requestDTO)
+        .thenApply(obj -> ResponseEntity.status(HttpStatus.CREATED).body(obj));
   }
 
   @GetMapping("{id}")
   @Operation(
       summary = "Busca um Peladeiro pelo id",
       tags = {"PeladeiroController"})
-  public ResponseEntity<PeladeiroDetailResponse> findById(@PathVariable final Long id) {
-    var obj = peladeiroService.findById(id);
-    return ResponseEntity.ok(obj);
+  public CompletableFuture<ResponseEntity<PeladeiroDetailResponse>> findById(
+      @PathVariable final Long id) {
+    return peladeiroService.findById(id).thenApply(ResponseEntity::ok);
   }
 
   @PutMapping("{id}")
   @Operation(
       summary = "Faz alteraçoes no Peladeiro cujo id é informado.",
       tags = {"PeladeiroController"})
-  public ResponseEntity<Void> update(
+  public CompletableFuture<ResponseEntity<Void>> update(
       @PathVariable final Long id, @Valid @RequestBody UpdatePeladeiroRequestDTO dto) {
-    peladeiroService.update(id, dto);
-    return ResponseEntity.noContent().build();
+    return peladeiroService.update(id, dto).thenApply(obj -> ResponseEntity.noContent().build());
   }
 
   @DeleteMapping("{id}")
   @Operation(
       summary = "Deleta o peladeiro cujo id foi informado. Cuidado!",
       tags = {"PeladeiroController"})
-  public ResponseEntity<Void> delete(@PathVariable final Long id) {
-    peladeiroService.delete(id);
-    return ResponseEntity.noContent().build();
+  public CompletableFuture<ResponseEntity<Void>> delete(@PathVariable final Long id) {
+    return peladeiroService.delete(id).thenApply(obj -> ResponseEntity.noContent().build());
   }
 
   @PostMapping(value = "uploadFoto/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   @Operation(
       summary = "Caso nao logado pelo gmail, enviar a foto do perfil",
       tags = {"PeladeiroController"})
-  public ResponseEntity<String> uploadFotoPeladeiro(
+  public CompletableFuture<ResponseEntity<String>> uploadFotoPeladeiro(
       @PathVariable Long id, @RequestPart("file") MultipartFile file) throws IOException {
-    peladeiroService.atualizarFoto(id, file);
-    return ResponseEntity.ok("Foto salva!");
+    return peladeiroService
+        .atualizarFoto(id, file)
+        .thenApply(obj -> ResponseEntity.ok("Foto salva!"));
   }
 }

@@ -14,8 +14,12 @@ import br.com.vemprofut.services.query.IFutQueryService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,11 +58,15 @@ public class FutService implements IFutService {
 
   @Autowired private IBanimentoService banidoService;
 
+  @Autowired
+  @Qualifier("partidasExecutor")
+  private Executor executor;
+
   // ======================== CRUD basico ==========================
 
   @Override
   @Transactional
-  public SaveFutResponseDTO create(SaveFutRequestDTO dto) {
+  public CompletableFuture<SaveFutResponseDTO> create(SaveFutRequestDTO dto) {
     queryService.verifyNomeFutExist(dto.nome());
     var peladeiro = peladeiroQueryService.verifyPeladeiroExist(dto.administradorPeladeiro());
 
@@ -67,67 +75,78 @@ public class FutService implements IFutService {
     HistoricoFutModel historico = historicoFutService.create();
     saved.setHistoricoFutId(historico);
     saved.setAdministradorPeladeiro(peladeiro);
-    return mapper.toSaveResponse(repository.save(saved));
+    SaveFutResponseDTO response = mapper.toSaveResponse(repository.save(saved));
+    return CompletableFuture.completedFuture(response);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public FutDetailsResponse findById(Long id) {
+  @Async
+  public CompletableFuture<FutDetailsResponse> findById(Long id) {
     var futModel = queryService.verifyFutExistRetorn(id);
-    return mapper.modelToDetailsResponse(futModel);
+    FutDetailsResponse response = mapper.modelToDetailsResponse(futModel);
+    return CompletableFuture.completedFuture(response);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public FutModel findByIdModel(Long id) {
-    return queryService.verifyFutExistRetorn(id);
+  @Async
+  public CompletableFuture<FutModel> findByIdModel(Long id) {
+    return CompletableFuture.completedFuture(queryService.verifyFutExistRetorn(id));
   }
 
   @Override
   @Transactional(readOnly = true)
-  public FutDTO findByNome(String nome) {
+  public CompletableFuture<FutDTO> findByNome(String nome) {
     var futModel = queryService.verifyNomeFutExistRetorn(nome);
-    return mapper.toDTO(futModel);
+    return CompletableFuture.completedFuture(mapper.toDTO(futModel));
   }
 
   @Override
   @Transactional(readOnly = true)
-  public List<FutDTO> findAll() {
-    return repository.findAll().stream().map(mapper::toDTO).toList();
+  @Async
+  public CompletableFuture<List<FutDTO>> findAll() {
+    return CompletableFuture.completedFuture(
+        repository.findAll().stream().map(mapper::toDTO).toList());
   }
 
   @Override
   @Transactional
-  public UpdateFutResponseDTO update(Long id, UpdateFutRequestDTO dto) {
+  public CompletableFuture<UpdateFutResponseDTO> update(Long id, UpdateFutRequestDTO dto) {
     var retorno = queryService.verifyFutExistRetorn(id);
 
     retorno.setJogadoresPorTime(dto.jogadoresPorTime());
     retorno.setTempoMaxPartida(dto.tempoMaxPartida());
     retorno.setMaxGolsVitoria(dto.maxGolsVitoria());
 
-    return mapper.modelToUpdateResponse(repository.save(retorno));
+    return CompletableFuture.completedFuture(
+        mapper.modelToUpdateResponse(repository.save(retorno)));
   }
 
   @Override
   @Transactional
-  public void delete(Long id) {
+  public CompletableFuture<Void> delete(Long id) {
     queryService.verifyFutExistRetorn(id);
     repository.deleteById(id);
+    return CompletableFuture.completedFuture(null);
   }
 
   // ======================== acoes partidas ==========================
 
-  @Override
+  /*@Override
   @Transactional
-  public SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel) {
-    return partidasService.create(requestDTO, futModel);
+  public CompletableFuture<SavePartidasResponseDTO> criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel) {
+    return CompletableFuture.completedFuture(partidasService.create(requestDTO, futModel));
   }
 
   @Override
-  @Transactional
-  public List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS) {
+  public CompletableFuture<List<SavePartidasResponseDTO>> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS) {
+    // dispara cada DTO em paralelo
+    List<CompletableFuture<PartidasModel>> futures = requestDTOS.stream()
+            .map(dto -> CompletableFuture.supplyAsync(() -> criarPartida(dto), executor))
+            .toList(); //TODO: ---------------------------------------------
 
-    List<PartidasModel> partidaList = new ArrayList<>();
+    // espera todos terminarem e junta os resultados
 
     for (SavePartidaRequestDTO dto : requestDTOS) {
       // 1 - criando partida
@@ -190,14 +209,14 @@ public class FutService implements IFutService {
       }
       partidaList.add(partida);
     }
-    return partidasMapper.toResponseList(partidaList);
-  }
+    return CompletableFuture.completedFuture(partidasMapper.toResponseList(partidaList));
+  } */
 
   // ======================== lista peladeiro ========================
 
   @Override
   @Transactional
-  public void addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO) {
+  public CompletableFuture<Void> addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO) {
     PeladeiroModel peladeiroModel =
         peladeiroQueryService.verifyPeladeiroExist(requestDTO.peladeiroId());
     FutModel futModel = queryService.verifyFutExistRetorn(requestDTO.futId());
@@ -209,11 +228,12 @@ public class FutService implements IFutService {
         .add(peladeiroModel); // Esse adiciona a tabela: "participa_peladeiro_fut".
     repository.save(
         futModel); // Esse salva em FutModel (que é onde a table intermediaria foi criada)
+    return CompletableFuture.completedFuture(null);
   }
 
   @Override
   @Transactional
-  public List<PeladeiroResponseDTO> listarPeladeiroCadastradosFut(Long futId) {
+  public CompletableFuture<List<PeladeiroResponseDTO>> listarPeladeiroCadastradosFut(Long futId) {
     FutModel futModel = queryService.verifyFutExistRetornListPeladeiro(futId); /*
                                                                                 Esse metodo retorna futModel já com peladeiros carregado... resolvendo o problema abaixo.
                                                                                 @ManyToMany é LAZY, Ou seja:
@@ -230,13 +250,13 @@ public class FutService implements IFutService {
     for (PeladeiroModel p : futModel.getPeladeiros()) {
       listResponce.add(peladeiroMapper.modelToPeladeiroResponse(p));
     }
-    return listResponce;
+    return CompletableFuture.completedFuture(listResponce);
   }
 
   // ===================== lista Editores =============================
   @Override
   @Transactional
-  public void addEditor(AddEditorInFutListResquestDTO resquestDTO) {
+  public CompletableFuture<Void> addEditor(AddEditorInFutListResquestDTO resquestDTO) {
     EditorModel editorModel = new EditorModel();
 
     // Verificacoes
@@ -259,7 +279,8 @@ public class FutService implements IFutService {
 
   @Override
   @Transactional
-  public List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut) {
+  public CompletableFuture<List<PeladeiroNameIdResponseDTO>> listarEditoresCadastradosFut(
+      Long idFut) {
     FutModel futModel = queryService.verifyFutExistRetornListEditores(idFut);
     log.info("Verificacao de existencia de Fut realizada com sucesso!");
 
@@ -269,14 +290,14 @@ public class FutService implements IFutService {
       listResponse.add(editorMapper.toResponseNameId(e));
     }
 
-    return listResponse;
+    return CompletableFuture.completedFuture(listResponse);
   }
 
   // ===================== upload arquivos fotos ======================
 
   @Override
   @Transactional
-  public void atualizarFotoCapa(Long id, MultipartFile file) {
+  public CompletableFuture<Void> atualizarFotoCapa(Long id, MultipartFile file) {
     queryService.verifyFutSaveFile(id, file);
   }
 
@@ -284,30 +305,32 @@ public class FutService implements IFutService {
 
   @Override
   @Transactional
-  public SaveBanimentoResponseDTO addBanimentoList(SaveBanimentoRequestDTO dto) {
+  public CompletableFuture<SaveBanimentoResponseDTO> addBanimentoList(SaveBanimentoRequestDTO dto) {
     FutModel futModel = queryService.verifyFutExistRetorn(dto.fut());
     PeladeiroModel peladeiroModel = peladeiroQueryService.verifyPeladeiroExist(dto.peladeiro());
 
     // Verificacao de existe o peladeiro em questao na lista de peladeiro...
     queryService.verifyBanidoListPeladeiros(futModel, peladeiroModel);
 
-    return banidoService.create(dto);
+    return CompletableFuture.completedFuture(banidoService.create(dto));
   }
 
   @Override
   @Transactional
-  public List<BanimentoDetailsResponseDTO> findAllBanidos(Long idFut) {
-    return banidoService.findAll(idFut);
+  @Async
+  public CompletableFuture<List<BanimentoDetailsResponseDTO>> findAllBanidos(Long idFut) {
+    return CompletableFuture.completedFuture(banidoService.findAll(idFut));
   }
 
   @Override
   @Transactional
-  public void removeBanido(Long idPeladeiro, Long idFut) {
+  public CompletableFuture<Void> removeBanido(Long idPeladeiro, Long idFut) {
     // TODO: retirar um Banido da lista
     queryService.verifyBanidoListPeladeiros(
         queryService.verifyFutExistRetorn(idFut),
         peladeiroQueryService.verifyPeladeiroExist(idPeladeiro));
 
     banidoService.delete(idPeladeiro);
+    return CompletableFuture.completedFuture(null);
   }
 }

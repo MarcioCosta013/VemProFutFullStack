@@ -41,6 +41,7 @@ public class PeladeiroService implements IPeladeiroService {
 
   @Override
   @Transactional
+  @Async("defaultExecutor")
   public CompletableFuture<SavePeladeiroResponseDTO> create(SavePeladeiroRequestDTO dto) {
     queryService.verifyEmail(dto.email());
     log.info("Email verificado!");
@@ -51,67 +52,67 @@ public class PeladeiroService implements IPeladeiroService {
     peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
 
     log.info("Peladeiro cadastrado com sucesso!");
-    SavePeladeiroResponseDTO response =
-        peladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
-
+    var response = peladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
     return CompletableFuture.completedFuture(response);
   }
 
   @Override
   @Transactional
-  @Async
+  @Async("defaultExecutor")
   public CompletableFuture<UpdatePeladeiroResponseDTO> update(
       Long id, UpdatePeladeiroRequestDTO dto) {
-    var peladeiroModel = queryService.verifyPeladeiroExist(id);
     log.info("Verificado a existencia de Peladeiro");
+    return queryService
+        .verifyPeladeiroExist(id)
+        .thenApply(
+            peladeiroModel -> {
+              peladeiroModel.setNome(dto.nome());
+              peladeiroModel.setEmail(dto.email());
+              peladeiroModel.setApelido(dto.apelido());
+              peladeiroModel.setDescricao(dto.descricao());
+              peladeiroModel.setWhatsapp(dto.whatsapp());
+              peladeiroModel.setPeDominante(dto.peDominante());
 
-    peladeiroModel.setNome(dto.nome());
-    peladeiroModel.setEmail(dto.email());
-    peladeiroModel.setApelido(dto.apelido());
-    peladeiroModel.setDescricao(dto.descricao());
-    peladeiroModel.setWhatsapp(dto.whatsapp());
-    peladeiroModel.setPeDominante(dto.peDominante());
+              log.info("Peladeiro alterado com sucesso!");
 
-    log.info("Peladeiro alterado com sucesso!");
-    UpdatePeladeiroResponseDTO response =
-        peladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
-    return CompletableFuture.completedFuture(response);
+              return peladeiroMapper.modelToUpdateResponse(repository.save(peladeiroModel));
+            });
   }
 
   @Override
   @Transactional(readOnly = true)
-  @Async
+  @Async("defaultExecutor")
   public CompletableFuture<PeladeiroDetailResponse> findById(Long id) {
     log.info("Buscando peladeiro pelo id... saida de resposta");
-    PeladeiroModel retorno = queryService.verifyPeladeiroExist(id);
-    CartoesResumoResponseDTO resumo = cartoesService.contarCartoesPeladeiro(id);
-    var response =
-        new PeladeiroDetailResponse(
-            retorno.getId(),
-            retorno.getNome(),
-            retorno.getEmail(),
-            retorno.getApelido(),
-            retorno.getDescricao(),
-            retorno.getWhatsapp(),
-            retorno.getPeDominante(),
-            resumo);
-
-    return CompletableFuture.completedFuture(response);
+    CompletableFuture<PeladeiroModel> peladeiroFuture = queryService.verifyPeladeiroExist(id);
+    CompletableFuture<CartoesResumoResponseDTO> resumoFuture =
+        cartoesService.contarCartoesPeladeiro(id);
+    return peladeiroFuture.thenCombine(
+        resumoFuture,
+        (retorno, resumo) ->
+            new PeladeiroDetailResponse(
+                retorno.getId(),
+                retorno.getNome(),
+                retorno.getEmail(),
+                retorno.getApelido(),
+                retorno.getDescricao(),
+                retorno.getWhatsapp(),
+                retorno.getPeDominante(),
+                resumo));
   }
 
   @Override
   @Transactional(readOnly = true)
-  @Async
+  @Async("defaultExecutor")
   public CompletableFuture<PeladeiroModel> findByIdModel(Long id) {
     log.info("Buscando peladeiro pelo id... saida de uso interno");
-    PeladeiroModel response = queryService.verifyPeladeiroExist(id);
-    return CompletableFuture.completedFuture(response);
+    return queryService.verifyPeladeiroExist(id);
   }
 
   //    @Override
-  //    @Transactional
-  //    @Async(readOnly = true)
-  //    public List<PeladeiroDTO> findAll() {
+  //    @Transactional(readOnly = true)
+  //     @Async("defaultExecutor")
+  //    public CompletableFuture<List<PeladeiroDTO>> findAll() {
   //
   //        return repository.findAll()
   //                .stream()
@@ -120,6 +121,7 @@ public class PeladeiroService implements IPeladeiroService {
   //    }
 
   @Override
+  @Async("defaultExecutor")
   @Transactional
   public CompletableFuture<Void> delete(Long id) {
     queryService.verifyPeladeiroExist(id);
@@ -129,6 +131,7 @@ public class PeladeiroService implements IPeladeiroService {
   }
 
   @Override
+  @Async("defaultExecutor")
   @Transactional
   public CompletableFuture<Void> atualizarFoto(Long id, MultipartFile file) {
     queryService.verifyPeladeiroSaveFile(id, file);

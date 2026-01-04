@@ -5,41 +5,44 @@ import br.com.vemprofut.controllers.response.*;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.FutModel;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IFutService {
 
-  SaveFutResponseDTO create(SaveFutRequestDTO dto);
+  CompletableFuture<SaveFutResponseDTO> create(SaveFutRequestDTO dto);
 
-  FutDetailsResponse findById(Long id);
+  CompletableFuture<FutDetailsResponse> findById(Long id);
 
-  FutModel findByIdModel(Long id);
+  CompletableFuture<FutModel> findByIdModel(Long id);
 
-  FutDTO findByNome(String nome);
+  CompletableFuture<FutDTO> findByNome(String nome);
 
-  List<FutDTO> findAll();
+  CompletableFuture<List<FutDTO>> findAll();
 
-  UpdateFutResponseDTO update(Long id, UpdateFutRequestDTO dto);
+  CompletableFuture<UpdateFutResponseDTO> update(Long id, UpdateFutRequestDTO dto);
 
-  void delete(Long id);
+  CompletableFuture<Void> delete(Long id);
 
-  SavePartidasResponseDTO criarPartida(SavePartidaRequestDTO requestDTO, FutModel futModel);
+  CompletableFuture<SavePartidasResponseDTO> criarPartida(
+      SavePartidaRequestDTO requestDTO, FutModel futModel);
 
-  void addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO);
+  CompletableFuture<Void> addPeladeiro(AddPeladeiroInFutListRequestDTO requestDTO);
 
-  List<SavePartidasResponseDTO> criarPartidasList(List<SavePartidaRequestDTO> requestDTOS);
+  CompletableFuture<List<SavePartidasResponseDTO>> criarPartidasList(
+      List<SavePartidaRequestDTO> requestDTOS);
 
-  List<PeladeiroResponseDTO> listarPeladeiroCadastradosFut(Long futId);
+  CompletableFuture<List<PeladeiroResponseDTO>> listarPeladeiroCadastradosFut(Long futId);
 
-  void addEditor(AddEditorInFutListResquestDTO resquestDTO);
+  CompletableFuture<Void> addEditor(AddEditorInFutListResquestDTO resquestDTO);
 
-  List<PeladeiroNameIdResponseDTO> listarEditoresCadastradosFut(Long idFut);
+  CompletableFuture<List<PeladeiroNameIdResponseDTO>> listarEditoresCadastradosFut(Long idFut);
 
-  void atualizarFotoCapa(Long id, MultipartFile file);
+  CompletableFuture<Void> atualizarFotoCapa(Long id, MultipartFile file);
 
-  SaveBanimentoResponseDTO addBanimentoList(SaveBanimentoRequestDTO dto);
+  CompletableFuture<SaveBanimentoResponseDTO> addBanimentoList(SaveBanimentoRequestDTO dto);
 
-  List<BanimentoDetailsResponseDTO> findAllBanidos(Long idFut);
+  CompletableFuture<List<BanimentoDetailsResponseDTO>> findAllBanidos(Long idFut);
 
-  void removeBanido(Long idPeladeiro, Long idFut);
+  CompletableFuture<Void> removeBanido(Long idPeladeiro, Long idFut);
 }

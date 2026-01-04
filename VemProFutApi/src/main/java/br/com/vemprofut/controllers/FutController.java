@@ -7,6 +7,7 @@ import br.com.vemprofut.services.IFutService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,10 +27,11 @@ public class FutController {
   @Operation(
       summary = "Cadastra um novo Fut",
       tags = {"FutController - CRUD Básico"})
-  public ResponseEntity<SaveFutResponseDTO> create(
+  public CompletableFuture<ResponseEntity<SaveFutResponseDTO>> create(
       @Valid @RequestBody final SaveFutRequestDTO requestDTO) {
-    var response = futService.create(requestDTO);
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    return futService
+        .create(requestDTO)
+        .thenApply(obj -> ResponseEntity.status(HttpStatus.CREATED).body(obj));
   }
 
   @GetMapping("{id}")

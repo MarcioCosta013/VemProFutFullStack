@@ -4,24 +4,25 @@ import br.com.vemprofut.controllers.response.CartoesResumoResponseDTO;
 import br.com.vemprofut.models.CartoesModel;
 import br.com.vemprofut.models.DTOs.CartoesDTO;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface ICartoesService {
 
-  CartoesDTO create(CartoesDTO dto);
+  CompletableFuture<CartoesDTO> create(CartoesDTO dto);
 
-  List<CartoesDTO> findByPeladeiro(Long id);
+  CompletableFuture<List<CartoesDTO>> findByPeladeiro(Long id);
 
-  List<CartoesDTO> findByPartida(Long id);
+  CompletableFuture<List<CartoesDTO>> findByPartida(Long id);
 
-  List<CartoesDTO> findByFut(Long id);
+  CompletableFuture<List<CartoesDTO>> findByFut(Long id);
 
-  List<CartoesDTO> findAll();
+  CompletableFuture<List<CartoesDTO>> findAll();
 
-  CartoesDTO findById(Long id);
+  CompletableFuture<CartoesDTO> findById(Long id);
 
-  CartoesModel findByIdModel(Long id);
+  CompletableFuture<CartoesModel> findByIdModel(Long id);
 
-  CartoesResumoResponseDTO contarCartoesPeladeiro(Long peladeiroId);
+  CompletableFuture<CartoesResumoResponseDTO> contarCartoesPeladeiro(Long peladeiroId);
 
-  CartoesResumoResponseDTO contarCartoesFut(Long futId);
+  CompletableFuture<CartoesResumoResponseDTO> contarCartoesFut(Long futId);
 }

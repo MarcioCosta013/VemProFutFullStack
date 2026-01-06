@@ -8,7 +8,9 @@ import br.com.vemprofut.repositories.EditorRepository;
 import br.com.vemprofut.services.IEditorService;
 import br.com.vemprofut.services.query.IEditorQueryService;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,34 +24,54 @@ public class EditorService implements IEditorService {
   @Autowired private EditorRepository repository;
 
   @Override
-  public EditorModel create(EditorModel model) {
-    queryService.verityEditorExist(model);
-    return repository.save(model);
+  @Async("defaultExecutor")
+  @Transactional
+  public CompletableFuture<EditorModel> create(EditorModel model) {
+    //    queryService.verityEditorExist(model); ---> nao async
+    //    return CompletableFuture.completedFuture(repository.save(model));
+
+    // Async
+    return CompletableFuture.supplyAsync(
+        () -> {
+          queryService.verityEditorExist(model);
+          return repository.save(model);
+        });
   }
 
   @Override
+  @Async("defaultExecutor")
   @Transactional(readOnly = true)
-  public EditorDTO findById(Long id) {
-    return mapper.toDTO(queryService.verityEditorIdExistReturn(id));
+  public CompletableFuture<EditorDTO> findById(Long id) {
+    return CompletableFuture.supplyAsync(
+        () -> mapper.toDTO(queryService.verityEditorIdExistReturn(id)));
   }
 
   @Override
+  @Async("defaultExecutor")
   @Transactional(readOnly = true)
-  public EditorModel findByIdModel(Long id) {
-    return queryService.verityEditorIdExistReturn(id);
+  public CompletableFuture<EditorModel> findByIdModel(Long id) {
+    return CompletableFuture.supplyAsync(() -> queryService.verityEditorIdExistReturn(id));
   }
 
   @Override
+  @Async("defaultExecutor")
   @Transactional(readOnly = true)
-  public List<EditorDTO> findAll(FutDTO futDTO) {
-    queryService.verityFutExist(futDTO);
-
-    return repository.findByFutId(futDTO.id()).stream().map(mapper::toDTO).toList();
+  public CompletableFuture<List<EditorDTO>> findAll(FutDTO futDTO) {
+    queryService.verityFutExist(futDTO); // sincrono
+    var response =
+        repository
+            .findByFutId(futDTO.id()) // sincrono
+            .stream()
+            .map(mapper::toDTO)
+            .toList();
+    return CompletableFuture.completedFuture(response);
   }
 
   @Override
-  public void delete(Long id) {
+  @Async("defaultExecutor")
+  public CompletableFuture<Void> delete(Long id) {
     queryService.verityEditorIdExist(id);
     repository.deleteById(id);
+    return CompletableFuture.completedFuture(null);
   }
 }

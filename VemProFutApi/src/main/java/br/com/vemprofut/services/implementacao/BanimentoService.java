@@ -13,7 +13,9 @@ import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.IBanimentoService;
 import br.com.vemprofut.services.query.IBanimentoQueryService;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,7 +31,7 @@ public class BanimentoService implements IBanimentoService {
 
   @Autowired private FutRepository futRepository;
 
-  public SaveBanimentoResponseDTO create(SaveBanimentoRequestDTO dto) {
+  public CompletableFuture<SaveBanimentoResponseDTO> create(SaveBanimentoRequestDTO dto) {
     banimentoQueryService.verifyPeladeiroBanidoExist(dto.fut(), dto.peladeiro());
 
     // Já foi verificado em FutService se Fut e Peladeiro existem... entao é só buscar
@@ -43,16 +45,20 @@ public class BanimentoService implements IBanimentoService {
     banimentoModel.setDataBanimento(dto.dataBaninimento());
     banimentoModel.setDataFimBanimento(dto.dataFimBanimento());
 
-    return banimentoMapper.toSaveResponse(repository.save(banimentoModel));
+    return CompletableFuture.completedFuture(
+        banimentoMapper.toSaveResponse(repository.save(banimentoModel)));
   }
 
   @Override
-  public List<BanimentoDetailsResponseDTO> findAll(Long idFut) {
-    return banimentoQueryService.verifyExistListBanido(idFut);
+  @Async
+  public CompletableFuture<List<BanimentoDetailsResponseDTO>> findAll(Long idFut) {
+    return CompletableFuture.completedFuture(banimentoQueryService.verifyExistListBanido(idFut));
   }
 
   @Override
-  public void delete(Long idPeladeiro) {
+  public CompletableFuture<Void> delete(Long idPeladeiro) {
+
     repository.deleteById(idPeladeiro);
+    return CompletableFuture.completedFuture(null);
   }
 }

@@ -8,8 +8,10 @@ import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.IUploadLocalService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,42 +24,45 @@ public class PeladeiroQueryService implements IPeladeiroQueryService {
   private final IUploadLocalService uploadLocalService;
 
   @Override
-  public void verifyEmail(String email) {
+  @Async("defaultExecutor")
+  public CompletableFuture<Void> verifyEmail(String email) {
     if (repository.existsByEmail(email)) {
       var message = "O e-mail " + email + " já está em uso";
       log.error(message);
       throw new EmailInUseException(message);
     }
+    return CompletableFuture.completedFuture(null);
   }
 
   @Override
-  public PeladeiroModel verifyPeladeiroExist(Long id) {
+  @Async("defaultExecutor")
+  public CompletableFuture<PeladeiroModel> verifyPeladeiroExist(Long id) {
     log.debug("Verificando existência do Peladeiro com ID: {}", id);
 
-    PeladeiroModel peladeiro =
-        repository
-            .findById(id)
-            .orElseThrow(
-                () -> {
-                  log.warn("Peladeiro com ID {} não encontrado no banco de dados", id);
-                  return new NotFoundException("Não foi encontrado o Peladeiro de id " + id);
-                });
-
-    log.debug("Peladeiro encontrado: {}", peladeiro);
-    return peladeiro;
+    return repository
+        .findById(id)
+        .map(CompletableFuture::completedFuture)
+        .orElseGet(
+            () ->
+                CompletableFuture.failedFuture(
+                    new NotFoundException("Não foi encontrado o Peladeiro de id " + id)));
   }
 
   @Override
-  public void verifyPeladeiroSaveFile(Long id, MultipartFile file) {
-    PeladeiroModel peladeiroModel = verifyPeladeiroExist(id);
-    try {
-      String url = uploadLocalService.upload(file, "peladeiro");
-      peladeiroModel.setFotoUrl(url);
-      repository.save(peladeiroModel);
-      log.info("Foto salva!");
-    } catch (IOException ex) {
-      throw new FileStorageException(
-          "Erro ao salvar a foto do peladeiro com id: " + id, ex.getCause());
-    }
+  @Async("defaultExecutor")
+  public CompletableFuture<Void> verifyPeladeiroSaveFile(Long id, MultipartFile file) {
+    return verifyPeladeiroExist(id) // retorna CompletableFuture<PeladeiroModel>
+        .thenAccept(
+            peladeiroModel -> {
+              try {
+                String url = uploadLocalService.upload(file, "peladeiro");
+                peladeiroModel.setFotoUrl(url);
+                repository.save(peladeiroModel);
+                log.info("Foto salva!");
+              } catch (IOException ex) {
+                throw new FileStorageException(
+                    "Erro ao salvar a foto do peladeiro com id: " + id, ex);
+              }
+            });
   }
 }

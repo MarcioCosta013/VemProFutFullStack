@@ -6,21 +6,22 @@ import br.com.vemprofut.controllers.response.PeladeiroDetailResponse;
 import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
 import br.com.vemprofut.controllers.response.UpdatePeladeiroResponseDTO;
 import br.com.vemprofut.models.PeladeiroModel;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IPeladeiroService {
 
-  SavePeladeiroResponseDTO create(SavePeladeiroRequestDTO dto);
+  CompletableFuture<SavePeladeiroResponseDTO> create(SavePeladeiroRequestDTO dto);
 
-  UpdatePeladeiroResponseDTO update(Long id, UpdatePeladeiroRequestDTO dto);
+  CompletableFuture<UpdatePeladeiroResponseDTO> update(Long id, UpdatePeladeiroRequestDTO dto);
 
-  PeladeiroDetailResponse findById(Long id);
+  CompletableFuture<PeladeiroDetailResponse> findById(Long id);
 
-  PeladeiroModel findByIdModel(Long id);
+  CompletableFuture<PeladeiroModel> findByIdModel(Long id);
 
-  // List<PeladeiroDTO> findAll();
+  // CompletableFuture<List<PeladeiroDTO>> findAll();
 
-  void delete(Long id);
+  CompletableFuture<Void> delete(Long id);
 
-  void atualizarFoto(Long id, MultipartFile file);
+  CompletableFuture<Void> atualizarFoto(Long id, MultipartFile file);
 }

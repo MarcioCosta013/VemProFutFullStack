@@ -1,8 +1,9 @@
 package br.com.vemprofut.services.query;
 
 import br.com.vemprofut.models.PartidasModel;
+import java.util.concurrent.CompletableFuture;
 
 public interface IPartidasQueryService {
 
-  PartidasModel verifyPartidaExistWithRetorn(Long id);
+  CompletableFuture<PartidasModel> verifyPartidaExistWithRetorn(Long id);
 }

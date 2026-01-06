@@ -14,6 +14,8 @@ import br.com.vemprofut.exceptions.EmailInUseException;
 import br.com.vemprofut.exceptions.NotFoundException;
 import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
 import br.com.vemprofut.mappers.IPeladeiroMapper;
+import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
+import br.com.vemprofut.models.HistoricoPeladeiroModel;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.PeladeiroRepository;
@@ -22,6 +24,7 @@ import br.com.vemprofut.services.IHistoricoPeladeiroService;
 import br.com.vemprofut.services.implementacao.PeladeiroService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,9 +41,9 @@ public class PeladeiroServiceTest {
   @Mock private IPeladeiroQueryService queryService;
   @Mock private PeladeiroRepository repository;
   @Mock private IPeladeiroMapper peladeiroMapper;
-  @Mock private IHistoricoPeladeiroMapper historicoMapper;
-  @Mock private IHistoricoPeladeiroService historicoPeladeiroService;
   @Mock private ICartoesService cartoesService;
+  @Mock private IHistoricoPeladeiroService historicoPeladeiroService;
+  @Mock private IHistoricoPeladeiroMapper historicoPeladeiroMapper;
 
   @InjectMocks private PeladeiroService peladeiroService;
 
@@ -68,12 +71,21 @@ public class PeladeiroServiceTest {
             PeDominante.DESTRO,
             "81999999999");
 
+    HistoricoPeladeiroDTO historicoPeladeiroDTO = new HistoricoPeladeiroDTO(1L, 10, 9.5, 5, 3);
+
+    HistoricoPeladeiroModel historicoPeladeiroModel = new HistoricoPeladeiroModel();
+
     // cria listas simuladas
     List<Long> partidas = List.of(10L, 20L);
     List<Long> futs = List.of(30L);
     List<Long> cartoes = List.of(40L, 50L);
 
-    doNothing().when(queryService).verifyEmail(savePeladeiroRequestDTO.email());
+    when(queryService.verifyEmail(savePeladeiroRequestDTO.email()))
+        .thenReturn(CompletableFuture.completedFuture(null));
+    when(historicoPeladeiroService.create())
+        .thenReturn(CompletableFuture.completedFuture(historicoPeladeiroDTO));
+    when(historicoPeladeiroMapper.toModel(historicoPeladeiroDTO))
+        .thenReturn(historicoPeladeiroModel);
     when(peladeiroMapper.saveRequestToModel(savePeladeiroRequestDTO)).thenReturn(peladeiroModel);
     when(repository.save(peladeiroModel)).thenReturn(peladeiroModel);
     when(peladeiroMapper.modelToSaveResponse(peladeiroModel))
@@ -98,6 +110,8 @@ public class PeladeiroServiceTest {
     assertThat(response.nome()).isEqualTo("Marcio");
 
     verify(queryService).verifyEmail(savePeladeiroRequestDTO.email());
+    verify(historicoPeladeiroService).create();
+    verify(historicoPeladeiroMapper).toModel(historicoPeladeiroDTO);
     verify(repository, times(2)).save(peladeiroModel);
     verify(peladeiroMapper).saveRequestToModel(savePeladeiroRequestDTO);
     verify(peladeiroMapper).modelToSaveResponse(peladeiroModel);
@@ -115,11 +129,6 @@ public class PeladeiroServiceTest {
             "o cara forte",
             PeDominante.DESTRO,
             "81999999999");
-
-    // cria listas simuladas
-    List<Long> partidas = List.of(10L, 20L);
-    List<Long> futs = List.of(30L);
-    List<Long> cartoes = List.of(40L, 50L);
 
     doThrow(
             new EmailInUseException(
@@ -149,7 +158,8 @@ public class PeladeiroServiceTest {
             PeDominante.CANHOTO,
             "81999993332");
 
-    when(queryService.verifyPeladeiroExist(1L)).thenReturn(peladeiroModel);
+    when(queryService.verifyPeladeiroExist(1L))
+        .thenReturn(CompletableFuture.completedFuture(peladeiroModel));
     when(repository.save(peladeiroModel)).thenReturn(peladeiroModel);
     when(peladeiroMapper.modelToUpdateResponse(peladeiroModel))
         .thenReturn(
@@ -203,8 +213,10 @@ public class PeladeiroServiceTest {
   void findById_quandoPeladeiroExiste_retornaPeladeiroDetailResponse() {
     // Arrange
     CartoesResumoResponseDTO cartoesResumoResponseDTO = new CartoesResumoResponseDTO(2, 3, 2);
-    when(queryService.verifyPeladeiroExist(1L)).thenReturn(peladeiroModel);
-    when(cartoesService.contarCartoesPeladeiro(1L)).thenReturn(cartoesResumoResponseDTO);
+    when(queryService.verifyPeladeiroExist(1L))
+        .thenReturn(CompletableFuture.completedFuture(peladeiroModel));
+    when(cartoesService.contarCartoesPeladeiro(1L))
+        .thenReturn(CompletableFuture.completedFuture(cartoesResumoResponseDTO));
 
     // Act
     PeladeiroDetailResponse peladeiroDetailResponse = peladeiroService.findById(1L).join();
@@ -243,7 +255,8 @@ public class PeladeiroServiceTest {
   @DisplayName("Deve retornar PeladeiroModel quando ID existe")
   void findByIdModel_quandoPeladeiroExiste_retornaPeladeiroModel() {
     // Arrenge
-    when(queryService.verifyPeladeiroExist(1L)).thenReturn(peladeiroModel);
+    when(queryService.verifyPeladeiroExist(1L))
+        .thenReturn(CompletableFuture.completedFuture(peladeiroModel));
 
     // Act
     PeladeiroModel response = peladeiroService.findByIdModel(1L).join();
@@ -275,7 +288,8 @@ public class PeladeiroServiceTest {
   @DisplayName("Deve apagar o Peladeiro indicado pelo numero do ID")
   void delete_quandoPeladeiroExiste() {
     // Arrenge
-    when(queryService.verifyPeladeiroExist(1L)).thenReturn(peladeiroModel);
+    when(queryService.verifyPeladeiroExist(1L))
+        .thenReturn(CompletableFuture.completedFuture(peladeiroModel));
     doNothing().when(repository).deleteById(1L);
 
     // Act
@@ -307,7 +321,8 @@ public class PeladeiroServiceTest {
   void atualizarFoto_quandoPeladeiroExiste() {
     MultipartFile file = mock(MultipartFile.class);
 
-    doNothing().when(queryService).verifyPeladeiroSaveFile(1L, file);
+    when(queryService.verifyPeladeiroSaveFile(1L, file))
+        .thenReturn(CompletableFuture.completedFuture(null));
     peladeiroService.atualizarFoto(1L, file).join();
 
     verify(queryService).verifyPeladeiroSaveFile(1L, file);

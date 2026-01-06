@@ -87,7 +87,7 @@ public interface IMappersDefault {
   // Converte ID tipo Long para EditorModel
   default EditorModel mapEditor(Long id) {
     IEditorService service = new EditorService();
-    return service.findByIdModel(id);
+    return service.findByIdModel(id).join();
   }
 
   // ======================FUT======================
@@ -100,7 +100,7 @@ public interface IMappersDefault {
   // Converte ID tipo Long para FutModel
   default FutModel mapFut(Long id) {
     IFutService service = new FutService();
-    return service.findByIdModel(id);
+    return service.findByIdModel(id).join();
   }
 
   // ===========================GOLS=================
@@ -139,7 +139,7 @@ public interface IMappersDefault {
   // Converte ID tipo Long para HistoricoPeladeiroModel
   default HistoricoPeladeiroModel mapHistoricoPeladeiro(Long id) {
     IHistoricoPeladeiroService service = new HistoricoPeladeiroService();
-    return service.findByIdModel(id);
+    return service.findByIdModel(id).join();
   }
 
   // ============================PARTIDAS===========================
@@ -152,7 +152,7 @@ public interface IMappersDefault {
   // Converte ID tipo Long para PartidasModel
   default PartidasModel mapPartidas(Long id) {
     IPartidasService service = new PartidasService();
-    return service.findByIdModel(id);
+    return service.findByIdModel(id).join();
   }
 
   // =========================PELADEIRO=========================
@@ -170,7 +170,7 @@ public interface IMappersDefault {
   // Converte ID tipo Long para PeladeiroModel
   default PeladeiroModel mapPeladeiro(Long id) {
     IPeladeiroService service = new PeladeiroService();
-    return service.findByIdModel(id);
+    return service.findByIdModel(id).join();
   }
 
   default PeladeiroResponseDTO mapModelToResponse(PeladeiroModel model) {

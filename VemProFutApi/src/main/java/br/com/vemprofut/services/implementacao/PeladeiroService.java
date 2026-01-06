@@ -8,7 +8,6 @@ import br.com.vemprofut.controllers.response.SavePeladeiroResponseDTO;
 import br.com.vemprofut.controllers.response.UpdatePeladeiroResponseDTO;
 import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
 import br.com.vemprofut.mappers.IPeladeiroMapper;
-import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.PeladeiroRepository;
 import br.com.vemprofut.services.ICartoesService;
@@ -48,12 +47,16 @@ public class PeladeiroService implements IPeladeiroService {
     PeladeiroModel peladeiroModel = peladeiroMapper.saveRequestToModel(dto);
     PeladeiroModel peladeiroSalvo = repository.save(peladeiroModel);
 
-    HistoricoPeladeiroDTO historico = historicoPeladeiroService.create();
-    peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
+    return historicoPeladeiroService
+        .create()
+        .thenApply(
+            historico -> {
+              peladeiroSalvo.setHistoricoPeladeiro(historicoMapper.toModel(historico));
+              PeladeiroModel salvo = repository.save(peladeiroSalvo);
 
-    log.info("Peladeiro cadastrado com sucesso!");
-    var response = peladeiroMapper.modelToSaveResponse(repository.save(peladeiroSalvo));
-    return CompletableFuture.completedFuture(response);
+              log.info("Peladeiro cadastrado com sucesso!");
+              return peladeiroMapper.modelToSaveResponse(salvo);
+            });
   }
 
   @Override

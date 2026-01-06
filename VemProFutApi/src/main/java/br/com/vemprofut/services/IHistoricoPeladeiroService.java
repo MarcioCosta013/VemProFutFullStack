@@ -2,16 +2,17 @@ package br.com.vemprofut.services;
 
 import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
 import br.com.vemprofut.models.HistoricoPeladeiroModel;
+import java.util.concurrent.CompletableFuture;
 
 public interface IHistoricoPeladeiroService {
 
-  HistoricoPeladeiroDTO create();
+  CompletableFuture<HistoricoPeladeiroDTO> create();
 
-  HistoricoPeladeiroDTO findById(Long id);
+  CompletableFuture<HistoricoPeladeiroDTO> findById(Long id);
 
-  HistoricoPeladeiroModel findByIdModel(Long id);
+  CompletableFuture<HistoricoPeladeiroModel> findByIdModel(Long id);
 
-  HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto);
+  CompletableFuture<HistoricoPeladeiroDTO> update(Long id, HistoricoPeladeiroDTO dto);
 
-  void delete(Long id);
+  CompletableFuture<Void> delete(Long id);
 }

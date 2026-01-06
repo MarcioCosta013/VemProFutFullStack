@@ -1,7 +1,6 @@
 package br.com.vemprofut.configs;
 
 import br.com.vemprofut.mappers.IHistoricoPeladeiroMapper;
-import br.com.vemprofut.models.DTOs.HistoricoPeladeiroDTO;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.models.enuns.PeDominante;
 import br.com.vemprofut.repositories.PeladeiroRepository;
@@ -56,20 +55,30 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     if (usuario == null) {
       log.info("Usuario inesxistente, cadastrando novo usuario...");
-      HistoricoPeladeiroDTO historicoPeladeiro = historicoPeladeiroService.create();
-      usuario = new PeladeiroModel();
-      usuario.setEmail(email);
-      usuario.setNome(name);
-      usuario.setApelido(name);
-      usuario.setDescricao("Usuário criado via OAuth2");
-      usuario.setWhatsapp("000000000");
-      usuario.setPeDominante(PeDominante.DESTRO); // escolha padrão
-      usuario.setAuthProvider(provider);
-      usuario.setFotoUrl(picture);
-      usuario.setHistoricoPeladeiro(historicoPeladeiroMapper.toModel(historicoPeladeiro));
-      peladeiroRepository.save(usuario);
 
-      log.info("Usuário salvo no banco com ID {}", usuario.getId());
+      historicoPeladeiroService
+          .create()
+          .thenAccept(
+              historicoPeladeiroDTO -> {
+                PeladeiroModel usuario2 = new PeladeiroModel();
+                usuario2.setEmail(email);
+                usuario2.setNome(name);
+                usuario2.setApelido(name);
+                usuario2.setDescricao("Usuário criado via OAuth2");
+                usuario2.setWhatsapp("000000000");
+                usuario2.setPeDominante(PeDominante.DESTRO); // escolha padrão
+                usuario2.setAuthProvider(provider);
+                usuario2.setFotoUrl(picture);
+                usuario2.setHistoricoPeladeiro(
+                    historicoPeladeiroMapper.toModel(historicoPeladeiroDTO));
+                peladeiroRepository.save(usuario2);
+                log.info("Usuário salvo no banco com ID {}", usuario2.getId());
+              })
+          .exceptionally(
+              ex -> {
+                log.error("Erro ao criar histórico do peladeiro", ex);
+                return null;
+              });
     } else {
       log.info("Usuario encontrado! ID: {}", usuario.getId());
     }

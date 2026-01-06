@@ -9,23 +9,18 @@ import br.com.vemprofut.controllers.response.FutDetailsResponse;
 import br.com.vemprofut.controllers.response.SaveFutResponseDTO;
 import br.com.vemprofut.exceptions.NomeInUseException;
 import br.com.vemprofut.exceptions.NotFoundException;
-import br.com.vemprofut.mappers.IEditorMapper;
 import br.com.vemprofut.mappers.IFutMapper;
-import br.com.vemprofut.mappers.IPartidasMapper;
-import br.com.vemprofut.mappers.IPeladeiroMapper;
 import br.com.vemprofut.models.DTOs.FutDTO;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.HistoricoFutModel;
 import br.com.vemprofut.models.PeladeiroModel;
 import br.com.vemprofut.repositories.*;
-import br.com.vemprofut.services.IBanimentoService;
-import br.com.vemprofut.services.IEditorService;
 import br.com.vemprofut.services.IHistoricoFutService;
-import br.com.vemprofut.services.IPartidasService;
 import br.com.vemprofut.services.implementacao.FutService;
 import br.com.vemprofut.services.query.IFutQueryService;
 import br.com.vemprofut.services.query.IPeladeiroQueryService;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,19 +35,9 @@ public class FutServiceTest {
 
   @Mock private IFutQueryService queryService;
   @Mock private IFutMapper mapper;
-  @Mock private IPartidasMapper partidasMapper;
   @Mock private FutRepository repository;
-  @Mock private IPartidasService partidasService;
-  @Mock private PartidasRepository partidasRepository;
   @Mock private IPeladeiroQueryService peladeiroQueryService;
-  @Mock private PeladeiroRepository peladeiroRepository;
-  @Mock private IPeladeiroMapper peladeiroMapper;
   @Mock private IHistoricoFutService historicoFutService;
-  @Mock private CartoesRepository cartoesRepository;
-  @Mock private GolsPartidaRepository golsRepository;
-  @Mock private IEditorService editorService;
-  @Mock private IEditorMapper editorMapper;
-  @Mock private IBanimentoService banidoService;
 
   @InjectMocks private FutService futService;
 
@@ -88,16 +73,17 @@ public class FutServiceTest {
         new SaveFutResponseDTO(
             1L, "Fut teste", 4, 10, 2, historicoFutModel.getId(), peladeiroModel.getId());
 
-    doNothing().when(queryService).verifyNomeFutExist(futModel.getNome());
+    when(queryService.verifyNomeFutExist(futModel.getNome()))
+        .thenReturn(CompletableFuture.completedFuture(null));
     when(peladeiroQueryService.verifyPeladeiroExist(saveFutRequestDTO.administradorPeladeiro()))
-        .thenReturn(peladeiroModel);
+        .thenReturn(CompletableFuture.completedFuture(peladeiroModel));
     when(mapper.saveRequestToModel(saveFutRequestDTO)).thenReturn(futModel);
     when(repository.save(futModel)).thenReturn(futModel);
     when(historicoFutService.create()).thenReturn(historicoFutModel);
     when(mapper.toSaveResponse(futModel)).thenReturn(saveFutResponseDTO);
 
     // Act:
-    SaveFutResponseDTO response = futService.create(saveFutRequestDTO);
+    SaveFutResponseDTO response = futService.create(saveFutRequestDTO).join();
 
     // Assert:
     assertThat(response.id()).isNotNull().isEqualTo(1L);
@@ -140,11 +126,12 @@ public class FutServiceTest {
     FutDetailsResponse futDetailsResponse =
         new FutDetailsResponse(1L, "Fut teste", 4, 10, 2, 1L, 1L);
 
-    when(queryService.verifyFutExistRetorn(1L)).thenReturn(futModel);
+    when(queryService.verifyFutExistRetorn(1L))
+        .thenReturn(CompletableFuture.completedFuture(futModel));
     when(mapper.modelToDetailsResponse(futModel)).thenReturn(futDetailsResponse);
 
     // Act:
-    FutDetailsResponse response = futService.findById(1L);
+    FutDetailsResponse response = futService.findById(1L).join();
 
     // Assert
     assertThat(response.id()).isNotNull().isEqualTo(1L);
@@ -159,8 +146,6 @@ public class FutServiceTest {
   void findById_quandoFutInexistente_retornaNotFoundException() {
 
     // Arrange:
-    FutDetailsResponse futDetailsResponse =
-        new FutDetailsResponse(1L, "Fut teste", 4, 10, 2, 1L, 1L);
 
     when(queryService.verifyFutExistRetorn(99L))
         .thenThrow(new NotFoundException("Não foi encontrado o Fut de id " + 99L));
@@ -181,11 +166,12 @@ public class FutServiceTest {
     List<Long> cartoes = List.of(1L, 2L, 3L, 5L);
     FutDTO futDTO = new FutDTO(1L, "Fut Test", 4, 10, 2, 1L, 1L, editores, peladeiros, cartoes);
 
-    when(queryService.verifyNomeFutExistRetorn("Fut Test")).thenReturn(futModel);
+    when(queryService.verifyNomeFutExistRetorn("Fut Test"))
+        .thenReturn(CompletableFuture.completedFuture(futModel));
     when(mapper.toDTO(futModel)).thenReturn(futDTO);
 
     // Act
-    FutDTO response = futService.findByNome("Fut Test");
+    FutDTO response = futService.findByNome("Fut Test").join();
 
     // Assert
     assertThat(response).isNotNull();

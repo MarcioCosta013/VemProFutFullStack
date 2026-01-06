@@ -6,18 +6,20 @@ import br.com.vemprofut.models.DTOs.PartidasDTO;
 import br.com.vemprofut.models.DTOs.PeladeiroDTO;
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PartidasModel;
+import java.util.concurrent.CompletableFuture;
 
 public interface IPartidasService {
 
-  SavePartidasResponseDTO create(SavePartidaRequestDTO requestDTO, FutModel futModel);
+  CompletableFuture<SavePartidasResponseDTO> create(
+      SavePartidaRequestDTO requestDTO, FutModel futModel);
 
-  PartidasDTO findById(Long id);
+  CompletableFuture<PartidasDTO> findById(Long id);
 
-  PartidasModel findByIdModel(Long id);
+  CompletableFuture<PartidasModel> findByIdModel(Long id);
 
-  void addGols(PeladeiroDTO peladeiroDTO, PartidasDTO partidasDTO);
+  CompletableFuture<Void> addGols(PeladeiroDTO peladeiroDTO, PartidasDTO partidasDTO);
 
-  void addPeladeiros(Long peladeiroId, PartidasDTO partidasDTO);
+  CompletableFuture<Void> addPeladeiros(Long peladeiroId, PartidasDTO partidasDTO);
 
-  void addCartoes(Long cartaoId, PartidasDTO partidasDTO);
+  CompletableFuture<Void> addCartoes(Long cartaoId, PartidasDTO partidasDTO);
 }

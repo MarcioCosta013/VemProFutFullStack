@@ -6,7 +6,9 @@ import br.com.vemprofut.models.HistoricoPeladeiroModel;
 import br.com.vemprofut.repositories.HistoricoPeladeiroRepository;
 import br.com.vemprofut.services.IHistoricoPeladeiroService;
 import br.com.vemprofut.services.query.IHistoricoPeladeiroQueryService;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,41 +23,53 @@ public class HistoricoPeladeiroService implements IHistoricoPeladeiroService {
 
   @Override
   @Transactional
-  public HistoricoPeladeiroDTO create() {
+  @Async("defaultExecutor")
+  public CompletableFuture<HistoricoPeladeiroDTO> create() {
     HistoricoPeladeiroModel historico = new HistoricoPeladeiroModel();
-    return mapper.toDTO(repository.save(historico));
+    var response = mapper.toDTO(repository.save(historico));
+    return CompletableFuture.completedFuture(response);
+
+    // Se mudar futuramente repository para async tem que compor o metodo com thenApply.
   }
 
   @Override
   @Transactional(readOnly = true)
-  public HistoricoPeladeiroDTO findById(Long id) {
+  @Async("defaultExecutor")
+  public CompletableFuture<HistoricoPeladeiroDTO> findById(Long id) {
 
-    return mapper.toDTO(queryService.verityHistoricoPeladeiroExistReturn(id));
+    return queryService.verityHistoricoPeladeiroExistReturn(id).thenApply(mapper::toDTO);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public HistoricoPeladeiroModel findByIdModel(Long id) {
+  @Async("defaultExecutor")
+  public CompletableFuture<HistoricoPeladeiroModel> findByIdModel(Long id) {
 
     return queryService.verityHistoricoPeladeiroExistReturn(id);
   }
 
   @Override
-  public HistoricoPeladeiroDTO update(Long id, HistoricoPeladeiroDTO dto) {
-    HistoricoPeladeiroModel historico = queryService.verityHistoricoPeladeiroExistReturn(id);
+  @Async("defaultExecutor")
+  public CompletableFuture<HistoricoPeladeiroDTO> update(Long id, HistoricoPeladeiroDTO dto) {
+    return queryService
+        .verityHistoricoPeladeiroExistReturn(id)
+        .thenApply(
+            historicoPeladeiroModel -> {
+              historicoPeladeiroModel.setGolsDoPeladeiro(dto.golsDoPeladeiro());
+              historicoPeladeiroModel.setNotaPeladeiro(dto.notaPeladeiro());
+              historicoPeladeiroModel.setPartidasJogadas(dto.partidasJogadas());
+              historicoPeladeiroModel.setPartidasGanhas(dto.partidasGanhas());
 
-    historico.setGolsDoPeladeiro(dto.golsDoPeladeiro());
-    historico.setNotaPeladeiro(dto.notaPeladeiro());
-    historico.setPartidasJogadas(dto.partidasJogadas());
-    historico.setPartidasGanhas(dto.partidasGanhas());
-
-    return mapper.toDTO(repository.save(historico));
+              return mapper.toDTO(repository.save(historicoPeladeiroModel));
+            });
   }
 
   @Override
-  public void delete(Long id) {
+  @Async("defaultExecutor")
+  public CompletableFuture<Void> delete(Long id) {
     queryService.verityHistoricoPeladeiroExist(id);
     repository.deleteById(id);
+    return CompletableFuture.completedFuture(null);
   }
 
   // TODO: implementar a somatoria de gols ao historico peladeiro

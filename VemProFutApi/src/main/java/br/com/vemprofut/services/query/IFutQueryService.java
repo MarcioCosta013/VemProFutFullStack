@@ -2,27 +2,29 @@ package br.com.vemprofut.services.query;
 
 import br.com.vemprofut.models.FutModel;
 import br.com.vemprofut.models.PeladeiroModel;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IFutQueryService {
 
-  void verifyFutExist(Long dto);
+  CompletableFuture<Void> verifyFutExist(Long dto);
 
-  FutModel verifyFutExistRetorn(Long fut);
+  CompletableFuture<FutModel> verifyFutExistRetorn(Long fut);
 
-  FutModel verifyFutExistRetornListPeladeiro(Long id);
+  CompletableFuture<FutModel> verifyFutExistRetornListPeladeiro(Long id);
 
-  FutModel verifyFutExistRetornListEditores(Long id);
+  CompletableFuture<FutModel> verifyFutExistRetornListEditores(Long id);
 
-  void verifyNomeFutExist(String nome);
+  CompletableFuture<Void> verifyNomeFutExist(String nome);
 
-  FutModel verifyNomeFutExistRetorn(String nome);
+  CompletableFuture<FutModel> verifyNomeFutExistRetorn(String nome);
 
-  void verifyPeladeiroExistInListOrAdm(FutModel futModel, PeladeiroModel model);
+  CompletableFuture<Void> verifyPeladeiroExistInListOrAdm(FutModel futModel, PeladeiroModel model);
 
-  void verifyFutSaveFile(Long id, MultipartFile file);
+  CompletableFuture<Void> verifyFutSaveFile(Long id, MultipartFile file);
 
-  void verityPeladeiroInList(FutModel futModel, PeladeiroModel peladeiroModel);
+  CompletableFuture<Void> verityPeladeiroInList(FutModel futModel, PeladeiroModel peladeiroModel);
 
-  void verifyBanidoListPeladeiros(FutModel futModel, PeladeiroModel peladeiroModel);
+  CompletableFuture<Void> verifyBanidoListPeladeiros(
+      FutModel futModel, PeladeiroModel peladeiroModel);
 }

@@ -13,7 +13,7 @@
 
 Crei esse projeto para aplicar todos os meus conhecimentos FullStack adqueridos em anos de estudos e bootcamps. Vai ser uma API que é consumida por uma pagina Web, um Mobile e aplicação Desktop. 
 
-### Índice:
+## 📋 Índice:
 * [Levantamento de Requisitos](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/LevantamentoDeRequisitos)
 
 * [Diagramas](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Diagramas)
@@ -26,21 +26,24 @@ Crei esse projeto para aplicar todos os meus conhecimentos FullStack adqueridos 
         - [SQL gerado pelo BrModelo e ajustado](https://github.com/MarcioCosta013/VemProFutFullStack/blob/main/Diagramas/DiagramaEntidadeRelacionamento/SQL_BrModelo).
 
 * [Prototipos](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos)
-    - [Web](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos/Web) (A ser iniciado)
-    - [Mobile](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos/Mobile) (A ser iniciado)
-    - [Desktop](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos/Desktop) (A ser iniciado)
+    - [Web](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos/Web) 
+    - [Mobile](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos/Mobile) 
+    - [Desktop](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/Prototipos/Desktop) 
 
-* [API REST (Java)](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutApi) (Em andamento..)
+* [API REST (Java)](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutApi) ( ✅ Concluída)
 
-* [Aplicação Desktop](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutDesktop) (A ser iniciado)
+* [Aplicação Desktop](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutDesktop) ( ⏳ A ser iniciado)
 
-* [Aplicação Mobile](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutMobile) (A ser iniciado)
+* [Aplicação Mobile](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutMobile) ( ⏳ A ser iniciado)
 
-* [Aplicação Web](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutWebPage) (A ser iniciado)
+* [Aplicação Web (Angular)](https://github.com/MarcioCosta013/VemProFutFullStack/tree/main/VemProFutWebPage) ( 🧰 Em produção...)
 
-### Tecnologias e Ferramentas Utilizadas:
 
-#### Back-End (API):
+
+
+## 🛠 Tecnologias e Ferramentas Utilizadas:
+
+### ⚙ Back-End (API):
 * Java:
     - Maven
     - Spring Boot
@@ -50,20 +53,23 @@ Crei esse projeto para aplicar todos os meus conhecimentos FullStack adqueridos 
     - Linter
         - Spotless
         - PMD
+        - SpotBugs
 
-#### FrontEnd (Web):
+### 💻 FrontEnd (Web):
+* Angular
+
+### 📱 Mobile:
 * ?
 
-#### Mobile:
+### 🖥 Desktop:
 * ?
 
-#### Desktop:
-* ?
-
-#### Banco de Dados:
+### 🎲 Banco de Dados:
 * MySQL
 * Flyway Migration
+* H2 (para testes)
 
-#### DevOps:
+### 🧱 DevOps:
 
 * Docker
+* Kubernetes
